@@ -9,12 +9,12 @@ import type { PriceMap } from "./types/domain";
 const STORAGE_KEY = "venor-calc-prices-v1";
 
 const defaultPrices: PriceMap = {
-  "cor-raw": 3_100_000,
-  "cor-cut": 8_000_000,
-  "cor-rare": 19_000_000,
-  "cor-antique": 50_000_000,
-  "ritual-stone": 80_000_000,
-  "wind-crystal": null,
+  50255: 10_000_000,
+  50256: 20_000_000,
+  50257: 60_000_000,
+  50258: 170_000_000,
+  25042: 300_000_000,
+  230042: 400_000_000,
 };
 
 export default function App() {
@@ -27,7 +27,7 @@ export default function App() {
       return defaultPrices;
     }
   });
-  const [targetItem, setTargetItem] = useState("cor-legendary");
+  const [targetItem, setTargetItem] = useState(50259);
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
@@ -71,7 +71,7 @@ export default function App() {
         <div className="target-controls">
           <select
             value={targetItem}
-            onChange={(event) => setTargetItem(event.target.value)}
+            onChange={(event) => setTargetItem(parseInt(event.target.value))}
           >
             {items.map((item) => (
               <option key={item.id} value={item.id}>

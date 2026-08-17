@@ -1,6 +1,7 @@
 import { itemById } from "../data/items";
 import { recipes } from "../data/recipes";
 import type {
+  ItemId,
   OptimizationResult,
   PathStep,
   PriceMap,
@@ -10,12 +11,12 @@ import type {
 const MAX_DEPTH = 12;
 const MAX_RESULTS_PER_ITEM = 8;
 
-function recipesFor(itemId: string): Recipe[] {
+function recipesFor(itemId: ItemId): Recipe[] {
   return recipes.filter((recipe) => recipe.output.itemId === itemId);
 }
 
 function marketResult(
-  itemId: string,
+  itemId: ItemId,
   quantity: number,
   prices: PriceMap,
 ): OptimizationResult | null {
@@ -54,10 +55,10 @@ function cartesian<T>(groups: T[][]): T[][] {
 }
 
 function optimizeInternal(
-  itemId: string,
+  itemId: ItemId,
   quantity: number,
   prices: PriceMap,
-  stack: Set<string>,
+  stack: Set<ItemId>,
   depth: number,
 ): OptimizationResult[] {
   if (depth > MAX_DEPTH || stack.has(itemId)) return [];
@@ -134,7 +135,7 @@ function optimizeInternal(
 }
 
 export function optimize(
-  itemId: string,
+  itemId: ItemId,
   quantity: number,
   prices: PriceMap,
 ): OptimizationResult[] {

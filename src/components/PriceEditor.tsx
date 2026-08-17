@@ -1,5 +1,5 @@
 import { items } from "../data/items";
-import type { PriceMap } from "../types/domain";
+import type { ItemId, PriceMap } from "../types/domain";
 
 interface Props {
   prices: PriceMap;
@@ -9,7 +9,7 @@ interface Props {
 export function PriceEditor({ prices, onChange }: Props) {
   const tradableItems = items.filter((item) => item.tradable);
 
-  function update(id: string, rawValue: string) {
+  function update(id: ItemId, rawValue: string) {
     const normalized = rawValue.replace(/\s/g, "");
     const parsed = normalized === "" ? null : Number(normalized);
     onChange({ ...prices, [id]: Number.isFinite(parsed) ? parsed : null });
