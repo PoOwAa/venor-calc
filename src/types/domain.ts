@@ -5,6 +5,7 @@ export interface Item {
   name: string;
   tradable: boolean;
   category?: string;
+  defaultMarketPrice?: number;
 }
 
 export interface RecipeIngredient {

@@ -3,21 +3,17 @@ import { ItemAutocomplete } from "./components/ItemAutocomplete";
 import { ItemIcon } from "./components/ItemIcon";
 import { PriceEditor } from "./components/PriceEditor";
 import { PathView } from "./components/PathView";
-import { itemById } from "./data/items";
+import { itemById, items } from "./data/items";
 import { formatGold } from "./lib/format";
 import { getRelevantTradableItems, optimize } from "./lib/optimizer";
 import type { PriceMap } from "./types/domain";
 
 const STORAGE_KEY = "venor-calc-prices-v1";
 
-const defaultPrices: PriceMap = {
-  50255: 10_000_000,
-  50256: 20_000_000,
-  50257: 60_000_000,
-  50258: 170_000_000,
-  25042: 300_000_000,
-  230042: 400_000_000,
-};
+const defaultPrices: PriceMap = items.reduce<PriceMap>((prices, item) => {
+  prices[item.id] = item.defaultMarketPrice ?? 0;
+  return prices;
+}, {});
 
 export default function App() {
   const [prices, setPrices] = useState<PriceMap>(() => {
@@ -69,8 +65,8 @@ export default function App() {
             {selectedTarget == null
               ? "Válassz egy tárgyat"
               : results[0]
-              ? formatGold(results[0].effectiveCost)
-              : "Nincs számolható útvonal"}
+                ? formatGold(results[0].effectiveCost)
+                : "Nincs számolható útvonal"}
           </strong>
         </div>
       </header>
@@ -161,7 +157,9 @@ export default function App() {
                     <div className="result-item-title">
                       <ItemIcon
                         itemId={result.itemId}
-                        name={itemById[result.itemId]?.name ?? result.sourceLabel}
+                        name={
+                          itemById[result.itemId]?.name ?? result.sourceLabel
+                        }
                         size={22}
                       />
                       <h3>{result.sourceLabel}</h3>
