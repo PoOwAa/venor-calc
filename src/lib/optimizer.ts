@@ -1,6 +1,7 @@
 import { itemById } from "../data/items";
 import { recipes } from "../data/recipes";
 import type {
+  Item,
   ItemId,
   OptimizationResult,
   PathStep,
@@ -13,6 +14,25 @@ const MAX_RESULTS_PER_ITEM = 8;
 
 function recipesFor(itemId: ItemId): Recipe[] {
   return recipes.filter((recipe) => recipe.output.itemId === itemId);
+}
+
+function collectTradableInputs(
+  itemId: ItemId,
+  visited: Set<ItemId>,
+  collected: Set<ItemId>,
+) {
+  if (visited.has(itemId)) return;
+  visited.add(itemId);
+
+  if (itemById[itemId]?.tradable) {
+    collected.add(itemId);
+  }
+
+  for (const recipe of recipesFor(itemId)) {
+    for (const input of recipe.inputs) {
+      collectTradableInputs(input.itemId, visited, collected);
+    }
+  }
 }
 
 function marketResult(
@@ -140,4 +160,19 @@ export function optimize(
   prices: PriceMap,
 ): OptimizationResult[] {
   return optimizeInternal(itemId, quantity, prices, new Set(), 0);
+}
+
+export function getRelevantTradableItems(itemId: ItemId): Item[] {
+  const collected = new Set<ItemId>();
+  collectTradableInputs(itemId, new Set(), collected);
+
+  return [...collected]
+    .map((id) => itemById[id])
+    .filter((item): item is Item => item != null)
+    .sort(
+      (a, b) =>
+        (a.category ?? "").localeCompare(b.category ?? "", "hu") ||
+        a.name.localeCompare(b.name, "hu") ||
+        a.id - b.id,
+    );
 }

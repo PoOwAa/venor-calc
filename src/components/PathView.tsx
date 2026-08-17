@@ -38,7 +38,7 @@ export function PathView({
         </strong>
         <span>
           {recipe?.inputs.map((inputItem) => (
-            <span>
+            <span key={`${recipe.id}-${inputItem.itemId}`}>
               {inputItem.quantity}x{" "}
               <ItemIcon
                 itemId={inputItem.itemId}

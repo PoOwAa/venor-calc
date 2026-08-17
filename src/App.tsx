@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
+import { ItemAutocomplete } from "./components/ItemAutocomplete";
+import { ItemIcon } from "./components/ItemIcon";
 import { PriceEditor } from "./components/PriceEditor";
 import { PathView } from "./components/PathView";
-import { items } from "./data/items";
+import { itemById } from "./data/items";
 import { formatGold } from "./lib/format";
-import { optimize } from "./lib/optimizer";
+import { getRelevantTradableItems, optimize } from "./lib/optimizer";
 import type { PriceMap } from "./types/domain";
-import { getItemIcon } from "./lib/utils";
 
 const STORAGE_KEY = "venor-calc-prices-v1";
 
@@ -28,15 +29,25 @@ export default function App() {
       return defaultPrices;
     }
   });
-  const [targetItem, setTargetItem] = useState(50259);
+  const [targetItem, setTargetItem] = useState<number | null>(null);
   const [quantity, setQuantity] = useState(1);
+
+  const selectedTarget = targetItem == null ? null : itemById[targetItem];
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(prices));
   }, [prices]);
 
+  const relevantTradableItems = useMemo(
+    () => (targetItem == null ? [] : getRelevantTradableItems(targetItem)),
+    [targetItem],
+  );
+
   const results = useMemo(
-    () => optimize(targetItem, Math.max(1, quantity), prices),
+    () =>
+      targetItem == null
+        ? []
+        : optimize(targetItem, Math.max(1, quantity), prices),
     [targetItem, quantity, prices],
   );
 
@@ -55,40 +66,68 @@ export default function App() {
         <div className="hero-stat">
           <span>Legjobb ár</span>
           <strong>
-            {results[0]
+            {selectedTarget == null
+              ? "Válassz egy tárgyat"
+              : results[0]
               ? formatGold(results[0].effectiveCost)
               : "Nincs számolható útvonal"}
           </strong>
         </div>
       </header>
 
-      <PriceEditor prices={prices} onChange={setPrices} />
-
       <section className="panel target-panel">
         <div>
           <p className="eyebrow">Cél</p>
           <h2>Mit szeretnél megszerezni?</h2>
+          <p className="helper-copy">
+            Először válaszd ki a kívánt tárgyat, utána csak a hozzá tartozó
+            receptekhez szükséges piaci ármezők jelennek meg.
+          </p>
         </div>
         <div className="target-controls">
-          <select
-            value={targetItem}
-            onChange={(event) => setTargetItem(parseInt(event.target.value))}
-          >
-            {items.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.name}
-              </option>
-            ))}
-          </select>
-          <img src={getItemIcon(targetItem)} />
-          <input
-            type="number"
-            min={1}
-            value={quantity}
-            onChange={(event) => setQuantity(Number(event.target.value) || 1)}
-          />
+          <div className="target-search">
+            <ItemAutocomplete
+              selectedItemId={targetItem}
+              onSelect={setTargetItem}
+            />
+            {selectedTarget ? (
+              <div className="target-summary">
+                <span className="target-badge">
+                  <ItemIcon
+                    itemId={selectedTarget.id}
+                    name={selectedTarget.name}
+                    size={18}
+                  />{" "}
+                  {selectedTarget.name}
+                </span>
+                <span className="target-badge subtle">
+                  {relevantTradableItems.length} releváns piaci tárgy
+                </span>
+              </div>
+            ) : null}
+          </div>
+
+          <label className="price-field">
+            <span>Mennyiség</span>
+            <input
+              type="number"
+              min={1}
+              value={quantity}
+              disabled={targetItem == null}
+              onChange={(event) => setQuantity(Number(event.target.value) || 1)}
+            />
+          </label>
         </div>
       </section>
+
+      {selectedTarget ? (
+        <PriceEditor
+          items={relevantTradableItems}
+          targetName={selectedTarget.name}
+          prices={prices}
+          onChange={setPrices}
+        />
+      ) : null}
 
       <section className="results-section">
         <div className="section-heading">
@@ -99,7 +138,12 @@ export default function App() {
           <span className="muted">Effective cost szerint rendezve</span>
         </div>
 
-        {results.length === 0 ? (
+        {selectedTarget == null ? (
+          <div className="empty-state">
+            Válassz ki egy tárgyat a keresőben, hogy megjelenjenek a releváns
+            receptek és az ármezők.
+          </div>
+        ) : results.length === 0 ? (
           <div className="empty-state">
             Adj meg piaci árakat azokhoz az alapanyagokhoz, amelyekből a cél
             előállítható.
