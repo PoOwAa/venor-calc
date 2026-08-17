@@ -2,6 +2,7 @@ import { itemById } from "../data/items";
 import { recipes } from "../data/recipes";
 import { formatGold } from "../lib/format";
 import type { PathStep } from "../types/domain";
+import { ItemIcon } from "./ItemIcon";
 
 export function PathView({
   step,
@@ -17,7 +18,8 @@ export function PathView({
       <div className="path-node" style={{ marginLeft: level * 18 }}>
         <span className="path-badge market">Piac</span>
         <strong>
-          {step.quantity}× {item?.name}
+          {step.quantity}×{" "}
+          <ItemIcon itemId={step.itemId} name={item?.name ?? ""} /> {item?.name}
         </strong>
         <span>{formatGold((step.unitCost ?? 0) * step.quantity)}</span>
       </div>
@@ -31,13 +33,20 @@ export function PathView({
       <div className="path-node">
         <span className="path-badge recipe">Recept</span>
         <strong>
-          {step.quantity}× {item?.name}
+          {step.quantity}×{" "}
+          <ItemIcon itemId={step.itemId} name={item?.name ?? ""} /> {item?.name}
         </strong>
         <span>
-          {recipe?.inputs.map(
-            (inputItem) =>
-              `${inputItem.quantity}x ${itemById[inputItem.itemId].name}`,
-          )}
+          {recipe?.inputs.map((inputItem) => (
+            <span>
+              {inputItem.quantity}x{" "}
+              <ItemIcon
+                itemId={inputItem.itemId}
+                name={itemById[inputItem.itemId].name}
+              />{" "}
+              {itemById[inputItem.itemId].name}
+            </span>
+          ))}
         </span>
         {step.goldCost ? <span>+ {formatGold(step.goldCost)}</span> : null}
       </div>
