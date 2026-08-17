@@ -158,7 +158,14 @@ export default function App() {
                 <div className="result-header">
                   <div>
                     <span className="rank">#{index + 1}</span>
-                    <h3>{result.sourceLabel}</h3>
+                    <div className="result-item-title">
+                      <ItemIcon
+                        itemId={result.itemId}
+                        name={itemById[result.itemId]?.name ?? result.sourceLabel}
+                        size={22}
+                      />
+                      <h3>{result.sourceLabel}</h3>
+                    </div>
                   </div>
                   {index === 0 ? (
                     <span className="best-label">LEGOLCSÓBB</span>
