@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { itemById, items } from "../data/items";
 import type { ItemId } from "../types/domain";
+import { ItemIcon } from "./ItemIcon";
 
 interface Props {
   selectedItemId: ItemId | null;
@@ -156,7 +157,9 @@ export function ItemAutocomplete({ selectedItemId, onSelect }: Props) {
                   selectItem(item.id);
                 }}
               >
-                <span>{item.name}</span>
+                <span>
+                  <ItemIcon itemId={item.id} name={item.name} /> {item.name}
+                </span>
                 <span className="muted">#{item.id}</span>
               </button>
             ))
