@@ -5,6 +5,7 @@ import { items } from "./data/items";
 import { formatGold } from "./lib/format";
 import { optimize } from "./lib/optimizer";
 import type { PriceMap } from "./types/domain";
+import { getItemIcon } from "./lib/utils";
 
 const STORAGE_KEY = "venor-calc-prices-v1";
 
@@ -79,6 +80,7 @@ export default function App() {
               </option>
             ))}
           </select>
+          <img src={getItemIcon(targetItem)} />
           <input
             type="number"
             min={1}
@@ -120,7 +122,7 @@ export default function App() {
                 </div>
                 <div className="metrics">
                   <div>
-                    <span>Cash required</span>
+                    <span>Szükséges arany</span>
                     <strong>{formatGold(result.cashCost)}</strong>
                   </div>
                   <div>

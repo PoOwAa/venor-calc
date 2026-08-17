@@ -50,9 +50,39 @@ export const recipes: Recipe[] = [
     goldCost: 0,
   },
   {
+    id: "wind-crystal-from-wind-shard",
+    npc: "Elementális Kereskedő (Szél)",
+    label: "Szél Kristály Kő-töredék és Szél kristálytöredékből",
+    inputs: [
+      {
+        itemId: 230012,
+        quantity: 10,
+      },
+      {
+        itemId: 230041,
+        quantity: 200,
+      },
+    ],
+    output: { itemId: 230042, quantity: 1 },
+    goldCost: 100_000_000,
+  },
+  {
+    id: "wind-crystal-from-zen-beans",
+    npc: "Elementális Kereskedő (Szél)",
+    label: "Szél Kristály Zen-babból",
+    inputs: [
+      {
+        itemId: 70102,
+        quantity: 2_000,
+      },
+    ],
+    output: { itemId: 230042, quantity: 1 },
+    goldCost: 0,
+  },
+  {
     id: "ritual-stone-from-magic-stone",
     npc: "Kovács",
-    label: "Rituális kő Mágikus kőből",
+    label: "Rituális kő 3 Mágikus kőből",
     inputs: [{ itemId: 25041, quantity: 3 }],
     output: { itemId: 25042, quantity: 1 },
     goldCost: 150_000_000,

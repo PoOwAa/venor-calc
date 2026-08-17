@@ -28,8 +28,26 @@ export const items: Item[] = [
   {
     id: 50259,
     name: "Cor Draconis (legendás)",
-    tradable: false,
+    tradable: true,
     category: "Cor Draconis",
+  },
+  {
+    id: 70102,
+    name: "Zen-bab",
+    tradable: true,
+    category: "Általános",
+  },
+  {
+    id: 230012,
+    name: "Kő-töredék",
+    tradable: true,
+    category: "Általános",
+  },
+  {
+    id: 230041,
+    name: "Szél kristálytöredék",
+    tradable: true,
+    category: "Event",
   },
   {
     id: 230042,

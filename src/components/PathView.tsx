@@ -25,6 +25,7 @@ export function PathView({
   }
 
   const recipe = recipes.find((entry) => entry.id === step.recipeId);
+
   return (
     <div className="path-group" style={{ marginLeft: level * 18 }}>
       <div className="path-node">
@@ -32,7 +33,12 @@ export function PathView({
         <strong>
           {step.quantity}× {item?.name}
         </strong>
-        <span>{recipe?.label}</span>
+        <span>
+          {recipe?.inputs.map(
+            (inputItem) =>
+              `${inputItem.quantity}x ${itemById[inputItem.itemId].name}`,
+          )}
+        </span>
         {step.goldCost ? <span>+ {formatGold(step.goldCost)}</span> : null}
       </div>
       <div className="npc">NPC: {step.npc}</div>
