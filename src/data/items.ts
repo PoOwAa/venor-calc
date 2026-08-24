@@ -1,41 +1,12 @@
 import type { Item } from "../types/domain";
+import { bossBoxes } from "./items/boxes";
+import { corDraconis } from "./items/corDraconis";
+import { yangOres } from "./items/yang";
 
 export const items: Item[] = [
-  {
-    id: 50255,
-    name: "Cor Draconis (Nyers)",
-    tradable: true,
-    category: "Cor Draconis",
-    defaultMarketPrice: 10_000_000,
-  },
-  {
-    id: 50256,
-    name: "Cor Draconis (Metszett)",
-    tradable: true,
-    category: "Cor Draconis",
-    defaultMarketPrice: 20_000_000,
-  },
-  {
-    id: 50257,
-    name: "Cor Draconis (Ritka)",
-    tradable: true,
-    category: "Cor Draconis",
-    defaultMarketPrice: 60_000_000,
-  },
-  {
-    id: 50258,
-    name: "Cor Draconis (Antik)",
-    tradable: true,
-    category: "Cor Draconis",
-    defaultMarketPrice: 170_000_000,
-  },
-  {
-    id: 50259,
-    name: "Cor Draconis (legendás)",
-    tradable: true,
-    category: "Cor Draconis",
-    defaultMarketPrice: 950_000_000,
-  },
+  ...yangOres,
+  ...bossBoxes,
+  ...corDraconis,
   {
     id: 70102,
     name: "Zen-bab",
@@ -84,6 +55,104 @@ export const items: Item[] = [
     tradable: true,
     category: "Fejlesztés",
     defaultMarketPrice: 4_500_000,
+  },
+  {
+    id: 39030,
+    name: "Koncentrált olvasás",
+    tradable: true,
+    category: "Fejlesztés",
+    defaultMarketPrice: 300_000,
+  },
+  {
+    id: 71001,
+    name: "Ördögűző tekercs",
+    tradable: true,
+    category: "Fejlesztés",
+    defaultMarketPrice: 300_000,
+  },
+  {
+    id: 27992,
+    name: "Fehér gyöngy",
+    tradable: true,
+    category: "Fejlesztés",
+    defaultMarketPrice: 25_000_000,
+  },
+  {
+    id: 27993,
+    name: "Kék gyöngy",
+    tradable: true,
+    category: "Fejlesztés",
+    defaultMarketPrice: 10_000_000,
+  },
+  {
+    id: 27994,
+    name: "Vörös gyöngy",
+    tradable: true,
+    category: "Fejlesztés",
+    defaultMarketPrice: 8_000_000,
+  },
+  {
+    id: 230010,
+    name: "Magenta gyöngy",
+    tradable: true,
+    category: "Fejlesztés",
+    defaultMarketPrice: 50_000_000,
+  },
+  {
+    id: 30618,
+    name: "Holdkő",
+    tradable: true,
+    category: "Fejlesztés",
+    defaultMarketPrice: 850_000_000,
+  },
+  {
+    id: 30550,
+    name: "Kék öv",
+    tradable: true,
+    category: "Fejlesztés",
+    defaultMarketPrice: 850_000_000,
+  },
+  {
+    id: 80019,
+    name: "Finom kelme",
+    tradable: true,
+    category: "Fejlesztés",
+    defaultMarketPrice: 4_000_000,
+  },
+  {
+    id: 250000,
+    name: "Kesztyű tekercs (PvM)",
+    tradable: true,
+    category: "Fejlesztés",
+    defaultMarketPrice: 2_000_000_000,
+  },
+  {
+    id: 33031,
+    name: "Elementáris virág",
+    tradable: true,
+    category: "Fejlesztés",
+    defaultMarketPrice: 40_000_000,
+  },
+  {
+    id: 230090,
+    name: "Zodiákus jelvény",
+    tradable: true,
+    category: "Fejlesztés",
+    defaultMarketPrice: 200_000_000,
+  },
+  {
+    id: 230089,
+    name: "Zodiákus pergamen",
+    tradable: true,
+    category: "Fejlesztés",
+    defaultMarketPrice: 35_000_000,
+  },
+  {
+    id: 230053,
+    name: "Szél token",
+    tradable: true,
+    category: "Event",
+    defaultMarketPrice: 2_000_000_000,
   },
 ];
 

@@ -80,6 +80,162 @@ export const recipes: Recipe[] = [
     goldCost: 0,
   },
   {
+    id: "wind-crystal-from-concentrated-reading",
+    npc: "Elementális Kereskedő (Szél)",
+    label: "Szél Kristály Koncentrált olvasásból",
+    inputs: [
+      {
+        itemId: 39030,
+        quantity: 1000,
+      },
+    ],
+    output: { itemId: 230042, quantity: 1 },
+    goldCost: 0,
+  },
+  {
+    id: "wind-crystal-from-exorcism-scroll",
+    npc: "Elementális Kereskedő (Szél)",
+    label: "Szél Kristály Ördögűző tekercsből",
+    inputs: [
+      {
+        itemId: 71001,
+        quantity: 1000,
+      },
+    ],
+    output: { itemId: 230042, quantity: 1 },
+    goldCost: 0,
+  },
+  {
+    id: "wind-crystal-from-magenta-pearl",
+    npc: "Elementális Kereskedő (Szél)",
+    label: "Szél Kristály Magenta Gyöngyből",
+    inputs: [
+      {
+        itemId: 230010,
+        quantity: 10,
+      },
+    ],
+    output: { itemId: 230042, quantity: 1 },
+    goldCost: 0,
+  },
+  {
+    id: "wind-crystal-from-moonstone",
+    npc: "Elementális Kereskedő (Szél)",
+    label: "Szél Kristály Holdkőből",
+    inputs: [
+      {
+        itemId: 30618,
+        quantity: 1,
+      },
+    ],
+    output: { itemId: 230042, quantity: 2 },
+    goldCost: 0,
+  },
+  {
+    id: "wind-crystal-from-blue-belt",
+    npc: "Elementális Kereskedő (Szél)",
+    label: "Szél Kristály Kék övből",
+    inputs: [
+      {
+        itemId: 30550,
+        quantity: 1,
+      },
+    ],
+    output: { itemId: 230042, quantity: 2 },
+    goldCost: 0,
+  },
+  {
+    id: "wind-crystal-from-stone-shard",
+    npc: "Elementális Kereskedő (Szél)",
+    label: "Szél Kristály Kő-töredékből",
+    inputs: [
+      {
+        itemId: 230012,
+        quantity: 1000,
+      },
+    ],
+    output: { itemId: 230042, quantity: 3 },
+    goldCost: 0,
+  },
+  {
+    id: "wind-crystal-from-fine-cloth",
+    npc: "Elementális Kereskedő (Szél)",
+    label: "Szél Kristály Finom Kelméből",
+    inputs: [
+      {
+        itemId: 80019,
+        quantity: 1000,
+      },
+    ],
+    output: { itemId: 230042, quantity: 8 },
+    goldCost: 0,
+  },
+  {
+    id: "wind-crystal-from-pvm-glove-scroll",
+    npc: "Elementális Kereskedő (Szél)",
+    label: "Szél Kristály Kesztyű tekercs (PvM)-ből",
+    inputs: [
+      {
+        itemId: 250000,
+        quantity: 1,
+      },
+    ],
+    output: { itemId: 230042, quantity: 5 },
+    goldCost: 0,
+  },
+  {
+    id: "wind-crystal-from-elemental-flower",
+    npc: "Elementális Kereskedő (Szél)",
+    label: "Szél Kristály Elementáris virágból",
+    inputs: [
+      {
+        itemId: 33031,
+        quantity: 20,
+      },
+    ],
+    output: { itemId: 230042, quantity: 1 },
+    goldCost: 0,
+  },
+  {
+    id: "wind-crystal-from-zodiac-emblem",
+    npc: "Elementális Kereskedő (Szél)",
+    label: "Szél Kristály Zodiákus jelvényből",
+    inputs: [
+      {
+        itemId: 230090,
+        quantity: 3,
+      },
+    ],
+    output: { itemId: 230042, quantity: 1 },
+    goldCost: 0,
+  },
+  {
+    id: "wind-crystal-from-zodiac-scroll",
+    npc: "Elementális Kereskedő (Szél)",
+    label: "Szél Kristály Zodiákus pergamenből",
+    inputs: [
+      {
+        itemId: 230089,
+        quantity: 12,
+      },
+    ],
+    output: { itemId: 230042, quantity: 1 },
+    goldCost: 0,
+  },
+  {
+    id: "wind-crystal-from-wind-token",
+    npc: "Elementális Kereskedő (Szél)",
+    label: "Szél Kristály Szél tokenből",
+    inputs: [
+      {
+        itemId: 230053,
+        quantity: 1,
+      },
+    ],
+    output: { itemId: 230042, quantity: 1 },
+    goldCost: 0,
+  },
+  {
     id: "ritual-stone-from-magic-stone",
     npc: "Kovács",
     label: "Rituális kő 3 Mágikus kőből",
