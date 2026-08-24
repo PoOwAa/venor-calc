@@ -13,7 +13,7 @@ button, input { border-radius: 12px; border: 1px solid #334155; background: #111
 button { cursor: pointer; }
 
 .app-shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 42px 0 28px; }
-.hero { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 26px; }
+.hero { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 20px; }
 .brand-mark { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: #f59e0b; color: #111827; font-weight: 900; letter-spacing: -1px; }
 .eyebrow { margin: 16px 0 6px; text-transform: uppercase; font-size: 12px; letter-spacing: .18em; color: #94a3b8; font-weight: 800; }
 h1 { font-size: clamp(40px, 7vw, 72px); line-height: .95; margin: 0; letter-spacing: -0.05em; }
@@ -22,6 +22,55 @@ h2, h3 { margin: 0; }
 .hero-stat { min-width: 300px; padding: 22px; border: 1px solid #334155; border-radius: 18px; background: rgba(15, 23, 42, .8); }
 .hero-stat span, .metrics span, .muted { color: #94a3b8; font-size: 13px; }
 .hero-stat strong { display: block; margin-top: 8px; font-size: 24px; }
+
+.crafting-summary-panel {
+  margin-bottom: 22px;
+}
+
+.crafting-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 18px;
+}
+
+.crafting-summary .eyebrow {
+  margin-top: 0;
+}
+
+.boss-boxes-panel {
+  min-height: 240px;
+}
+
+.top-menu {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 8px;
+  border: 1px solid #263247;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, .7);
+}
+
+.menu-item {
+  border: 1px solid #334155;
+  border-radius: 11px;
+  background: #0f172a;
+  color: #cbd5e1;
+  font-weight: 700;
+  padding: 10px 14px;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+
+.menu-item:hover {
+  background: #172036;
+}
+
+.menu-item.active {
+  background: #f59e0b;
+  border-color: #f59e0b;
+  color: #111827;
+}
 
 .panel, .result-card, .empty-state { background: rgba(15, 23, 42, .86); border: 1px solid #263247; border-radius: 20px; }
 .panel { padding: 24px; margin-bottom: 22px; }
@@ -77,6 +126,8 @@ footer { margin-top: 30px; text-align: center; color: #64748b; font-size: 12px; 
 @media (max-width: 760px) {
   .hero, .target-layout { flex-direction: column; align-items: stretch; }
   .hero-stat { min-width: 0; }
+  .crafting-summary { flex-direction: column; align-items: stretch; }
+  .top-menu { flex-wrap: wrap; }
   .target-controls { flex-direction: column; }
   .target-controls > .price-field { flex-basis: auto; width: 100%; }
   .target-controls > .price-field input { min-width: 0; }
