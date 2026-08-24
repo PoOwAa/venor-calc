@@ -21,9 +21,9 @@ export default function App() {
     { key: "crafting", label: "Kraftolás" },
     { key: "boss-boxes", label: "Boss ládák" },
   ] as const;
-  const [activeMenu, setActiveMenu] = useState<(typeof menuItems)[number]["key"]>(
-    menuItems[0].key,
-  );
+  const [activeMenu, setActiveMenu] = useState<
+    (typeof menuItems)[number]["key"]
+  >(menuItems[0].key);
   const [prices, setPrices] = useState<PriceMap>(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored) return defaultPrices;
@@ -179,8 +179,8 @@ export default function App() {
               </div>
             ) : results.length === 0 ? (
               <div className="empty-state">
-                Adj meg piaci árakat azokhoz az alapanyagokhoz, amelyekből a
-                cél előállítható.
+                Adj meg piaci árakat azokhoz az alapanyagokhoz, amelyekből a cél
+                előállítható.
               </div>
             ) : (
               <div className="results-grid">

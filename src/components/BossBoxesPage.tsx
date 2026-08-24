@@ -54,7 +54,7 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
               <div className="boss-box-header">
                 <div>
                   <h3>
-                    <ItemIcon itemId={box.id} name={box.name} size={18} /> {" "}
+                    <ItemIcon itemId={box.id} name={box.name} size={18} />{" "}
                     {box.name}
                   </h3>
                   <p className="muted">Tárgy azonosító: {box.id}</p>
@@ -97,7 +97,10 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
               {boxStats && boxStats.drops.length > 0 ? (
                 <div className="boss-drop-list">
                   {boxStats.drops.map((drop) => (
-                    <div className="boss-drop-row" key={`${box.id}-${drop.itemId}`}>
+                    <div
+                      className="boss-drop-row"
+                      key={`${box.id}-${drop.itemId}`}
+                    >
                       <div className="drop-name">
                         <ItemIcon
                           itemId={drop.itemId}
@@ -109,10 +112,12 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
                       <div className="drop-values">
                         <span>{(drop.dropProbability * 100).toFixed(1)}%</span>
                         <span>
-                          átlag: {drop.avgQuantityPerOpen.toFixed(2)} db / nyitás
+                          átlag: {drop.avgQuantityPerOpen.toFixed(2)} db /
+                          nyitás
                         </span>
                         <span>
-                          hozzájárulás: {formatGold(drop.expectedIncomeContribution)}
+                          hozzájárulás:{" "}
+                          {formatGold(drop.expectedIncomeContribution)}
                         </span>
                       </div>
                     </div>
