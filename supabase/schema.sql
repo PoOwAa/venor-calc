@@ -1,0 +1,219 @@
+-- Supabase schema for Boss Box OCR review workflow
+-- Run this in Supabase SQL Editor.
+
+create extension if not exists pgcrypto;
+
+create table if not exists public.box_opening_review_queue (
+  id uuid primary key default gen_random_uuid(),
+  box_item_id bigint not null,
+  opened_box_count integer,
+  screenshot_object_path text not null,
+  screenshot_source_filename text,
+  raw_ocr_text text not null,
+  unresolved_count integer not null default 0,
+  submitted_entries jsonb not null,
+  status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
+  submitted_by uuid,
+  reviewer_note text,
+  reviewed_by uuid,
+  reviewed_at timestamptz,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.box_opening_approved (
+  id uuid primary key default gen_random_uuid(),
+  review_queue_id uuid unique not null references public.box_opening_review_queue(id) on delete cascade,
+  box_item_id bigint not null,
+  opened_box_count integer,
+  screenshot_object_path text not null,
+  screenshot_source_filename text,
+  raw_ocr_text text not null,
+  approved_entries jsonb not null,
+  approved_by uuid,
+  approved_at timestamptz not null default now(),
+  created_at timestamptz not null default now()
+);
+
+create or replace function public.approve_box_opening_submission(
+  p_review_queue_id uuid,
+  p_reviewer_note text default null
+)
+returns public.box_opening_approved
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_review public.box_opening_review_queue;
+  v_approved public.box_opening_approved;
+begin
+  select *
+  into v_review
+  from public.box_opening_review_queue
+  where id = p_review_queue_id
+  for update;
+
+  if not found then
+    raise exception 'Review queue row not found: %', p_review_queue_id;
+  end if;
+
+  if v_review.status <> 'pending' then
+    raise exception 'Review queue row is already processed: %', p_review_queue_id;
+  end if;
+
+  insert into public.box_opening_approved (
+    review_queue_id,
+    box_item_id,
+    opened_box_count,
+    screenshot_object_path,
+    screenshot_source_filename,
+    raw_ocr_text,
+    approved_entries,
+    approved_by
+  )
+  values (
+    v_review.id,
+    v_review.box_item_id,
+    v_review.opened_box_count,
+    v_review.screenshot_object_path,
+    v_review.screenshot_source_filename,
+    v_review.raw_ocr_text,
+    v_review.submitted_entries,
+    auth.uid()
+  )
+  returning * into v_approved;
+
+  update public.box_opening_review_queue
+  set
+    status = 'approved',
+    reviewer_note = p_reviewer_note,
+    reviewed_by = auth.uid(),
+    reviewed_at = now()
+  where id = v_review.id;
+
+  return v_approved;
+end;
+$$;
+
+grant execute on function public.approve_box_opening_submission(uuid, text) to authenticated;
+
+alter table public.box_opening_review_queue enable row level security;
+alter table public.box_opening_approved enable row level security;
+
+-- Submission policy for app users. Tighten as needed (for example authenticated only).
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'box_opening_review_queue'
+      and policyname = 'Allow insert into review queue'
+  ) then
+    create policy "Allow insert into review queue"
+    on public.box_opening_review_queue
+    for insert
+    to anon, authenticated
+    with check (true);
+  end if;
+end
+$$;
+
+-- Reviewer read policy.
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'box_opening_review_queue'
+      and policyname = 'Allow reviewers to read review queue'
+  ) then
+    create policy "Allow reviewers to read review queue"
+    on public.box_opening_review_queue
+    for select
+    to authenticated
+    using (true);
+  end if;
+end
+$$;
+
+-- Reviewer update policy.
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'box_opening_review_queue'
+      and policyname = 'Allow reviewers to update review queue'
+  ) then
+    create policy "Allow reviewers to update review queue"
+    on public.box_opening_review_queue
+    for update
+    to authenticated
+    using (true)
+    with check (true);
+  end if;
+end
+$$;
+
+-- Approved dataset read policy.
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'box_opening_approved'
+      and policyname = 'Allow approved data read'
+  ) then
+    create policy "Allow approved data read"
+    on public.box_opening_approved
+    for select
+    to anon, authenticated
+    using (true);
+  end if;
+end
+$$;
+
+-- Storage bucket for screenshots.
+insert into storage.buckets (id, name, public)
+values ('box-opening-screenshots', 'box-opening-screenshots', false)
+on conflict (id) do nothing;
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'storage'
+      and tablename = 'objects'
+      and policyname = 'Allow upload screenshots'
+  ) then
+    create policy "Allow upload screenshots"
+    on storage.objects
+    for insert
+    to anon, authenticated
+    with check (bucket_id = 'box-opening-screenshots');
+  end if;
+end
+$$;
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'storage'
+      and tablename = 'objects'
+      and policyname = 'Allow reviewer read screenshots'
+  ) then
+    create policy "Allow reviewer read screenshots"
+    on storage.objects
+    for select
+    to authenticated
+    using (bucket_id = 'box-opening-screenshots');
+  end if;
+end
+$$;

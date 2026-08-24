@@ -10,9 +10,13 @@ import {
   parseBoxOcrText,
   type MatchedOcrDropLine,
 } from "../lib/bossBoxOcr";
+import { getSupabaseClient, isSupabaseConfigured } from "../lib/supabase";
 import type { PriceMap } from "../types/domain";
 import { EditableItemAutocomplete } from "./EditableItemAutocomplete";
 import { ItemIcon } from "./ItemIcon";
+
+const SCREENSHOT_BUCKET = "box-opening-screenshots";
+const REVIEW_QUEUE_TABLE = "box_opening_review_queue";
 
 interface BossBoxesPageProps {
   prices: PriceMap;
@@ -32,6 +36,10 @@ interface EditableOcrLine {
 }
 
 export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
+  const [selectedBoxId, setSelectedBoxId] = useState<number>(bossBoxes[0].id);
+  const [uploadedScreenshot, setUploadedScreenshot] = useState<File | null>(
+    null,
+  );
   const [ocrText, setOcrText] = useState("");
   const [ocrLines, setOcrLines] = useState<EditableOcrLine[]>([]);
   const [ocrOpenedBoxCount, setOcrOpenedBoxCount] = useState<number | null>(
@@ -40,6 +48,9 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
   const [ocrProgress, setOcrProgress] = useState(0);
   const [isOcrRunning, setIsOcrRunning] = useState(false);
   const [ocrError, setOcrError] = useState<string | null>(null);
+  const [isSavingResult, setIsSavingResult] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [saveMessage, setSaveMessage] = useState<string | null>(null);
 
   const statsByBoxId = useMemo(() => {
     const stats = buildBossBoxStats(boxOpeningSamples, prices);
@@ -62,6 +73,10 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
   ) {
     const file = event.target.files?.[0];
     if (!file) return;
+
+    setUploadedScreenshot(file);
+    setSaveError(null);
+    setSaveMessage(null);
 
     setIsOcrRunning(true);
     setOcrError(null);
@@ -170,6 +185,84 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
     );
   }
 
+  async function handleSaveSubmission() {
+    if (!uploadedScreenshot) {
+      setSaveError("Előbb tölts fel egy screenshotot.");
+      return;
+    }
+
+    if (ocrLines.length === 0) {
+      setSaveError("Nincs menthető OCR eredmény.");
+      return;
+    }
+
+    if (!isSupabaseConfigured()) {
+      setSaveError(
+        "A Supabase környezeti változók hiányoznak. Add meg a VITE_SUPABASE_URL és VITE_SUPABASE_ANON_KEY értékeket.",
+      );
+      return;
+    }
+
+    setIsSavingResult(true);
+    setSaveError(null);
+    setSaveMessage(null);
+
+    try {
+      const supabase = getSupabaseClient();
+      const webpBlob = await convertImageToWebp(uploadedScreenshot);
+      const objectPath = buildScreenshotPath(uploadedScreenshot.name);
+
+      const uploadResult = await supabase.storage
+        .from(SCREENSHOT_BUCKET)
+        .upload(objectPath, webpBlob, {
+          contentType: "image/webp",
+          upsert: false,
+        });
+
+      if (uploadResult.error) {
+        throw uploadResult.error;
+      }
+
+      const queuePayload = {
+        box_item_id: selectedBoxId,
+        opened_box_count: ocrOpenedBoxCount,
+        screenshot_object_path: objectPath,
+        screenshot_source_filename: uploadedScreenshot.name,
+        raw_ocr_text: ocrText,
+        unresolved_count: ocrLines.filter((line) => line.needsReview).length,
+        submitted_entries: ocrLines.map((line) => ({
+          recognized_name: line.recognizedName,
+          corrected_name: line.itemNameInput,
+          item_id: line.matchedItemId,
+          matched_item_name: line.matchedItemName,
+          quantity: line.quantity,
+          confidence: line.confidence,
+          needs_review: line.needsReview,
+          source_line: line.sourceLine,
+        })),
+      };
+
+      const insertResult = await supabase
+        .from(REVIEW_QUEUE_TABLE)
+        .insert(queuePayload);
+
+      if (insertResult.error) {
+        throw insertResult.error;
+      }
+
+      setSaveMessage(
+        "A screenshot és a feldolgozott adat mentésre került a review queue táblába.",
+      );
+    } catch (error) {
+      console.error(error);
+      setSaveError(
+        "Mentési hiba történt. Ellenőrizd a Supabase bucket/policy és a tábla beállításokat.",
+      );
+    } finally {
+      setIsSavingResult(false);
+    }
+  }
+
   return (
     <section className="boss-boxes-page">
       <section className="panel ocr-panel">
@@ -193,10 +286,45 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
           </label>
         </div>
 
+        <div className="ocr-controls">
+          <label className="price-field ocr-box-select">
+            <span>Melyik ládát nyitottátok?</span>
+            <select
+              value={selectedBoxId}
+              onChange={(event) => setSelectedBoxId(Number(event.target.value))}
+            >
+              {bossBoxes.map((box) => (
+                <option key={box.id} value={box.id}>
+                  {box.name} (#{box.id})
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <button
+            type="button"
+            className="secondary save-ocr-button"
+            onClick={handleSaveSubmission}
+            disabled={isSavingResult || isOcrRunning || ocrLines.length === 0}
+          >
+            {isSavingResult
+              ? "Mentés folyamatban..."
+              : "Mentés review queue-ba"}
+          </button>
+        </div>
+
+        {uploadedScreenshot ? (
+          <p className="muted">
+            Feltöltött screenshot: {uploadedScreenshot.name}
+          </p>
+        ) : null}
+
         {isOcrRunning ? (
           <p className="muted">OCR folyamat: {ocrProgress}%</p>
         ) : null}
         {ocrError ? <p className="ocr-error">{ocrError}</p> : null}
+        {saveError ? <p className="ocr-error">{saveError}</p> : null}
+        {saveMessage ? <p className="ocr-success">{saveMessage}</p> : null}
 
         {ocrLines.length > 0 ? (
           <>
@@ -396,6 +524,53 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
       </footer>
     </section>
   );
+}
+
+function buildScreenshotPath(originalName: string): string {
+  const safeName = originalName
+    .replace(/\.[^.]+$/, "")
+    .replace(/[^a-zA-Z0-9-_]+/g, "-");
+  const randomId = crypto.randomUUID();
+  return `pending/${new Date().toISOString().slice(0, 10)}/${safeName}-${randomId}.webp`;
+}
+
+async function convertImageToWebp(file: File): Promise<Blob> {
+  const objectUrl = URL.createObjectURL(file);
+
+  try {
+    const image = await loadImage(objectUrl);
+    const canvas = document.createElement("canvas");
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+
+    const context = canvas.getContext("2d");
+    if (!context) {
+      throw new Error("A böngésző nem támogatja a canvas kontextust.");
+    }
+
+    context.drawImage(image, 0, 0);
+
+    const blob = await new Promise<Blob | null>((resolve) => {
+      canvas.toBlob(resolve, "image/webp", 0.9);
+    });
+
+    if (!blob) {
+      throw new Error("Nem sikerült webP képet előállítani.");
+    }
+
+    return blob;
+  } finally {
+    URL.revokeObjectURL(objectUrl);
+  }
+}
+
+function loadImage(url: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error("A kép betöltése sikertelen."));
+    image.src = url;
+  });
 }
 
 function toEditableOcrLines(matches: MatchedOcrDropLine[]): EditableOcrLine[] {
