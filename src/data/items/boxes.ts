@@ -27,7 +27,7 @@ export const bossBoxes: Item[] = [
   },
   {
     id: 54702,
-    name: "Beran-Setaou ládája",
+    name: "Razador ládája",
     tradable: true,
     category: "Boss ládák",
   },

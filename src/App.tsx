@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { ItemAutocomplete } from "./components/ItemAutocomplete";
+import { BossBoxesPage } from "./components/BossBoxesPage";
 import { ItemIcon } from "./components/ItemIcon";
 import { PriceEditor } from "./components/PriceEditor";
 import { PathView } from "./components/PathView";
@@ -232,16 +233,7 @@ export default function App() {
           </section>
         </>
       ) : (
-        <section className="panel boss-boxes-panel">
-          <div>
-            <p className="eyebrow">Boss ládák</p>
-            <h2>Hamarosan</h2>
-            <p className="helper-copy">
-              Ez az oldal még üres. Ide kerül majd a boss ládák kezelése és a
-              kapcsolódó kalkulációk.
-            </p>
-          </div>
-        </section>
+        <BossBoxesPage prices={prices} onPriceChange={setPrices} />
       )}
 
       <footer>

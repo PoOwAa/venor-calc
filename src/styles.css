@@ -38,8 +38,94 @@ h2, h3 { margin: 0; }
   margin-top: 0;
 }
 
-.boss-boxes-panel {
-  min-height: 240px;
+.boss-boxes-page {
+  margin-top: 8px;
+}
+
+.boss-box-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.boss-box-card {
+  display: grid;
+  gap: 16px;
+}
+
+.boss-box-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: end;
+}
+
+.boss-box-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.box-price-input {
+  flex: 0 0 min(320px, 100%);
+}
+
+.boss-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.boss-metrics div {
+  padding: 14px;
+  border-radius: 14px;
+  background: #0b1220;
+}
+
+.boss-metrics strong {
+  display: block;
+  margin-top: 6px;
+}
+
+.boss-drop-list {
+  display: grid;
+  gap: 8px;
+}
+
+.boss-drop-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  padding: 11px 12px;
+  border-radius: 12px;
+  background: #0b1220;
+}
+
+.drop-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.drop-name span {
+  color: #dbeafe;
+}
+
+.drop-values {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 10px;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.boss-note {
+  margin-top: 20px;
+  text-align: left;
+  color: #64748b;
+  font-size: 12px;
 }
 
 .top-menu {
@@ -128,6 +214,11 @@ footer { margin-top: 30px; text-align: center; color: #64748b; font-size: 12px; 
   .hero-stat { min-width: 0; }
   .crafting-summary { flex-direction: column; align-items: stretch; }
   .top-menu { flex-wrap: wrap; }
+  .boss-box-header { flex-direction: column; align-items: stretch; }
+  .box-price-input { flex-basis: auto; }
+  .boss-metrics { grid-template-columns: 1fr; }
+  .boss-drop-row { flex-direction: column; align-items: start; }
+  .drop-values { justify-content: start; }
   .target-controls { flex-direction: column; }
   .target-controls > .price-field { flex-basis: auto; width: 100%; }
   .target-controls > .price-field input { min-width: 0; }
