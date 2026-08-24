@@ -95,125 +95,99 @@ begin
 end;
 $$;
 
-grant execute on function public.approve_box_opening_submission(uuid, text) to authenticated;
+create or replace function public.reject_box_opening_submission(
+  p_review_queue_id uuid,
+  p_reviewer_note text default null
+)
+returns public.box_opening_review_queue
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_review public.box_opening_review_queue;
+begin
+  select *
+  into v_review
+  from public.box_opening_review_queue
+  where id = p_review_queue_id
+  for update;
+
+  if not found then
+    raise exception 'Review queue row not found: %', p_review_queue_id;
+  end if;
+
+  if v_review.status <> 'pending' then
+    raise exception 'Review queue row is already processed: %', p_review_queue_id;
+  end if;
+
+  update public.box_opening_review_queue
+  set
+    status = 'rejected',
+    reviewer_note = p_reviewer_note,
+    reviewed_by = auth.uid(),
+    reviewed_at = now()
+  where id = v_review.id
+  returning * into v_review;
+
+  return v_review;
+end;
+$$;
+
+grant execute on function public.approve_box_opening_submission(uuid, text) to anon, authenticated;
+grant execute on function public.reject_box_opening_submission(uuid, text) to anon, authenticated;
 
 alter table public.box_opening_review_queue enable row level security;
 alter table public.box_opening_approved enable row level security;
 
 -- Submission policy for app users. Tighten as needed (for example authenticated only).
-do $$
-begin
-  if not exists (
-    select 1
-    from pg_policies
-    where schemaname = 'public'
-      and tablename = 'box_opening_review_queue'
-      and policyname = 'Allow insert into review queue'
-  ) then
-    create policy "Allow insert into review queue"
-    on public.box_opening_review_queue
-    for insert
-    to anon, authenticated
-    with check (true);
-  end if;
-end
-$$;
+drop policy if exists "Allow insert into review queue" on public.box_opening_review_queue;
+create policy "Allow insert into review queue"
+on public.box_opening_review_queue
+for insert
+to anon, authenticated
+with check (true);
 
 -- Reviewer read policy.
-do $$
-begin
-  if not exists (
-    select 1
-    from pg_policies
-    where schemaname = 'public'
-      and tablename = 'box_opening_review_queue'
-      and policyname = 'Allow reviewers to read review queue'
-  ) then
-    create policy "Allow reviewers to read review queue"
-    on public.box_opening_review_queue
-    for select
-    to authenticated
-    using (true);
-  end if;
-end
-$$;
+drop policy if exists "Allow reviewers to read review queue" on public.box_opening_review_queue;
+create policy "Allow reviewers to read review queue"
+on public.box_opening_review_queue
+for select
+to anon, authenticated
+using (true);
 
 -- Reviewer update policy.
-do $$
-begin
-  if not exists (
-    select 1
-    from pg_policies
-    where schemaname = 'public'
-      and tablename = 'box_opening_review_queue'
-      and policyname = 'Allow reviewers to update review queue'
-  ) then
-    create policy "Allow reviewers to update review queue"
-    on public.box_opening_review_queue
-    for update
-    to authenticated
-    using (true)
-    with check (true);
-  end if;
-end
-$$;
+drop policy if exists "Allow reviewers to update review queue" on public.box_opening_review_queue;
+create policy "Allow reviewers to update review queue"
+on public.box_opening_review_queue
+for update
+to anon, authenticated
+using (true)
+with check (true);
 
 -- Approved dataset read policy.
-do $$
-begin
-  if not exists (
-    select 1
-    from pg_policies
-    where schemaname = 'public'
-      and tablename = 'box_opening_approved'
-      and policyname = 'Allow approved data read'
-  ) then
-    create policy "Allow approved data read"
-    on public.box_opening_approved
-    for select
-    to anon, authenticated
-    using (true);
-  end if;
-end
-$$;
+drop policy if exists "Allow approved data read" on public.box_opening_approved;
+create policy "Allow approved data read"
+on public.box_opening_approved
+for select
+to anon, authenticated
+using (true);
 
 -- Storage bucket for screenshots.
 insert into storage.buckets (id, name, public)
 values ('box-opening-screenshots', 'box-opening-screenshots', false)
 on conflict (id) do nothing;
 
-do $$
-begin
-  if not exists (
-    select 1
-    from pg_policies
-    where schemaname = 'storage'
-      and tablename = 'objects'
-      and policyname = 'Allow upload screenshots'
-  ) then
-    create policy "Allow upload screenshots"
-    on storage.objects
-    for insert
-    to anon, authenticated
-    with check (bucket_id = 'box-opening-screenshots');
-  end if;
-end
-$$;
+drop policy if exists "Allow upload screenshots" on storage.objects;
+create policy "Allow upload screenshots"
+on storage.objects
+for insert
+to anon, authenticated
+with check (bucket_id = 'box-opening-screenshots');
 
-do $$
-begin
-  if not exists (
-    select 1
-    from pg_policies
-    where schemaname = 'storage'
-      and tablename = 'objects'
-      and policyname = 'Allow reviewer read screenshots'
-  ) then
-    create policy "Allow reviewer read screenshots"
-    on storage.objects
-    for select
-    to authenticated
-    using (bucket_id = 'box-opening-screenshots');
-  end if;
-end
-$$;
+drop policy if exists "Allow reviewer read screenshots" on storage.objects;
+create policy "Allow reviewer read screenshots"
+on storage.objects
+for select
+to anon, authenticated
+using (bucket_id = 'box-opening-screenshots');

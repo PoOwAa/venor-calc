@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { BossBoxReviewPage } from "./components/BossBoxReviewPage";
 import { ItemAutocomplete } from "./components/ItemAutocomplete";
 import { BossBoxesPage } from "./components/BossBoxesPage";
 import { ItemIcon } from "./components/ItemIcon";
@@ -20,6 +21,7 @@ export default function App() {
   const menuItems = [
     { key: "crafting", label: "Kraftolás" },
     { key: "boss-boxes", label: "Boss ládák" },
+    { key: "review", label: "Review" },
   ] as const;
   const [activeMenu, setActiveMenu] = useState<
     (typeof menuItems)[number]["key"]
@@ -232,8 +234,10 @@ export default function App() {
             )}
           </section>
         </>
-      ) : (
+      ) : activeMenu === "boss-boxes" ? (
         <BossBoxesPage prices={prices} onPriceChange={setPrices} />
+      ) : (
+        <BossBoxReviewPage />
       )}
 
       <footer>

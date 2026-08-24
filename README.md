@@ -56,14 +56,17 @@ Ez létrehozza:
 
 - `box_opening_review_queue` (reviewolandó OCR eredmények)
 - `box_opening_approved` (jóváhagyott, trusted adatok)
-- `approve_box_opening_submission(...)` függvény (review queue → approved)
+- `approve_box_opening_submission(...)` és `reject_box_opening_submission(...)` függvények
 - `box-opening-screenshots` storage bucket + policyk
+
+Megjegyzés: a jelenlegi policy-k demo célra engedik az `anon` reviewer hozzáférést is, hogy az in-app review oldal auth nélkül működjön. Éles használat előtt szűkítsd vissza authenticated/reviewer role-ra.
 
 ### 3. Reviewer folyamat
 
-1. Reviewer megnézi a `box_opening_review_queue` táblát.
-2. Összeveti a screenshotot és a `submitted_entries` mezőt.
-3. Jóváhagyás:
+1. Nyisd meg az appban a **Review** menüpontot.
+2. Ellenőrizd a screenshotot és a `submitted_entries` sorokat.
+3. Jóváhagyás vagy elutasítás közvetlenül UI-ból.
+4. SQL-ből is jóváhagyható:
 
 ```sql
 select public.approve_box_opening_submission('REVIEW_QUEUE_ROW_UUID', 'ok');

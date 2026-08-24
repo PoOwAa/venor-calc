@@ -274,6 +274,112 @@ h2, h3 { margin: 0; }
   font-size: 12px;
 }
 
+.review-page {
+  display: grid;
+  gap: 14px;
+}
+
+.review-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.review-card {
+  display: grid;
+  gap: 14px;
+}
+
+.review-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+}
+
+.review-card-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.review-chip {
+  background: rgba(180, 83, 9, 0.22);
+  color: #fde68a;
+  border: 1px solid #b45309;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.review-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.review-meta-grid > div {
+  background: #0b1220;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.review-meta-grid span {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.review-meta-grid strong {
+  display: block;
+  margin-top: 4px;
+}
+
+.review-image-wrap {
+  border: 1px solid #334155;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0b1220;
+}
+
+.review-image {
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  display: block;
+}
+
+.review-entries {
+  display: grid;
+  gap: 8px;
+}
+
+.review-entry-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1.4fr .6fr .6fr;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  background: #0b1220;
+}
+
+.review-entry-row.needs-review {
+  border-color: #b45309;
+  background: rgba(120, 53, 15, 0.22);
+}
+
+.review-actions {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+
+.review-actions .approve {
+  background: rgba(22, 101, 52, 0.35);
+  border-color: #166534;
+  color: #bbf7d0;
+}
+
 .top-menu {
   display: flex;
   gap: 10px;
@@ -363,6 +469,11 @@ footer { margin-top: 30px; text-align: center; color: #64748b; font-size: 12px; 
   .boss-box-header { flex-direction: column; align-items: stretch; }
   .box-price-input { flex-basis: auto; }
   .boss-metrics { grid-template-columns: 1fr; }
+  .review-card-header { flex-direction: column; align-items: start; }
+  .review-meta-grid { grid-template-columns: 1fr; }
+  .review-entry-row { grid-template-columns: 1fr; }
+  .review-actions { justify-content: stretch; }
+  .review-actions > button { flex: 1; }
   .boss-drop-row { flex-direction: column; align-items: start; }
   .drop-values { justify-content: start; }
   .ocr-edit-grid { grid-template-columns: 1fr; }
