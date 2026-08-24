@@ -1,10 +1,17 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { boxOpeningSamples } from "../data/bossBoxObservations";
-import { itemById } from "../data/items";
+import { itemById, items } from "../data/items";
 import { bossBoxes } from "../data/items/boxes";
 import { formatGold } from "../lib/format";
 import { buildBossBoxStats } from "../lib/bossBoxes";
+import {
+  matchDropsToKnownItems,
+  normalizeText,
+  parseBoxOcrText,
+  type MatchedOcrDropLine,
+} from "../lib/bossBoxOcr";
 import type { PriceMap } from "../types/domain";
+import { EditableItemAutocomplete } from "./EditableItemAutocomplete";
 import { ItemIcon } from "./ItemIcon";
 
 interface BossBoxesPageProps {
@@ -12,11 +19,34 @@ interface BossBoxesPageProps {
   onPriceChange: (next: PriceMap) => void;
 }
 
+interface EditableOcrLine {
+  id: string;
+  recognizedName: string;
+  sourceLine: string;
+  quantity: number;
+  itemNameInput: string;
+  matchedItemId: number | null;
+  matchedItemName: string | null;
+  confidence: number;
+  needsReview: boolean;
+}
+
 export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
+  const [ocrText, setOcrText] = useState("");
+  const [ocrLines, setOcrLines] = useState<EditableOcrLine[]>([]);
+  const [ocrOpenedBoxCount, setOcrOpenedBoxCount] = useState<number | null>(
+    null,
+  );
+  const [ocrProgress, setOcrProgress] = useState(0);
+  const [isOcrRunning, setIsOcrRunning] = useState(false);
+  const [ocrError, setOcrError] = useState<string | null>(null);
+
   const statsByBoxId = useMemo(() => {
     const stats = buildBossBoxStats(boxOpeningSamples, prices);
     return Object.fromEntries(stats.map((entry) => [entry.boxItemId, entry]));
   }, [prices]);
+
+  const reviewCount = ocrLines.filter((entry) => entry.needsReview).length;
 
   function updateBoxPrice(boxItemId: number, rawValue: string) {
     const normalized = rawValue.replace(/\s/g, "");
@@ -27,8 +57,235 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
     });
   }
 
+  async function handleOcrFileChange(
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsOcrRunning(true);
+    setOcrError(null);
+    setOcrProgress(0);
+
+    try {
+      const tesseract = await import("tesseract.js");
+      const result = await tesseract.recognize(file, "hun+eng", {
+        logger: (message: { status?: string; progress?: number }) => {
+          if (typeof message.progress === "number") {
+            setOcrProgress(Math.round(message.progress * 100));
+          }
+        },
+      });
+
+      const text = result.data.text;
+      setOcrText(text);
+
+      const parsed = parseBoxOcrText(text);
+      setOcrOpenedBoxCount(parsed.openedBoxCount);
+      const matched = matchDropsToKnownItems(parsed.drops);
+      setOcrLines(toEditableOcrLines(matched));
+    } catch (error) {
+      setOcrError(
+        "Az OCR feldolgozás sikertelen volt. Próbáld újra egy tisztább képpel.",
+      );
+      setOcrText("");
+      setOcrOpenedBoxCount(null);
+      setOcrLines([]);
+      console.error(error);
+    } finally {
+      setIsOcrRunning(false);
+      event.target.value = "";
+    }
+  }
+
+  function updateOcrItemName(lineId: string, value: string) {
+    setOcrLines((current) =>
+      current.map((line) => {
+        if (line.id !== lineId) return line;
+
+        const exactMatch = findExactItemByName(value);
+        if (exactMatch) {
+          return {
+            ...line,
+            itemNameInput: value,
+            matchedItemId: exactMatch.id,
+            matchedItemName: exactMatch.name,
+            confidence: 1,
+            needsReview: false,
+          };
+        }
+
+        const [fuzzyMatch] = matchDropsToKnownItems([
+          {
+            rawName: value,
+            quantity: line.quantity,
+            sourceLine: line.sourceLine,
+          },
+        ]);
+
+        return {
+          ...line,
+          itemNameInput: value,
+          matchedItemId: fuzzyMatch?.matchedItemId ?? null,
+          matchedItemName: fuzzyMatch?.matchedItemName ?? null,
+          confidence: fuzzyMatch?.confidence ?? 0,
+          needsReview: fuzzyMatch?.needsReview ?? true,
+        };
+      }),
+    );
+  }
+
+  function updateOcrQuantity(lineId: string, rawValue: string) {
+    const parsed = Number(rawValue);
+    setOcrLines((current) =>
+      current.map((line) =>
+        line.id === lineId
+          ? {
+              ...line,
+              quantity: Number.isFinite(parsed) && parsed >= 0 ? parsed : 0,
+            }
+          : line,
+      ),
+    );
+  }
+
+  function applyOcrItemSelection(
+    lineId: string,
+    itemId: number,
+    itemName: string,
+  ) {
+    setOcrLines((current) =>
+      current.map((line) =>
+        line.id === lineId
+          ? {
+              ...line,
+              itemNameInput: itemName,
+              matchedItemId: itemId,
+              matchedItemName: itemName,
+              confidence: 1,
+              needsReview: false,
+            }
+          : line,
+      ),
+    );
+  }
+
   return (
     <section className="boss-boxes-page">
+      <section className="panel ocr-panel">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">OCR import</p>
+            <h2>Box nyitási screenshot feldolgozása</h2>
+            <p className="helper-copy">
+              Tölts fel egy képet a chat logról. A rendszer megpróbálja
+              felismerni az itemneveket és a mennyiségeket.
+            </p>
+          </div>
+          <label className="secondary ocr-upload">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleOcrFileChange}
+              disabled={isOcrRunning}
+            />
+            {isOcrRunning ? "Feldolgozás..." : "Screenshot feltöltése"}
+          </label>
+        </div>
+
+        {isOcrRunning ? (
+          <p className="muted">OCR folyamat: {ocrProgress}%</p>
+        ) : null}
+        {ocrError ? <p className="ocr-error">{ocrError}</p> : null}
+
+        {ocrLines.length > 0 ? (
+          <>
+            <div className="ocr-summary">
+              <span>Felismert sorok: {ocrLines.length}</span>
+              <span>
+                Nyitott ládák száma:{" "}
+                {ocrOpenedBoxCount == null ? "ismeretlen" : ocrOpenedBoxCount}
+              </span>
+              <span className={reviewCount > 0 ? "warn" : "ok"}>
+                Ellenőrzendő tételek: {reviewCount}
+              </span>
+            </div>
+
+            <div className="ocr-result-list">
+              {ocrLines.map((entry, index) => (
+                <article
+                  className={`ocr-result-row ${entry.needsReview ? "needs-review" : ""}`}
+                  key={`${entry.sourceLine}-${index}`}
+                >
+                  <div className="ocr-edit-grid">
+                    <label className="price-field">
+                      <span>Felismert név</span>
+                      <strong>{entry.recognizedName}</strong>
+                    </label>
+
+                    <label className="price-field">
+                      <span>Javított item név</span>
+                      <EditableItemAutocomplete
+                        value={entry.itemNameInput}
+                        onValueChange={(value) =>
+                          updateOcrItemName(entry.id, value)
+                        }
+                        onSelectItem={(itemId, itemName) =>
+                          applyOcrItemSelection(entry.id, itemId, itemName)
+                        }
+                        placeholder="Kezdj el gépelni..."
+                        ariaLabel="OCR tétel javítása"
+                      />
+                    </label>
+
+                    <label className="price-field">
+                      <span>Mennyiség</span>
+                      <input
+                        type="number"
+                        min={0}
+                        value={entry.quantity}
+                        onChange={(event) =>
+                          updateOcrQuantity(entry.id, event.target.value)
+                        }
+                      />
+                    </label>
+                  </div>
+
+                  <div className="ocr-match-meta">
+                    {entry.matchedItemId == null ||
+                    entry.matchedItemName == null ? (
+                      <span className="warn">Nincs megbízható egyezés</span>
+                    ) : (
+                      <span>
+                        <ItemIcon
+                          itemId={entry.matchedItemId}
+                          name={entry.matchedItemName}
+                          size={14}
+                        />{" "}
+                        {entry.matchedItemName} (#{entry.matchedItemId})
+                      </span>
+                    )}
+                    <span>
+                      Biztonság: {(entry.confidence * 100).toFixed(0)}%
+                    </span>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <details>
+              <summary>Nyers OCR szöveg megjelenítése</summary>
+              <pre className="ocr-raw-text">{ocrText}</pre>
+            </details>
+          </>
+        ) : (
+          <div className="empty-state">
+            Még nincs feldolgozott screenshot. Válassz egy képet az OCR
+            ellenőrzéshez.
+          </div>
+        )}
+      </section>
+
       <div className="section-heading">
         <div>
           <p className="eyebrow">Boss ládák</p>
@@ -139,4 +396,25 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
       </footer>
     </section>
   );
+}
+
+function toEditableOcrLines(matches: MatchedOcrDropLine[]): EditableOcrLine[] {
+  return matches.map((entry, index) => ({
+    id: `${entry.sourceLine}-${index}`,
+    recognizedName: entry.rawName,
+    sourceLine: entry.sourceLine,
+    quantity: entry.quantity,
+    itemNameInput: entry.matchedItemName ?? entry.rawName,
+    matchedItemId: entry.matchedItemId,
+    matchedItemName: entry.matchedItemName,
+    confidence: entry.confidence,
+    needsReview: entry.needsReview,
+  }));
+}
+
+function findExactItemByName(value: string) {
+  const normalized = normalizeText(value);
+  if (!normalized) return null;
+
+  return items.find((item) => normalizeText(item.name) === normalized) ?? null;
 }
