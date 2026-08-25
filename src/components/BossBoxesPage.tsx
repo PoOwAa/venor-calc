@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { BoxOpeningSample } from "../data/bossBoxObservations";
 import { itemById, items } from "../data/items";
 import { formatGold } from "../lib/format";
@@ -67,6 +67,7 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
   const [uploadedScreenshot, setUploadedScreenshot] = useState<File | null>(
     null,
   );
+  const screenshotInputRef = useRef<HTMLInputElement | null>(null);
   const [ocrText, setOcrText] = useState("");
   const [ocrLines, setOcrLines] = useState<EditableOcrLine[]>([]);
   const [ocrOpenedBoxCount, setOcrOpenedBoxCount] = useState<number | null>(
@@ -143,12 +144,81 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
     });
   }
 
-  async function handleOcrFileChange(
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) {
-    const file = event.target.files?.[0];
-    if (!file) return;
+  function updateOpenedBoxCount(rawValue: string) {
+    const normalized = rawValue.replace(/\s/g, "");
 
+    if (normalized === "") {
+      setOcrOpenedBoxCount(null);
+      return;
+    }
+
+    const parsed = Number(normalized);
+    setOcrOpenedBoxCount(Number.isFinite(parsed) && parsed >= 0 ? parsed : 0);
+  }
+
+  useEffect(() => {
+    function handleWindowPaste(event: ClipboardEvent) {
+      if (isOcrRunning) {
+        return;
+      }
+
+      const pastedImage = extractImageFileFromClipboard(event.clipboardData);
+      if (!pastedImage) {
+        return;
+      }
+
+      event.preventDefault();
+      void processOcrScreenshot(pastedImage);
+    }
+
+    window.addEventListener("paste", handleWindowPaste);
+
+    return () => {
+      window.removeEventListener("paste", handleWindowPaste);
+    };
+  }, [isOcrRunning]);
+
+  function openScreenshotPicker() {
+    screenshotInputRef.current?.click();
+  }
+
+  function extractImageFileFromClipboard(
+    data: DataTransfer | null,
+  ): File | null {
+    if (!data) {
+      return null;
+    }
+
+    for (const item of Array.from(data.items)) {
+      if (item.kind === "file" && item.type.startsWith("image/")) {
+        const file = item.getAsFile();
+        if (file) {
+          return normalizeClipboardFile(file);
+        }
+      }
+    }
+
+    const file = data.files[0];
+    if (file && file.type.startsWith("image/")) {
+      return normalizeClipboardFile(file);
+    }
+
+    return null;
+  }
+
+  function normalizeClipboardFile(file: File): File {
+    if (file.name) {
+      return file;
+    }
+
+    const extension = file.type === "image/jpeg" ? "jpg" : "png";
+    return new File([file], `clipboard-screenshot.${extension}`, {
+      type: file.type || "image/png",
+      lastModified: Date.now(),
+    });
+  }
+
+  async function processOcrScreenshot(file: File) {
     setUploadedScreenshot(file);
     setSaveError(null);
     setSaveMessage(null);
@@ -185,8 +255,17 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
       console.error(error);
     } finally {
       setIsOcrRunning(false);
-      event.target.value = "";
     }
+  }
+
+  async function handleOcrFileChange(
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    await processOcrScreenshot(file);
+    event.target.value = "";
   }
 
   function updateOcrItemName(lineId: string, value: string) {
@@ -352,19 +431,34 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
             <p className="eyebrow">OCR import</p>
             <h2>Box nyitási screenshot feldolgozása</h2>
             <p className="helper-copy">
-              Tölts fel egy képet a chat logról. A rendszer megpróbálja
-              felismerni az itemneveket és a mennyiségeket.
+              Illeszd be a játék screenshotját a vágólapról, vagy válassz egy
+              képfájlt. A rendszer megpróbálja felismerni az itemneveket és a
+              mennyiségeket.
             </p>
           </div>
-          <label className="secondary ocr-upload">
+          <div className="ocr-upload-card">
+            <div className="ocr-upload-copy">
+              <span className="ocr-upload-chip">Paste támogatott</span>
+              <strong>Ctrl/Cmd+V vagy fájlválasztás</strong>
+              <span>Másold ki a screenshotot, és illeszd be ide.</span>
+            </div>
+            <button
+              type="button"
+              className="ocr-upload-button"
+              onClick={openScreenshotPicker}
+              disabled={isOcrRunning}
+            >
+              {isOcrRunning ? "Feldolgozás..." : "Screenshot feltöltése"}
+            </button>
             <input
+              ref={screenshotInputRef}
               type="file"
               accept="image/*"
               onChange={handleOcrFileChange}
               disabled={isOcrRunning}
+              className="ocr-upload-input"
             />
-            {isOcrRunning ? "Feldolgozás..." : "Screenshot feltöltése"}
-          </label>
+          </div>
         </div>
 
         <div className="ocr-controls">
@@ -406,10 +500,17 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
           <>
             <div className="ocr-summary">
               <span>Felismert sorok: {ocrLines.length}</span>
-              <span>
-                Nyitott ládák száma:{" "}
-                {ocrOpenedBoxCount == null ? "ismeretlen" : ocrOpenedBoxCount}
-              </span>
+              <label className="price-field ocr-opened-count-field">
+                <span>Nyitott ládák száma</span>
+                <input
+                  type="number"
+                  min={0}
+                  inputMode="numeric"
+                  value={ocrOpenedBoxCount ?? ""}
+                  onChange={(event) => updateOpenedBoxCount(event.target.value)}
+                  placeholder="ismeretlen"
+                />
+              </label>
               <span className={reviewCount > 0 ? "warn" : "ok"}>
                 Ellenőrzendő tételek: {reviewCount}
               </span>
