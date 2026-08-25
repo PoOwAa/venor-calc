@@ -111,7 +111,9 @@ export function ItemAutocomplete({
       setIsOpen(false);
       setActiveIndex(0);
       setQuery(
-        matchedItem || selectedItem ? getItemDisplayName(matchedItem ?? selectedItem) : "",
+        matchedItem || selectedItem
+          ? getItemDisplayName(matchedItem ?? selectedItem)
+          : "",
       );
     }, 100);
   }

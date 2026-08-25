@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { BossBoxReviewPage } from "./components/BossBoxReviewPage";
+import { BossBoxUploadPage } from "./components/BossBoxUploadPage";
 import { ItemAutocomplete } from "./components/ItemAutocomplete";
 import { BossBoxesPage } from "./components/BossBoxesPage";
 import { ItemIcon } from "./components/ItemIcon";
@@ -24,6 +25,7 @@ export default function App() {
   const menuItems = [
     { key: "crafting", label: "Kraftolás" },
     { key: "boss-boxes", label: "Boss ládák" },
+    { key: "boss-box-upload", label: "Boss láda nyitás feltöltése" },
     { key: "review", label: "Review" },
   ] as const;
   const [activeMenu, setActiveMenu] = useState<
@@ -443,6 +445,8 @@ export default function App() {
         </>
       ) : activeMenu === "boss-boxes" ? (
         <BossBoxesPage prices={prices} onPriceChange={setPrices} />
+      ) : activeMenu === "boss-box-upload" ? (
+        <BossBoxUploadPage />
       ) : (
         <BossBoxReviewPage />
       )}
