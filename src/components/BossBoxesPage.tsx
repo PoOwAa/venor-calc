@@ -34,6 +34,7 @@ interface EditableOcrLine {
   matchedItemName: string | null;
   confidence: number;
   needsReview: boolean;
+  isManual?: boolean;
 }
 
 interface ApprovedBoxOpeningRow {
@@ -160,6 +161,21 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
   );
 
   const reviewCount = ocrLines.filter((entry) => entry.needsReview).length;
+
+  function createManualOcrLine(): EditableOcrLine {
+    return {
+      id: `manual-${crypto.randomUUID()}`,
+      recognizedName: "Kézi sor",
+      sourceLine: "manual",
+      quantity: 0,
+      itemNameInput: "",
+      matchedItemId: null,
+      matchedItemName: null,
+      confidence: 0,
+      needsReview: true,
+      isManual: true,
+    };
+  }
 
   function updateBoxPrice(boxItemId: number, rawValue: string) {
     const normalized = rawValue.replace(/\s/g, "");
@@ -366,6 +382,14 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
     );
   }
 
+  function addManualOcrLine() {
+    setOcrLines((current) => [...current, createManualOcrLine()]);
+  }
+
+  function removeOcrLine(lineId: string) {
+    setOcrLines((current) => current.filter((line) => line.id !== lineId));
+  }
+
   async function handleSaveSubmission() {
     if (!uploadedScreenshot) {
       setSaveError("Előbb tölts fel egy screenshotot.");
@@ -552,6 +576,16 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
             <div className="ocr-correction-pane">
               {ocrLines.length > 0 ? (
                 <>
+                  <div className="ocr-actions-row">
+                    <button
+                      type="button"
+                      className="secondary ocr-add-row-button"
+                      onClick={addManualOcrLine}
+                    >
+                      Sor hozzáadása
+                    </button>
+                  </div>
+
                   <div className="ocr-summary">
                     <span>Felismert sorok: {ocrLines.length}</span>
                     <label className="price-field ocr-opened-count-field">
@@ -580,7 +614,9 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
                       >
                         <div className="ocr-edit-grid">
                           <label className="price-field ocr-recognized-field">
-                            <span>Felismert név</span>
+                            <span>
+                              {entry.isManual ? "Kézi tétel" : "Felismert név"}
+                            </span>
                             <strong>{entry.recognizedName}</strong>
                           </label>
 
@@ -617,6 +653,15 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
                         </div>
 
                         <div className="ocr-match-meta">
+                          {entry.isManual ? (
+                            <button
+                              type="button"
+                              className="secondary ocr-remove-row-button"
+                              onClick={() => removeOcrLine(entry.id)}
+                            >
+                              Sor törlése
+                            </button>
+                          ) : null}
                           {entry.matchedItemId == null ||
                           entry.matchedItemName == null ? (
                             <span className="warn">
@@ -841,6 +886,7 @@ function toEditableOcrLines(matches: MatchedOcrDropLine[]): EditableOcrLine[] {
     matchedItemName: entry.matchedItemName,
     confidence: entry.confidence,
     needsReview: entry.needsReview,
+    isManual: false,
   }));
 }
 
