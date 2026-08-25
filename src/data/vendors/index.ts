@@ -24,7 +24,6 @@ import { recipes as vendorRecipes_afrodite_60311 } from "./afrodite-60311";
 import { recipes as vendorRecipes_elementalis_kereskedo_szel_60033 } from "./elementalis-kereskedo-szel-60033";
 import { recipes as vendorRecipes_chaegirab_biologus_20084 } from "./chaegirab-biologus-20084";
 import { recipes as vendorRecipes_zodiakus_kereskedo_20451 } from "./zodiakus-kereskedo-20451";
-import { recipes as vendorRecipes_gaya_kereskedo_20503 } from "./gaya-kereskedo-20503";
 import { recipes as vendorRecipes_kaloz_kapitany_60253 } from "./kaloz-kapitany-60253";
 import { recipes as vendorRecipes_kalandorok_nagyapja_60263 } from "./kalandorok-nagyapja-60263";
 import { recipes as vendorRecipes_asmodeus_ore_60271 } from "./asmodeus-ore-60271";
@@ -60,7 +59,6 @@ export const vendorRecipeGroups = [
   { vendorName: "Elementális kereskedő (Szél)", vendorNpcVnum: 60033, recipes: vendorRecipes_elementalis_kereskedo_szel_60033 },
   { vendorName: "Chaegirab biológus", vendorNpcVnum: 20084, recipes: vendorRecipes_chaegirab_biologus_20084 },
   { vendorName: "Zodiákus kereskedő", vendorNpcVnum: 20451, recipes: vendorRecipes_zodiakus_kereskedo_20451 },
-  { vendorName: "Gaya kereskedő", vendorNpcVnum: 20503, recipes: vendorRecipes_gaya_kereskedo_20503 },
   { vendorName: "Kalóz Kapitány", vendorNpcVnum: 60253, recipes: vendorRecipes_kaloz_kapitany_60253 },
   { vendorName: "Kalandorok nagyapja", vendorNpcVnum: 60263, recipes: vendorRecipes_kalandorok_nagyapja_60263 },
   { vendorName: "Asmodeus őre", vendorNpcVnum: 60271, recipes: vendorRecipes_asmodeus_ore_60271 },

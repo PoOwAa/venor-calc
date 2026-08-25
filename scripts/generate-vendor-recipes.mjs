@@ -14,6 +14,8 @@ const shops = JSON.parse(fs.readFileSync(shopsPath, "utf8"));
 
 const uniqueVendors = new Map();
 for (const shop of shops) {
+  if (Number(shop.npc_vnum ?? 0) === 20503) continue;
+
   const vendorKey = `${shop.npc_vnum ?? 0}|${shop.npc_name ?? "vendor"}`;
   const current = uniqueVendors.get(vendorKey) ?? {
     npc_vnum: shop.npc_vnum ?? 0,
