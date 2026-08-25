@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { boxOpeningSamples } from "../data/bossBoxObservations";
+import { useEffect, useMemo, useState } from "react";
+import type { BoxOpeningSample } from "../data/bossBoxObservations";
 import { itemById, items } from "../data/items";
 import { formatGold } from "../lib/format";
 import { buildBossBoxStats } from "../lib/bossBoxes";
@@ -34,10 +34,24 @@ interface EditableOcrLine {
   needsReview: boolean;
 }
 
+interface ApprovedBoxOpeningRow {
+  box_item_id: number;
+  opened_box_count: number | null;
+  approved_entries: Array<{
+    item_id?: number | null;
+    quantity?: number | string | null;
+  }>;
+}
+
 export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
   const bossBoxes = useMemo(
     () => items.filter((item) => item.type === "ITEM_GIFTBOX"),
     [],
+  );
+
+  const [boxOpeningSamples, setBoxOpeningSamples] = useState<BoxOpeningSample[]>([]);
+  const [supabaseDataError, setSupabaseDataError] = useState<string | null>(
+    null,
   );
 
   const [selectedBoxId, setSelectedBoxId] = useState<number>(
@@ -58,10 +72,58 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
   const [saveError, setSaveError] = useState<string | null>(null);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
 
+  useEffect(() => {
+    let ignore = false;
+
+    async function loadApprovedSamples() {
+      if (!isSupabaseConfigured()) {
+        if (!ignore) {
+          setBoxOpeningSamples([]);
+          setSupabaseDataError(
+            "A Supabase konfiguráció hiányzik. Add meg a VITE_SUPABASE_URL és VITE_SUPABASE_ANON_KEY értékeket.",
+          );
+        }
+        return;
+      }
+
+      try {
+        const supabase = getSupabaseClient();
+        const { data, error } = await supabase
+          .from("box_opening_approved")
+          .select("*");
+
+        if (error) throw error;
+
+        const samples = normalizeApprovedRowsToSamples(
+          (data ?? []) as ApprovedBoxOpeningRow[],
+        );
+
+        if (!ignore) {
+          setBoxOpeningSamples(samples);
+          setSupabaseDataError(null);
+        }
+      } catch (error) {
+        console.error(error);
+        if (!ignore) {
+          setBoxOpeningSamples([]);
+          setSupabaseDataError(
+            "Nem sikerült betölteni a jóváhagyott box nyitási adatokat a Supabase-ből.",
+          );
+        }
+      }
+    }
+
+    void loadApprovedSamples();
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
   const statsByBoxId = useMemo(() => {
     const stats = buildBossBoxStats(boxOpeningSamples, prices);
     return Object.fromEntries(stats.map((entry) => [entry.boxItemId, entry]));
-  }, [prices]);
+  }, [boxOpeningSamples, prices]);
 
   const reviewCount = ocrLines.filter((entry) => entry.needsReview).length;
 
@@ -425,12 +487,14 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
           <p className="eyebrow">Boss ládák</p>
           <h2>Drop valószínűségek és átlagos income</h2>
           <p className="helper-copy">
-            A nyers felnyitási adatokból számolt valószínűségek és várható
+            A jóváhagyott Supabase adatokból számolt valószínűségek és várható
             ládaértékek.
           </p>
         </div>
         <span className="muted">Minták száma: {boxOpeningSamples.length}</span>
       </div>
+
+      {supabaseDataError ? <p className="ocr-error">{supabaseDataError}</p> : null}
 
       <div className="boss-box-grid">
         {bossBoxes.map((box) => {
@@ -595,6 +659,50 @@ function toEditableOcrLines(matches: MatchedOcrDropLine[]): EditableOcrLine[] {
     confidence: entry.confidence,
     needsReview: entry.needsReview,
   }));
+}
+
+function normalizeApprovedRowsToSamples(
+  rows: ApprovedBoxOpeningRow[],
+): BoxOpeningSample[] {
+  return rows.flatMap((row) => {
+    const boxItemId = Number(row.box_item_id);
+    const openedBoxCount = Number(row.opened_box_count ?? 1);
+
+    if (!Number.isFinite(boxItemId) || boxItemId <= 0) {
+      return [];
+    }
+
+    const drops = (row.approved_entries ?? [])
+      .map((entry) => {
+        const itemId = Number(entry.item_id ?? NaN);
+        const quantity = Number(entry.quantity ?? 0);
+
+        if (
+          !Number.isFinite(itemId) ||
+          itemId <= 0 ||
+          !Number.isFinite(quantity) ||
+          quantity <= 0
+        ) {
+          return null;
+        }
+
+        return { itemId, quantity };
+      })
+      .filter((drop): drop is { itemId: number; quantity: number } => drop != null);
+
+    if (drops.length === 0) {
+      return [];
+    }
+
+    const sampleCount = Number.isFinite(openedBoxCount) && openedBoxCount > 0
+      ? openedBoxCount
+      : 1;
+
+    return Array.from({ length: sampleCount }, () => ({
+      boxItemId,
+      drops,
+    }));
+  });
 }
 
 function findExactItemByName(value: string) {
