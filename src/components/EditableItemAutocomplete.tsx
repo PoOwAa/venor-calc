@@ -70,6 +70,7 @@ export function EditableItemAutocomplete({
   const [activeIndex, setActiveIndex] = useState(0);
 
   const suggestions = useMemo(() => rankItems(value), [value]);
+  const exactMatch = useMemo(() => findExactItem(value), [value]);
 
   function applyItem(itemId: number, itemName: string) {
     onValueChange(itemName);
@@ -80,6 +81,15 @@ export function EditableItemAutocomplete({
 
   return (
     <div className="autocomplete">
+      {exactMatch ? (
+        <span className="autocomplete-prefix" aria-hidden="true">
+          <ItemIcon
+            itemId={exactMatch.vnum}
+            name={getItemDisplayName(exactMatch)}
+            size={18}
+          />
+        </span>
+      ) : null}
       <input
         className="autocomplete-input"
         value={value}

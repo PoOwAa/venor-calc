@@ -8,6 +8,7 @@ interface Props {
   selectedItemId: ItemId | null;
   onSelect: (itemId: ItemId | null) => void;
   itemsToSearch?: Item[];
+  placeholder?: string;
 }
 
 const MAX_SUGGESTIONS = 8;
@@ -62,18 +63,25 @@ export function ItemAutocomplete({
   selectedItemId,
   onSelect,
   itemsToSearch = items,
+  placeholder = "Kezdj el gépelni egy tárgynevet vagy item ID-t",
 }: Props) {
   const selectedItem = selectedItemId == null ? null : itemById[selectedItemId];
-  const [query, setQuery] = useState(getItemDisplayName(selectedItem));
+  const [query, setQuery] = useState(
+    selectedItem ? getItemDisplayName(selectedItem) : "",
+  );
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    setQuery(getItemDisplayName(selectedItem));
+    setQuery(selectedItem ? getItemDisplayName(selectedItem) : "");
   }, [selectedItem]);
 
   const suggestions = useMemo(
     () => rankItems(query, itemsToSearch),
+    [query, itemsToSearch],
+  );
+  const exactMatch = useMemo(
+    () => findExactItem(query, itemsToSearch),
     [query, itemsToSearch],
   );
 
@@ -94,24 +102,35 @@ export function ItemAutocomplete({
   }
 
   function handleBlur() {
-    const exactMatch = findExactItem(query, itemsToSearch);
-    if (exactMatch) {
-      onSelect(exactMatch.vnum);
+    const matchedItem = findExactItem(query, itemsToSearch);
+    if (matchedItem) {
+      onSelect(matchedItem.vnum);
     }
 
     window.setTimeout(() => {
       setIsOpen(false);
       setActiveIndex(0);
-      setQuery(getItemDisplayName(exactMatch ?? selectedItem));
+      setQuery(
+        matchedItem || selectedItem ? getItemDisplayName(matchedItem ?? selectedItem) : "",
+      );
     }, 100);
   }
 
   return (
     <div className="autocomplete">
+      {exactMatch ? (
+        <span className="autocomplete-prefix" aria-hidden="true">
+          <ItemIcon
+            itemId={exactMatch.vnum}
+            name={getItemDisplayName(exactMatch)}
+            size={18}
+          />
+        </span>
+      ) : null}
       <input
         className="autocomplete-input"
         value={query}
-        placeholder="Kezdj el gépelni egy tárgynevet vagy item ID-t"
+        placeholder={placeholder}
         onChange={(event) => handleChange(event.target.value)}
         onFocus={() => {
           if (query.trim()) setIsOpen(true);
@@ -145,7 +164,7 @@ export function ItemAutocomplete({
           if (event.key === "Escape") {
             setIsOpen(false);
             setActiveIndex(0);
-            setQuery(getItemDisplayName(selectedItem));
+            setQuery(selectedItem ? getItemDisplayName(selectedItem) : "");
           }
         }}
         aria-label="Keresett tárgy"

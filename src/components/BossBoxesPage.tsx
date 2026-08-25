@@ -62,9 +62,7 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
     null,
   );
 
-  const [selectedBoxId, setSelectedBoxId] = useState<number | null>(
-    bossBoxes[0]?.vnum ?? null,
-  );
+  const [selectedBoxId, setSelectedBoxId] = useState<number | null>(null);
   const [uploadedScreenshot, setUploadedScreenshot] = useState<File | null>(
     null,
   );
@@ -482,13 +480,15 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
             <h2>Láda nyitási screenshot feldolgozása</h2>
             <p className="helper-copy">
               Illeszd be a játék screenshotját a vágólapról, vagy válassz egy
-              képfájlt. A rendszer megpróbálja felismerni az itemneveket és a
+              képet. A rendszer megpróbálja felismerni az itemneveket és a
               mennyiségeket.
             </p>
           </div>
           <div className="ocr-upload-card">
             <div className="ocr-upload-copy">
-              <span className="ocr-upload-chip">Paste támogatott</span>
+              <span className="ocr-upload-chip">
+                Vágólapról beillesztés támogatott
+              </span>
               <strong>Ctrl/Cmd+V vagy fájlválasztás</strong>
               <span>Másold ki a screenshotot, és illeszd be ide.</span>
             </div>
@@ -513,23 +513,37 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
 
         <div className="ocr-controls">
           <label className="price-field ocr-box-select">
-            <span>Melyik ládát nyitottátok?</span>
+            <span>Melyik ládát nyitottad?</span>
             <ItemAutocomplete
               selectedItemId={selectedBoxId}
               onSelect={(itemId) => setSelectedBoxId(itemId)}
               itemsToSearch={bossBoxes}
+              placeholder="Válassz ládát"
+            />
+          </label>
+
+          <label
+            className={`price-field ocr-opened-count-field ocr-opened-count-control ${ocrOpenedBoxCount == null ? "is-unknown" : ""}`}
+          >
+            <span>Nyitott ládák száma</span>
+            <input
+              type="number"
+              min={0}
+              inputMode="numeric"
+              value={ocrOpenedBoxCount ?? ""}
+              onChange={(event) => updateOpenedBoxCount(event.target.value)}
+              placeholder="ismeretlen"
+              aria-invalid={ocrOpenedBoxCount == null}
             />
           </label>
 
           <button
             type="button"
-            className="secondary save-ocr-button"
+            className="save-ocr-button"
             onClick={handleSaveSubmission}
             disabled={isSavingResult || isOcrRunning || ocrLines.length === 0}
           >
-            {isSavingResult
-              ? "Mentés folyamatban..."
-              : "Mentés review queue-ba"}
+            {isSavingResult ? "Mentés folyamatban..." : "Mentés átnézésre"}
           </button>
         </div>
 
@@ -555,7 +569,6 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
                     <p className="eyebrow">Eredeti kép</p>
                     <h3>{uploadedScreenshot.name}</h3>
                   </div>
-                  <span className="muted">Ellenőrzésre szolgál</span>
                 </div>
 
                 {screenshotPreviewUrl ? (
@@ -570,37 +583,22 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
                   A képet itt tudod gyorsan ellenőrizni, miközben jobbra a
                   felismert sorokat javítod.
                 </p>
+
+                <button
+                  type="button"
+                  className="secondary ocr-add-row-button ocr-add-row-sticky"
+                  onClick={addManualOcrLine}
+                >
+                  Sor hozzáadása
+                </button>
               </aside>
             ) : null}
 
             <div className="ocr-correction-pane">
               {ocrLines.length > 0 ? (
                 <>
-                  <div className="ocr-actions-row">
-                    <button
-                      type="button"
-                      className="secondary ocr-add-row-button"
-                      onClick={addManualOcrLine}
-                    >
-                      Sor hozzáadása
-                    </button>
-                  </div>
-
                   <div className="ocr-summary">
                     <span>Felismert sorok: {ocrLines.length}</span>
-                    <label className="price-field ocr-opened-count-field">
-                      <span>Nyitott ládák száma</span>
-                      <input
-                        type="number"
-                        min={0}
-                        inputMode="numeric"
-                        value={ocrOpenedBoxCount ?? ""}
-                        onChange={(event) =>
-                          updateOpenedBoxCount(event.target.value)
-                        }
-                        placeholder="ismeretlen"
-                      />
-                    </label>
                     <span className={reviewCount > 0 ? "warn" : "ok"}>
                       Ellenőrzendő tételek: {reviewCount}
                     </span>
@@ -613,15 +611,15 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
                         key={`${entry.sourceLine}-${index}`}
                       >
                         <div className="ocr-edit-grid">
-                          <label className="price-field ocr-recognized-field">
+                          {/* <label className="price-field ocr-recognized-field">
                             <span>
                               {entry.isManual ? "Kézi tétel" : "Felismert név"}
                             </span>
                             <strong>{entry.recognizedName}</strong>
-                          </label>
+                          </label> */}
 
                           <label className="price-field ocr-item-field">
-                            <span>Javított item név</span>
+                            <span>Item név</span>
                             <EditableItemAutocomplete
                               value={entry.itemNameInput}
                               onValueChange={(value) =>
@@ -678,7 +676,7 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
                             </span>
                           )}
                           <span>
-                            Biztonság: {(entry.confidence * 100).toFixed(0)}%
+                            Bizonyosság: {(entry.confidence * 100).toFixed(0)}%
                           </span>
                         </div>
                       </article>
@@ -709,7 +707,7 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
       <div className="section-heading">
         <div>
           <p className="eyebrow">Boss ládák</p>
-          <h2>Drop valószínűségek és átlagos income</h2>
+          <h2>Drop valószínűségek és átlagos bevétel</h2>
           <p className="helper-copy">
             A jóváhagyott Supabase adatokból számolt valószínűségek és várható
             ládaértékek.
