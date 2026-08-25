@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { BoxOpeningSample } from "../data/bossBoxObservations";
 import { items } from "../data/items";
-import { formatGold } from "../lib/format";
+import { formatGold, formatGoldInput } from "../lib/format";
 import { buildBossBoxStats } from "../lib/bossBoxes";
 import { getSupabaseClient, isSupabaseConfigured } from "../lib/supabase";
 import type { PriceMap } from "../types/domain";
@@ -100,7 +100,7 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
   );
 
   function updateBoxPrice(boxItemId: number, rawValue: string) {
-    const normalized = rawValue.replace(/\s/g, "");
+    const normalized = rawValue.replace(/[\s.]/g, "");
     const parsed = normalized === "" ? null : Number(normalized);
     onPriceChange({
       ...prices,
@@ -154,9 +154,10 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
                   <span>Láda piaci ár</span>
                   <div className="input-with-suffix">
                     <input
+                      type="text"
                       inputMode="numeric"
-                      placeholder="pl. 250000000"
-                      value={boxPrice ?? ""}
+                      placeholder="pl. 250 000 000"
+                      value={boxPrice == null ? "" : formatGoldInput(boxPrice)}
                       onChange={(event) =>
                         updateBoxPrice(box.vnum, event.target.value)
                       }

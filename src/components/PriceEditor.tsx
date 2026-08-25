@@ -1,6 +1,7 @@
 import type { Item, ItemId, PriceMap } from "../types/domain";
 import { getItemDisplayName } from "../lib/itemName";
 import { ItemIcon } from "./ItemIcon";
+import { formatGoldInput } from "../lib/format";
 
 interface Props {
   items: Item[];
@@ -11,7 +12,7 @@ interface Props {
 
 export function PriceEditor({ items, targetName, prices, onChange }: Props) {
   function update(id: ItemId, rawValue: string) {
-    const normalized = rawValue.replace(/\s/g, "");
+    const normalized = rawValue.replace(/[\s.]/g, "");
     const parsed = normalized === "" ? null : Number(normalized);
     onChange({ ...prices, [id]: Number.isFinite(parsed) ? parsed : null });
   }
@@ -59,9 +60,14 @@ export function PriceEditor({ items, targetName, prices, onChange }: Props) {
               </span>
               <div className="input-with-suffix">
                 <input
+                  type="text"
                   inputMode="numeric"
-                  placeholder="pl. 80000000"
-                  value={prices[item.vnum] ?? ""}
+                  placeholder="pl. 80 000 000"
+                  value={
+                    prices[item.vnum] == null
+                      ? ""
+                      : formatGoldInput(prices[item.vnum] ?? 0)
+                  }
                   onChange={(event) => update(item.vnum, event.target.value)}
                 />
                 <span>Arany</span>
