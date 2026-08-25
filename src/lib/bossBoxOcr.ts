@@ -121,27 +121,38 @@ export function matchDropsToKnownItems(
 }
 
 function parseDropLine(line: string): ParsedOcrDropLine | null {
-  const compact = line.replace(/\s+/g, " ").trim();
+  const compact = line
+    .replace(/[\[\](){}<>]+/g, " ")
+    .replace(/[\u2013\u2014]/g, "-")
+    .replace(/[.,;!?]+$/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 
-  const withDash = compact.match(/^(.+?)\s*[-–—:]\s*([0-9]+)\s*$/);
-  if (withDash) {
-    return {
-      rawName: withDash[1].trim(),
-      quantity: Number(withDash[2]),
-      sourceLine: line,
-    };
+  if (!compact || /^(?:[a-zA-Z]{1,2}|[\p{P}\p{S}]+)$/u.test(compact)) {
+    return null;
   }
 
-  const trailingCount = compact.match(/^(.+?)\s+([0-9]+)\s*$/);
-  if (trailingCount) {
-    return {
-      rawName: trailingCount[1].trim(),
-      quantity: Number(trailingCount[2]),
-      sourceLine: line,
-    };
+  const quantityMatch = compact.match(
+    /^(.+?)\s*(?:[-–—:=~]|\s+)\s*([0-9]+)\s*$/u,
+  );
+  if (!quantityMatch) {
+    return null;
   }
 
-  return null;
+  const rawName = quantityMatch[1]
+    .replace(/^[^\p{L}\p{N}]+/u, "")
+    .replace(/[^\p{L}\p{N}]+$/u, "")
+    .trim();
+
+  if (!rawName || /^\d+$/.test(rawName)) {
+    return null;
+  }
+
+  return {
+    rawName,
+    quantity: Number(quantityMatch[2]),
+    sourceLine: line,
+  };
 }
 
 function scoreNameSimilarity(a: string, b: string): number {
