@@ -1,22 +1,23 @@
 import { useEffect, useMemo, useState } from "react";
 import { itemById, items } from "../data/items";
 import { getItemDisplayName, getItemNameForSearch } from "../lib/itemName";
-import type { ItemId } from "../types/domain";
+import type { Item, ItemId } from "../types/domain";
 import { ItemIcon } from "./ItemIcon";
 
 interface Props {
   selectedItemId: ItemId | null;
   onSelect: (itemId: ItemId | null) => void;
+  itemsToSearch?: Item[];
 }
 
 const MAX_SUGGESTIONS = 8;
 
-function findExactItem(query: string) {
+function findExactItem(query: string, itemPool: Item[] = items) {
   const normalized = query.trim().toLocaleLowerCase("hu-HU");
   if (!normalized) return null;
 
   return (
-    items.find(
+    itemPool.find(
       (item) =>
         getItemNameForSearch(item).toLocaleLowerCase("hu-HU") === normalized ||
         String(item.vnum) === normalized,
@@ -24,12 +25,12 @@ function findExactItem(query: string) {
   );
 }
 
-function rankItems(query: string) {
+function rankItems(query: string, itemPool: Item[] = items) {
   const normalized = query.trim().toLocaleLowerCase("hu-HU");
 
   if (!normalized) return [];
 
-  return items
+  return itemPool
     .map((item) => {
       const name = getItemNameForSearch(item).toLocaleLowerCase("hu-HU");
       const id = String(item.vnum);
@@ -47,14 +48,21 @@ function rankItems(query: string) {
     .sort(
       (a, b) =>
         a.score - b.score ||
-        getItemNameForSearch(a.item).localeCompare(getItemNameForSearch(b.item), "hu") ||
+        getItemNameForSearch(a.item).localeCompare(
+          getItemNameForSearch(b.item),
+          "hu",
+        ) ||
         a.item.vnum - b.item.vnum,
     )
     .slice(0, MAX_SUGGESTIONS)
     .map((entry) => entry.item);
 }
 
-export function ItemAutocomplete({ selectedItemId, onSelect }: Props) {
+export function ItemAutocomplete({
+  selectedItemId,
+  onSelect,
+  itemsToSearch = items,
+}: Props) {
   const selectedItem = selectedItemId == null ? null : itemById[selectedItemId];
   const [query, setQuery] = useState(getItemDisplayName(selectedItem));
   const [isOpen, setIsOpen] = useState(false);
@@ -64,7 +72,10 @@ export function ItemAutocomplete({ selectedItemId, onSelect }: Props) {
     setQuery(getItemDisplayName(selectedItem));
   }, [selectedItem]);
 
-  const suggestions = useMemo(() => rankItems(query), [query]);
+  const suggestions = useMemo(
+    () => rankItems(query, itemsToSearch),
+    [query, itemsToSearch],
+  );
 
   function selectItem(itemId: ItemId | null) {
     onSelect(itemId);
@@ -83,7 +94,7 @@ export function ItemAutocomplete({ selectedItemId, onSelect }: Props) {
   }
 
   function handleBlur() {
-    const exactMatch = findExactItem(query);
+    const exactMatch = findExactItem(query, itemsToSearch);
     if (exactMatch) {
       onSelect(exactMatch.vnum);
     }
@@ -159,7 +170,11 @@ export function ItemAutocomplete({ selectedItemId, onSelect }: Props) {
                 }}
               >
                 <span>
-                  <ItemIcon itemId={item.vnum} name={getItemDisplayName(item)} /> {getItemDisplayName(item)}
+                  <ItemIcon
+                    itemId={item.vnum}
+                    name={getItemDisplayName(item)}
+                  />{" "}
+                  {getItemDisplayName(item)}
                 </span>
                 <span className="muted">#{item.vnum}</span>
               </button>

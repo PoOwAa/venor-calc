@@ -12,6 +12,7 @@ import {
 import { getSupabaseClient, isSupabaseConfigured } from "../lib/supabase";
 import type { PriceMap } from "../types/domain";
 import { EditableItemAutocomplete } from "./EditableItemAutocomplete";
+import { ItemAutocomplete } from "./ItemAutocomplete";
 import { ItemIcon } from "./ItemIcon";
 
 const SCREENSHOT_BUCKET = "box-opening-screenshots";
@@ -45,17 +46,22 @@ interface ApprovedBoxOpeningRow {
 
 export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
   const bossBoxes = useMemo(
-    () => items.filter((item) => item.type === "ITEM_GIFTBOX"),
+    () =>
+      items.filter(
+        (item) => item.type === "ITEM_GIFTBOX" || item.type === "ITEM_GACHA",
+      ),
     [],
   );
 
-  const [boxOpeningSamples, setBoxOpeningSamples] = useState<BoxOpeningSample[]>([]);
+  const [boxOpeningSamples, setBoxOpeningSamples] = useState<
+    BoxOpeningSample[]
+  >([]);
   const [supabaseDataError, setSupabaseDataError] = useState<string | null>(
     null,
   );
 
-  const [selectedBoxId, setSelectedBoxId] = useState<number>(
-    bossBoxes[0]?.vnum ?? 0,
+  const [selectedBoxId, setSelectedBoxId] = useState<number | null>(
+    bossBoxes[0]?.vnum ?? null,
   );
   const [uploadedScreenshot, setUploadedScreenshot] = useState<File | null>(
     null,
@@ -259,6 +265,11 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
       return;
     }
 
+    if (selectedBoxId == null) {
+      setSaveError("Előbb válassz ki egy boxot a listából.");
+      return;
+    }
+
     if (ocrLines.length === 0) {
       setSaveError("Nincs menthető OCR eredmény.");
       return;
@@ -357,16 +368,11 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
         <div className="ocr-controls">
           <label className="price-field ocr-box-select">
             <span>Melyik ládát nyitottátok?</span>
-            <select
-              value={selectedBoxId}
-              onChange={(event) => setSelectedBoxId(Number(event.target.value))}
-            >
-              {bossBoxes.map((box) => (
-                <option key={box.vnum} value={box.vnum}>
-                  {box.name} (#{box.vnum})
-                </option>
-              ))}
-            </select>
+            <ItemAutocomplete
+              selectedItemId={selectedBoxId}
+              onSelect={(itemId) => setSelectedBoxId(itemId)}
+              itemsToSearch={bossBoxes}
+            />
           </label>
 
           <button
@@ -494,7 +500,9 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
         <span className="muted">Minták száma: {boxOpeningSamples.length}</span>
       </div>
 
-      {supabaseDataError ? <p className="ocr-error">{supabaseDataError}</p> : null}
+      {supabaseDataError ? (
+        <p className="ocr-error">{supabaseDataError}</p>
+      ) : null}
 
       <div className="boss-box-grid">
         {bossBoxes.map((box) => {
@@ -688,15 +696,18 @@ function normalizeApprovedRowsToSamples(
 
         return { itemId, quantity };
       })
-      .filter((drop): drop is { itemId: number; quantity: number } => drop != null);
+      .filter(
+        (drop): drop is { itemId: number; quantity: number } => drop != null,
+      );
 
     if (drops.length === 0) {
       return [];
     }
 
-    const sampleCount = Number.isFinite(openedBoxCount) && openedBoxCount > 0
-      ? openedBoxCount
-      : 1;
+    const sampleCount =
+      Number.isFinite(openedBoxCount) && openedBoxCount > 0
+        ? openedBoxCount
+        : 1;
 
     return Array.from({ length: sampleCount }, () => ({
       boxItemId,

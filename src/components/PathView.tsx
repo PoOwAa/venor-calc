@@ -20,7 +20,8 @@ export function PathView({
         <span className="path-badge market">Piac</span>
         <strong>
           {step.quantity}×{" "}
-          <ItemIcon itemId={step.itemId} name={getItemDisplayName(item)} /> {getItemDisplayName(item)}
+          <ItemIcon itemId={step.itemId} name={getItemDisplayName(item)} />{" "}
+          {getItemDisplayName(item)}
         </strong>
         <span>{formatGold((step.unitCost ?? 0) * step.quantity)}</span>
       </div>
@@ -35,7 +36,8 @@ export function PathView({
         <span className="path-badge recipe">Recept</span>
         <strong>
           {step.quantity}×{" "}
-          <ItemIcon itemId={step.itemId} name={getItemDisplayName(item)} /> {getItemDisplayName(item)}
+          <ItemIcon itemId={step.itemId} name={getItemDisplayName(item)} />{" "}
+          {getItemDisplayName(item)}
         </strong>
         <span>
           {recipe?.inputs.map((inputItem) => (

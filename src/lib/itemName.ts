@@ -5,6 +5,8 @@ export function getItemDisplayName(item?: Partial<Item> | null): string {
   return raw.trim() || "Unnamed item";
 }
 
-export function getItemNameForSearch(item: Partial<Item> | null | undefined): string {
+export function getItemNameForSearch(
+  item: Partial<Item> | null | undefined,
+): string {
   return (item?.locale_name ?? item?.name ?? "").trim();
 }

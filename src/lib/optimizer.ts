@@ -172,7 +172,10 @@ export function getRelevantTradableItems(itemId: ItemId): Item[] {
     .sort(
       (a, b) =>
         (a.type ?? "").localeCompare(b.type ?? "", "hu") ||
-        (a.locale_name || a.name).localeCompare(b.locale_name || b.name, "hu") ||
+        (a.locale_name || a.name).localeCompare(
+          b.locale_name || b.name,
+          "hu",
+        ) ||
         a.vnum - b.vnum,
     );
 }

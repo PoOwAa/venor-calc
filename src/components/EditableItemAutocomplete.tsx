@@ -49,7 +49,10 @@ function rankItems(query: string) {
     .sort(
       (a, b) =>
         a.score - b.score ||
-        getItemNameForSearch(a.item).localeCompare(getItemNameForSearch(b.item), "hu") ||
+        getItemNameForSearch(a.item).localeCompare(
+          getItemNameForSearch(b.item),
+          "hu",
+        ) ||
         a.item.vnum - b.item.vnum,
     )
     .slice(0, MAX_SUGGESTIONS)
@@ -150,7 +153,11 @@ export function EditableItemAutocomplete({
                 }}
               >
                 <span>
-                  <ItemIcon itemId={item.vnum} name={getItemDisplayName(item)} /> {getItemDisplayName(item)}
+                  <ItemIcon
+                    itemId={item.vnum}
+                    name={getItemDisplayName(item)}
+                  />{" "}
+                  {getItemDisplayName(item)}
                 </span>
                 <span className="muted">#{item.vnum}</span>
               </button>
