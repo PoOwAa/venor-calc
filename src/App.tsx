@@ -596,7 +596,7 @@ export default function App() {
                   setCentralPriceOverrideEnabled(event.target.checked)
                 }
               />
-              <span>Központi árakat felülírása</span>
+              <span>Árak szinkronizálása a felhőbe</span>
             </label>
           </div>
           <button
