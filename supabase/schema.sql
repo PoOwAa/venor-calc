@@ -191,3 +191,35 @@ on storage.objects
 for select
 to anon, authenticated
 using (bucket_id = 'box-opening-screenshots');
+
+-- Shared market price overrides for the crafting optimizer.
+create table if not exists public.shared_market_prices (
+  id text primary key,
+  price_overrides jsonb not null default '{}'::jsonb,
+  updated_by uuid,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.shared_market_prices enable row level security;
+
+drop policy if exists "Allow shared market prices read" on public.shared_market_prices;
+create policy "Allow shared market prices read"
+on public.shared_market_prices
+for select
+to authenticated
+using (id = 'shared');
+
+drop policy if exists "Allow shared market prices insert" on public.shared_market_prices;
+create policy "Allow shared market prices insert"
+on public.shared_market_prices
+for insert
+to authenticated
+with check (id = 'shared');
+
+drop policy if exists "Allow shared market prices update" on public.shared_market_prices;
+create policy "Allow shared market prices update"
+on public.shared_market_prices
+for update
+to authenticated
+using (id = 'shared')
+with check (id = 'shared');

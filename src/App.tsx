@@ -14,13 +14,67 @@ import { getSupabaseClient, isSupabaseConfigured } from "./lib/supabase";
 import { vendorRecipeGroups } from "./data/vendors";
 import type { PriceMap } from "./types/domain";
 
-const STORAGE_KEY = "venor-calc-prices-v1";
+const SHARED_PRICE_SET_ID = "shared";
 const SITE_LOGO = `${import.meta.env.BASE_URL}logo/venorcalc-profile.png`;
 
 const defaultPrices: PriceMap = items.reduce<PriceMap>((prices, item) => {
   prices[item.vnum] = item.shop_buy_price ?? 0;
   return prices;
 }, {});
+
+function mergeStoredPrices(storedPrices: unknown): PriceMap {
+  const nextPrices: PriceMap = { ...defaultPrices };
+
+  if (
+    !storedPrices ||
+    typeof storedPrices !== "object" ||
+    Array.isArray(storedPrices)
+  ) {
+    return nextPrices;
+  }
+
+  for (const [rawItemId, rawValue] of Object.entries(
+    storedPrices as Record<string, unknown>,
+  )) {
+    const itemId = Number(rawItemId);
+    if (!Number.isFinite(itemId)) continue;
+
+    if (rawValue == null) {
+      nextPrices[itemId] = null;
+      continue;
+    }
+
+    const parsedValue = Number(rawValue);
+    nextPrices[itemId] = Number.isFinite(parsedValue) ? parsedValue : null;
+  }
+
+  return nextPrices;
+}
+
+function buildStoredPriceOverrides(
+  prices: PriceMap,
+): Record<string, number | null> {
+  const overrides: Record<string, number | null> = {};
+
+  for (const [rawItemId, value] of Object.entries(prices)) {
+    const itemId = Number(rawItemId);
+    if (!Number.isFinite(itemId)) continue;
+
+    const defaultValue = defaultPrices[itemId] ?? 0;
+    if (value == null) {
+      if (defaultValue !== null && defaultValue !== 0) {
+        overrides[rawItemId] = null;
+      }
+      continue;
+    }
+
+    if (value !== defaultValue) {
+      overrides[rawItemId] = value;
+    }
+  }
+
+  return overrides;
+}
 
 export default function App() {
   const menuItems = [
@@ -32,19 +86,13 @@ export default function App() {
   const [activeMenu, setActiveMenu] = useState<
     (typeof menuItems)[number]["key"]
   >(menuItems[0].key);
-  const [prices, setPrices] = useState<PriceMap>(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) return defaultPrices;
-    try {
-      return JSON.parse(stored);
-    } catch {
-      return defaultPrices;
-    }
-  });
+  const [prices, setPrices] = useState<PriceMap>(defaultPrices);
   const [targetItem, setTargetItem] = useState<number | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [session, setSession] = useState<Session | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [priceSyncReady, setPriceSyncReady] = useState(false);
+  const [priceSyncMessage, setPriceSyncMessage] = useState<string | null>(null);
   const [membershipState, setMembershipState] = useState<
     "idle" | "checking" | "allowed" | "denied" | "error"
   >("idle");
@@ -55,8 +103,89 @@ export default function App() {
   const selectedTarget = targetItem == null ? null : itemById[targetItem];
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(prices));
-  }, [prices]);
+    let ignore = false;
+
+    async function loadSharedPrices() {
+      if (!isSupabaseConfigured() || !session) {
+        if (!ignore) {
+          setPrices(defaultPrices);
+          setPriceSyncReady(false);
+          setPriceSyncMessage(null);
+        }
+        return;
+      }
+
+      if (!ignore) {
+        setPriceSyncReady(false);
+        setPriceSyncMessage(null);
+      }
+
+      try {
+        const supabase = getSupabaseClient();
+        const { data, error } = await supabase
+          .from("shared_market_prices")
+          .select("price_overrides")
+          .eq("id", SHARED_PRICE_SET_ID)
+          .maybeSingle();
+
+        if (error) throw error;
+
+        if (!ignore) {
+          setPrices(mergeStoredPrices(data?.price_overrides));
+          setPriceSyncReady(true);
+        }
+      } catch (error) {
+        console.error(error);
+        if (!ignore) {
+          setPrices(defaultPrices);
+          setPriceSyncReady(false);
+          setPriceSyncMessage(
+            "Nem sikerült betölteni a közös árlistát a Supabase-ből.",
+          );
+        }
+      }
+    }
+
+    void loadSharedPrices();
+
+    return () => {
+      ignore = true;
+    };
+  }, [session?.user.id]);
+
+  useEffect(() => {
+    if (!priceSyncReady || !session || !isSupabaseConfigured()) return;
+
+    const timeout = window.setTimeout(() => {
+      void (async () => {
+        try {
+          const supabase = getSupabaseClient();
+          const { error } = await supabase.from("shared_market_prices").upsert(
+            {
+              id: SHARED_PRICE_SET_ID,
+              price_overrides: buildStoredPriceOverrides(prices),
+              updated_by: session.user.id,
+              updated_at: new Date().toISOString(),
+            },
+            { onConflict: "id" },
+          );
+
+          if (error) throw error;
+
+          setPriceSyncMessage(null);
+        } catch (error) {
+          console.error(error);
+          setPriceSyncMessage(
+            "Nem sikerült menteni a közös árakat a Supabase-be.",
+          );
+        }
+      })();
+    }, 500);
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [prices, priceSyncReady, session?.user.id]);
 
   useEffect(() => {
     if (!isSupabaseConfigured()) {
@@ -311,6 +440,9 @@ export default function App() {
                   A teljes vendőrkatalógusból számolva, minden receptet
                   figyelembe véve.
                 </p>
+                {priceSyncMessage ? (
+                  <p className="ocr-error">{priceSyncMessage}</p>
+                ) : null}
               </div>
               <div className="hero-stat">
                 <span>Legjobb ár</span>
