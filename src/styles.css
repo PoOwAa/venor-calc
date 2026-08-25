@@ -15,6 +15,8 @@ button { cursor: pointer; }
 
 .app-shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 42px 0 28px; }
 .hero { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 20px; }
+.hero-branding { display: grid; gap: 10px; }
+.site-logo { width: 72px; height: 72px; object-fit: cover; border-radius: 18px; border: 1px solid rgba(148, 163, 184, .28); box-shadow: 0 14px 32px rgba(2, 6, 23, .25); background: #0b1220; }
 .brand-mark { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: #f59e0b; color: #111827; font-weight: 900; letter-spacing: -1px; }
 .eyebrow { margin: 16px 0 6px; text-transform: uppercase; font-size: 12px; letter-spacing: .18em; color: #94a3b8; font-weight: 800; }
 h1 { font-size: clamp(40px, 7vw, 72px); line-height: .95; margin: 0; letter-spacing: -0.05em; }
@@ -29,6 +31,10 @@ h2, h3 { margin: 0; }
   gap: 12px;
   max-width: 620px;
   margin: 90px auto 0;
+}
+
+.auth-panel .site-logo {
+  margin-bottom: 4px;
 }
 
 .auth-actions {
@@ -148,9 +154,9 @@ h2, h3 { margin: 0; }
 }
 
 .ocr-result-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 260px);
+  gap: 12px;
   align-items: start;
   padding: 12px;
   border-radius: 12px;
@@ -160,10 +166,18 @@ h2, h3 { margin: 0; }
 
 .ocr-edit-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 140px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr) 96px;
   gap: 10px;
   align-items: end;
   flex: 1;
+}
+
+.ocr-item-field {
+  min-width: 0;
+}
+
+.ocr-quantity-field {
+  width: 96px;
 }
 
 .ocr-edit-grid strong {
@@ -177,6 +191,10 @@ h2, h3 { margin: 0; }
 .ocr-edit-grid input {
   width: 100%;
   padding: 10px 12px;
+}
+
+.ocr-quantity-field input {
+  text-align: right;
 }
 
 .ocr-result-row.needs-review {
@@ -656,8 +674,11 @@ footer { margin-top: 30px; text-align: center; color: #64748b; font-size: 12px; 
   .boss-drop-row { flex-direction: column; align-items: start; }
   .drop-values { justify-content: start; }
   .ocr-edit-grid { grid-template-columns: 1fr; }
-  .ocr-result-row { flex-direction: column; align-items: start; }
+  .ocr-result-row { grid-template-columns: 1fr; }
   .ocr-match-meta { justify-items: start; }
+  .ocr-quantity-field {
+    width: 100%;
+  }
   .ocr-controls { align-items: stretch; }
   .ocr-box-select { min-width: 0; width: 100%; }
   .target-controls { flex-direction: column; }

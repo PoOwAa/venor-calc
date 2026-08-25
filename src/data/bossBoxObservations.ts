@@ -7,6 +7,7 @@ export interface BoxDropObservation {
 
 export interface BoxOpeningSample {
   boxItemId: ItemId;
+  openedBoxCount?: number;
   drops: BoxDropObservation[];
 }
 

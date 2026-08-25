@@ -35,7 +35,10 @@ export function buildBossBoxStats(
 
   return Array.from(groupedByBox.entries())
     .map(([boxItemId, boxSamples]) => {
-      const totalOpens = boxSamples.length;
+      const totalOpens = boxSamples.reduce(
+        (sum, sample) => sum + (sample.openedBoxCount ?? 1),
+        0,
+      );
       const dropMap = new Map<
         number,
         { dropCount: number; totalQuantity: number }

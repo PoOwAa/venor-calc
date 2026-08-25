@@ -13,6 +13,7 @@ import { getSupabaseClient, isSupabaseConfigured } from "./lib/supabase";
 import type { PriceMap } from "./types/domain";
 
 const STORAGE_KEY = "venor-calc-prices-v1";
+const SITE_LOGO = "/logo/venorcalc-profile.png";
 
 const defaultPrices: PriceMap = items.reduce<PriceMap>((prices, item) => {
   prices[item.vnum] = item.shop_buy_price ?? 0;
@@ -176,6 +177,7 @@ export default function App() {
     return (
       <main className="app-shell">
         <section className="panel auth-panel">
+          <img className="site-logo" src={SITE_LOGO} alt="VenorCalc" />
           <h2>Hitelesítés ellenőrzése</h2>
           <p className="helper-copy">
             Kérlek várj, betöltjük a munkamenetet...
@@ -189,6 +191,7 @@ export default function App() {
     return (
       <main className="app-shell">
         <section className="panel auth-panel">
+          <img className="site-logo" src={SITE_LOGO} alt="VenorCalc" />
           <p className="eyebrow">Belépés szükséges</p>
           <h1>VenorCalc</h1>
           <p className="helper-copy">
@@ -214,6 +217,7 @@ export default function App() {
     return (
       <main className="app-shell">
         <section className="panel auth-panel">
+          <img className="site-logo" src={SITE_LOGO} alt="VenorCalc" />
           <h2>Discord jogosultság ellenőrzése</h2>
           <p className="helper-copy">
             Ellenőrizzük, hogy tagja vagy-e a szükséges Discord szervernek.
@@ -255,8 +259,8 @@ export default function App() {
   return (
     <main className="app-shell">
       <header className="hero">
-        <div>
-          <span className="brand-mark">VC</span>
+        <div className="hero-branding">
+          <img className="site-logo" src={SITE_LOGO} alt="VenorCalc" />
           <p className="eyebrow">Venor2 optimizer</p>
           <h1>VenorCalc</h1>
           <p className="hero-copy">

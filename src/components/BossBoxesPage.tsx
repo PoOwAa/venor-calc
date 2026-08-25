@@ -150,6 +150,15 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
     return Object.fromEntries(stats.map((entry) => [entry.boxItemId, entry]));
   }, [boxOpeningSamples, prices]);
 
+  const totalOpenedBoxes = useMemo(
+    () =>
+      boxOpeningSamples.reduce(
+        (sum, sample) => sum + (sample.openedBoxCount ?? 1),
+        0,
+      ),
+    [boxOpeningSamples],
+  );
+
   const reviewCount = ocrLines.filter((entry) => entry.needsReview).length;
 
   function updateBoxPrice(boxItemId: number, rawValue: string) {
@@ -570,12 +579,12 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
                         key={`${entry.sourceLine}-${index}`}
                       >
                         <div className="ocr-edit-grid">
-                          <label className="price-field">
+                          <label className="price-field ocr-recognized-field">
                             <span>Felismert név</span>
                             <strong>{entry.recognizedName}</strong>
                           </label>
 
-                          <label className="price-field">
+                          <label className="price-field ocr-item-field">
                             <span>Javított item név</span>
                             <EditableItemAutocomplete
                               value={entry.itemNameInput}
@@ -594,7 +603,7 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
                             />
                           </label>
 
-                          <label className="price-field">
+                          <label className="price-field ocr-quantity-field">
                             <span>Mennyiség</span>
                             <input
                               type="number"
@@ -661,7 +670,9 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
             ládaértékek.
           </p>
         </div>
-        <span className="muted">Minták száma: {boxOpeningSamples.length}</span>
+        <span className="muted">
+          Felnyitott boxok száma: {totalOpenedBoxes}
+        </span>
       </div>
 
       {supabaseDataError ? (
@@ -868,15 +879,16 @@ function normalizeApprovedRowsToSamples(
       return [];
     }
 
-    const sampleCount =
-      Number.isFinite(openedBoxCount) && openedBoxCount > 0
-        ? openedBoxCount
-        : 1;
-
-    return Array.from({ length: sampleCount }, () => ({
-      boxItemId,
-      drops,
-    }));
+    return [
+      {
+        boxItemId,
+        openedBoxCount:
+          Number.isFinite(openedBoxCount) && openedBoxCount > 0
+            ? openedBoxCount
+            : 1,
+        drops,
+      },
+    ];
   });
 }
 
