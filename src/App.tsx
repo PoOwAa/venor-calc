@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { BossBoxReviewPage } from "./components/BossBoxReviewPage";
 import { BossBoxUploadPage } from "./components/BossBoxUploadPage";
@@ -144,6 +144,7 @@ export default function App() {
   const [priceChangeToasts, setPriceChangeToasts] = useState<
     PriceChangeToast[]
   >([]);
+  const suppressNextSharedPriceSaveRef = useRef(false);
   const [membershipState, setMembershipState] = useState<
     "idle" | "checking" | "allowed" | "denied" | "error"
   >("idle");
@@ -200,6 +201,7 @@ export default function App() {
             data?.price_overrides,
           );
           setSharedPriceOverrides(nextOverrides);
+          suppressNextSharedPriceSaveRef.current = true;
           setPrices(mergeStoredPrices(nextOverrides));
           setPriceSyncReady(true);
         }
@@ -293,6 +295,7 @@ export default function App() {
           });
 
           if (cloudPriceSyncEnabled) {
+            suppressNextSharedPriceSaveRef.current = true;
             setPrices(mergeStoredPrices(nextOverrides));
           }
         },
@@ -306,10 +309,16 @@ export default function App() {
 
   useEffect(() => {
     if (!cloudPriceSyncEnabled) return;
+    suppressNextSharedPriceSaveRef.current = true;
     setPrices(mergeStoredPrices(sharedPriceOverrides));
   }, [cloudPriceSyncEnabled, sharedPriceOverrides]);
 
   useEffect(() => {
+    if (suppressNextSharedPriceSaveRef.current) {
+      suppressNextSharedPriceSaveRef.current = false;
+      return;
+    }
+
     if (
       !priceSyncReady ||
       !session ||
