@@ -6,8 +6,8 @@ const OUTPUT_DIR = "./public/items";
 
 const ICON_BASE_URL = "https://wiki.venor2.hu/assets/icons/";
 
-const MIN_DELAY = 2500;
-const MAX_DELAY = 5000;
+const MIN_DELAY = 10;
+const MAX_DELAY = 20;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -38,8 +38,9 @@ async function downloadIcon(itemId, filename) {
 
   const response = await fetch(url, {
     headers: {
-      "User-Agent": "VenorCalc/1.0",
-      Accept: "image/png,image/*;q=0.8,*/*;q=0.5",
+      "User-Agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      Referer: `https://wiki.venor2.hu/items/${itemId}`,
     },
   });
 
@@ -94,6 +95,7 @@ async function main() {
         downloaded++;
       } else if (result === "skipped") {
         skipped++;
+        continue;
       } else {
         failed++;
       }
