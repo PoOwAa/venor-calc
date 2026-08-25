@@ -50,6 +50,8 @@ export interface RecipeOutput {
 export interface Recipe {
   id: string;
   npc: string;
+  vendor?: string;
+  vendorNpcVnum?: number;
   label: string;
   inputs: RecipeIngredient[];
   output: RecipeOutput;

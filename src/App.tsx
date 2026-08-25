@@ -11,6 +11,7 @@ import { itemById, items } from "./data/items";
 import { formatGold } from "./lib/format";
 import { getRelevantTradableItems, optimize } from "./lib/optimizer";
 import { getSupabaseClient, isSupabaseConfigured } from "./lib/supabase";
+import { vendorRecipeGroups } from "./data/vendors";
 import type { PriceMap } from "./types/domain";
 
 const STORAGE_KEY = "venor-calc-prices-v1";
@@ -99,6 +100,12 @@ export default function App() {
   const relevantTradableItems = useMemo(
     () => (targetItem == null ? [] : getRelevantTradableItems(targetItem)),
     [targetItem],
+  );
+
+  const totalRecipeCount = useMemo(
+    () =>
+      vendorRecipeGroups.reduce((sum, group) => sum + group.recipes.length, 0),
+    [],
   );
 
   const results = useMemo(
@@ -301,7 +308,8 @@ export default function App() {
                 <p className="eyebrow">Kraftolás</p>
                 <h2>Legjobb kalkulált ár</h2>
                 <p className="helper-copy">
-                  A kiválasztott cél és mennyiség alapján számolva.
+                  A teljes vendőrkatalógusból számolva, minden receptet
+                  figyelembe véve.
                 </p>
               </div>
               <div className="hero-stat">
@@ -314,6 +322,10 @@ export default function App() {
                       : "Nincs számolható útvonal"}
                 </strong>
               </div>
+            </div>
+            <div className="crafting-summary-meta">
+              <span>{vendorRecipeGroups.length} kereskedő</span>
+              <span>{totalRecipeCount} recept</span>
             </div>
           </section>
 
