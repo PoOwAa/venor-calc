@@ -67,6 +67,9 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
   const [uploadedScreenshot, setUploadedScreenshot] = useState<File | null>(
     null,
   );
+  const [screenshotPreviewUrl, setScreenshotPreviewUrl] = useState<
+    string | null
+  >(null);
   const screenshotInputRef = useRef<HTMLInputElement | null>(null);
   const [ocrText, setOcrText] = useState("");
   const [ocrLines, setOcrLines] = useState<EditableOcrLine[]>([]);
@@ -115,7 +118,7 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
         if (!ignore) {
           setBoxOpeningSamples([]);
           setSupabaseDataError(
-            "Nem sikerült betölteni a jóváhagyott box nyitási adatokat a Supabase-ből.",
+            "Nem sikerült betölteni a jóváhagyott láda nyitási adatokat a Supabase-ből.",
           );
         }
       }
@@ -127,6 +130,20 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
       ignore = true;
     };
   }, []);
+
+  useEffect(() => {
+    if (!uploadedScreenshot) {
+      setScreenshotPreviewUrl(null);
+      return;
+    }
+
+    const previewUrl = URL.createObjectURL(uploadedScreenshot);
+    setScreenshotPreviewUrl(previewUrl);
+
+    return () => {
+      URL.revokeObjectURL(previewUrl);
+    };
+  }, [uploadedScreenshot]);
 
   const statsByBoxId = useMemo(() => {
     const stats = buildBossBoxStats(boxOpeningSamples, prices);
@@ -429,7 +446,7 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
         <div className="section-heading">
           <div>
             <p className="eyebrow">OCR import</p>
-            <h2>Box nyitási screenshot feldolgozása</h2>
+            <h2>Láda nyitási screenshot feldolgozása</h2>
             <p className="helper-copy">
               Illeszd be a játék screenshotját a vágólapról, vagy válassz egy
               képfájlt. A rendszer megpróbálja felismerni az itemneveket és a
@@ -496,93 +513,137 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
         {saveError ? <p className="ocr-error">{saveError}</p> : null}
         {saveMessage ? <p className="ocr-success">{saveMessage}</p> : null}
 
-        {ocrLines.length > 0 ? (
-          <>
-            <div className="ocr-summary">
-              <span>Felismert sorok: {ocrLines.length}</span>
-              <label className="price-field ocr-opened-count-field">
-                <span>Nyitott ládák száma</span>
-                <input
-                  type="number"
-                  min={0}
-                  inputMode="numeric"
-                  value={ocrOpenedBoxCount ?? ""}
-                  onChange={(event) => updateOpenedBoxCount(event.target.value)}
-                  placeholder="ismeretlen"
-                />
-              </label>
-              <span className={reviewCount > 0 ? "warn" : "ok"}>
-                Ellenőrzendő tételek: {reviewCount}
-              </span>
-            </div>
+        {uploadedScreenshot || ocrLines.length > 0 ? (
+          <div className="ocr-workspace">
+            {uploadedScreenshot ? (
+              <aside className="ocr-preview-pane">
+                <div className="ocr-preview-header">
+                  <div>
+                    <p className="eyebrow">Eredeti kép</p>
+                    <h3>{uploadedScreenshot.name}</h3>
+                  </div>
+                  <span className="muted">Ellenőrzésre szolgál</span>
+                </div>
 
-            <div className="ocr-result-list">
-              {ocrLines.map((entry, index) => (
-                <article
-                  className={`ocr-result-row ${entry.needsReview ? "needs-review" : ""}`}
-                  key={`${entry.sourceLine}-${index}`}
-                >
-                  <div className="ocr-edit-grid">
-                    <label className="price-field">
-                      <span>Felismert név</span>
-                      <strong>{entry.recognizedName}</strong>
-                    </label>
+                {screenshotPreviewUrl ? (
+                  <img
+                    className="ocr-preview-image"
+                    src={screenshotPreviewUrl}
+                    alt="Feltöltött OCR screenshot"
+                  />
+                ) : null}
 
-                    <label className="price-field">
-                      <span>Javított item név</span>
-                      <EditableItemAutocomplete
-                        value={entry.itemNameInput}
-                        onValueChange={(value) =>
-                          updateOcrItemName(entry.id, value)
-                        }
-                        onSelectItem={(itemId, itemName) =>
-                          applyOcrItemSelection(entry.id, itemId, itemName)
-                        }
-                        placeholder="Kezdj el gépelni..."
-                        ariaLabel="OCR tétel javítása"
-                      />
-                    </label>
+                <p className="ocr-preview-note">
+                  A képet itt tudod gyorsan ellenőrizni, miközben jobbra a
+                  felismert sorokat javítod.
+                </p>
+              </aside>
+            ) : null}
 
-                    <label className="price-field">
-                      <span>Mennyiség</span>
+            <div className="ocr-correction-pane">
+              {ocrLines.length > 0 ? (
+                <>
+                  <div className="ocr-summary">
+                    <span>Felismert sorok: {ocrLines.length}</span>
+                    <label className="price-field ocr-opened-count-field">
+                      <span>Nyitott ládák száma</span>
                       <input
                         type="number"
                         min={0}
-                        value={entry.quantity}
+                        inputMode="numeric"
+                        value={ocrOpenedBoxCount ?? ""}
                         onChange={(event) =>
-                          updateOcrQuantity(entry.id, event.target.value)
+                          updateOpenedBoxCount(event.target.value)
                         }
+                        placeholder="ismeretlen"
                       />
                     </label>
-                  </div>
-
-                  <div className="ocr-match-meta">
-                    {entry.matchedItemId == null ||
-                    entry.matchedItemName == null ? (
-                      <span className="warn">Nincs megbízható egyezés</span>
-                    ) : (
-                      <span>
-                        <ItemIcon
-                          itemId={entry.matchedItemId}
-                          name={entry.matchedItemName}
-                          size={14}
-                        />{" "}
-                        {entry.matchedItemName} (#{entry.matchedItemId})
-                      </span>
-                    )}
-                    <span>
-                      Biztonság: {(entry.confidence * 100).toFixed(0)}%
+                    <span className={reviewCount > 0 ? "warn" : "ok"}>
+                      Ellenőrzendő tételek: {reviewCount}
                     </span>
                   </div>
-                </article>
-              ))}
-            </div>
 
-            <details>
-              <summary>Nyers OCR szöveg megjelenítése</summary>
-              <pre className="ocr-raw-text">{ocrText}</pre>
-            </details>
-          </>
+                  <div className="ocr-result-list">
+                    {ocrLines.map((entry, index) => (
+                      <article
+                        className={`ocr-result-row ${entry.needsReview ? "needs-review" : ""}`}
+                        key={`${entry.sourceLine}-${index}`}
+                      >
+                        <div className="ocr-edit-grid">
+                          <label className="price-field">
+                            <span>Felismert név</span>
+                            <strong>{entry.recognizedName}</strong>
+                          </label>
+
+                          <label className="price-field">
+                            <span>Javított item név</span>
+                            <EditableItemAutocomplete
+                              value={entry.itemNameInput}
+                              onValueChange={(value) =>
+                                updateOcrItemName(entry.id, value)
+                              }
+                              onSelectItem={(itemId, itemName) =>
+                                applyOcrItemSelection(
+                                  entry.id,
+                                  itemId,
+                                  itemName,
+                                )
+                              }
+                              placeholder="Kezdj el gépelni..."
+                              ariaLabel="OCR tétel javítása"
+                            />
+                          </label>
+
+                          <label className="price-field">
+                            <span>Mennyiség</span>
+                            <input
+                              type="number"
+                              min={0}
+                              value={entry.quantity}
+                              onChange={(event) =>
+                                updateOcrQuantity(entry.id, event.target.value)
+                              }
+                            />
+                          </label>
+                        </div>
+
+                        <div className="ocr-match-meta">
+                          {entry.matchedItemId == null ||
+                          entry.matchedItemName == null ? (
+                            <span className="warn">
+                              Nincs megbízható egyezés
+                            </span>
+                          ) : (
+                            <span>
+                              <ItemIcon
+                                itemId={entry.matchedItemId}
+                                name={entry.matchedItemName}
+                                size={14}
+                              />{" "}
+                              {entry.matchedItemName} (#{entry.matchedItemId})
+                            </span>
+                          )}
+                          <span>
+                            Biztonság: {(entry.confidence * 100).toFixed(0)}%
+                          </span>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+
+                  <details>
+                    <summary>Nyers OCR szöveg megjelenítése</summary>
+                    <pre className="ocr-raw-text">{ocrText}</pre>
+                  </details>
+                </>
+              ) : (
+                <div className="empty-state">
+                  Még nincs feldolgozott screenshot. Válassz egy képet az OCR
+                  ellenőrzéshez.
+                </div>
+              )}
+            </div>
+          </div>
         ) : (
           <div className="empty-state">
             Még nincs feldolgozott screenshot. Válassz egy képet az OCR
