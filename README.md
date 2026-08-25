@@ -95,3 +95,61 @@ Az Actions workflow ezeket automatikusan átadja a buildnek.
 `src/data/recipes.ts`
 
 A jelenlegi optimizer ciklusvédelmet tartalmaz, és rekurzívan összehasonlítja a piaci vásárlást az ismert receptekkel.
+
+## Kötelező Discord Login + Guild/Role ellenőrzés
+
+Az app most kötelező Discord login után működik, és egy Supabase Edge Function ellenőrzi:
+
+- a felhasználó tagja-e egy konkrét Discord szervernek
+- opcionálisan rendelkezik-e egy konkrét role-lal
+
+### 1. Supabase Auth: Discord provider
+
+1. Supabase Dashboard → **Authentication → Providers → Discord**
+2. Kapcsold be a Discord providert
+3. Állítsd be a Discord OAuth app Client ID és Client Secret értékeit
+4. Discord appban add hozzá a Supabase callback URL-t (Authentication / Redirect URL)
+
+### 2. Discord bot a guild checkhez
+
+1. Hozz létre egy Discord botot a Developer Portalon
+2. Hívd be a botot a szerveredre
+3. Mentsd el a bot tokenjét
+4. Jegyezd fel:
+	- Discord Guild ID
+	- opcionális Required Role ID
+
+### 3. Edge Function deploy
+
+Function fájl: [supabase/functions/discord-guild-check/index.ts](supabase/functions/discord-guild-check/index.ts)
+
+Supabase CLI példa:
+
+```bash
+supabase login
+supabase link --project-ref <PROJECT_REF>
+supabase secrets set DISCORD_BOT_TOKEN=... DISCORD_GUILD_ID=... DISCORD_REQUIRED_ROLE_ID=...
+supabase functions deploy discord-guild-check
+```
+
+Megjegyzés:
+
+- `DISCORD_REQUIRED_ROLE_ID` opcionális. Ha nincs megadva, csak guild tagságot ellenőriz.
+
+### 4. Frontend env (lokál + GitHub Pages)
+
+Lokálisan `.env`:
+
+```bash
+VITE_SUPABASE_URL=...
+VITE_SUPABASE_ANON_KEY=...
+```
+
+GitHub repo secret-ek (Actions):
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+
+### 5. Biztonsági megjegyzés
+
+A guild/role ellenőrzés szerveroldalon (Edge Function) fut bot tokennel. Ezt ne tedd frontend kódba.

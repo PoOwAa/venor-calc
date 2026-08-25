@@ -24,6 +24,27 @@ h2, h3 { margin: 0; }
 .hero-stat span, .metrics span, .muted { color: #94a3b8; font-size: 13px; }
 .hero-stat strong { display: block; margin-top: 8px; font-size: 24px; }
 
+.auth-panel {
+  display: grid;
+  gap: 12px;
+  max-width: 620px;
+  margin: 90px auto 0;
+}
+
+.auth-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.auth-message {
+  margin-top: 6px;
+}
+
+.auth-logout {
+  align-self: start;
+}
+
 .crafting-summary-panel {
   margin-bottom: 22px;
 }
@@ -464,6 +485,7 @@ footer { margin-top: 30px; text-align: center; color: #64748b; font-size: 12px; 
 @media (max-width: 760px) {
   .hero, .target-layout { flex-direction: column; align-items: stretch; }
   .hero-stat { min-width: 0; }
+  .auth-actions > button { flex: 1; }
   .crafting-summary { flex-direction: column; align-items: stretch; }
   .top-menu { flex-wrap: wrap; }
   .boss-box-header { flex-direction: column; align-items: stretch; }
