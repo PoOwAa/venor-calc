@@ -24,7 +24,7 @@ function collectTradableInputs(
   if (visited.has(itemId)) return;
   visited.add(itemId);
 
-  if (itemById[itemId]?.tradable) {
+  if (itemById[itemId]) {
     collected.add(itemId);
   }
 
@@ -171,8 +171,8 @@ export function getRelevantTradableItems(itemId: ItemId): Item[] {
     .filter((item): item is Item => item != null)
     .sort(
       (a, b) =>
-        (a.category ?? "").localeCompare(b.category ?? "", "hu") ||
+        (a.type ?? "").localeCompare(b.type ?? "", "hu") ||
         a.name.localeCompare(b.name, "hu") ||
-        a.id - b.id,
+        a.vnum - b.vnum,
     );
 }

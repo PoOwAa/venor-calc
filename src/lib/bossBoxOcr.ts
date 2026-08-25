@@ -28,7 +28,7 @@ interface ItemLookupEntry {
 }
 
 const itemLookup: ItemLookupEntry[] = items.map((item) => ({
-  id: item.id,
+  id: item.vnum,
   name: item.name,
   normalizedName: normalizeText(item.name),
 }));

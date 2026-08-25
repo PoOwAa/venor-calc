@@ -62,7 +62,7 @@ export function buildBossBoxStats(
 
       const drops: BossBoxDropStats[] = Array.from(dropMap.entries()).map(
         ([itemId, aggregate]) => {
-          const fallbackPrice = itemById[itemId]?.defaultMarketPrice ?? 0;
+          const fallbackPrice = itemById[itemId]?.shop_buy_price ?? 0;
           const unitPrice = prices[itemId] ?? fallbackPrice;
           const dropProbability =
             totalOpens === 0 ? 0 : aggregate.dropCount / totalOpens;

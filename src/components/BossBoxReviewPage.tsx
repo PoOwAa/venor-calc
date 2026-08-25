@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { bossBoxes } from "../data/items/boxes";
+import { itemById } from "../data/items";
 import { getSupabaseClient, isSupabaseConfigured } from "../lib/supabase";
 import { ItemIcon } from "./ItemIcon";
 
@@ -45,7 +45,9 @@ export function BossBoxReviewPage() {
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [actionRowId, setActionRowId] = useState<string | null>(null);
-  const [reviewerNotes, setReviewerNotes] = useState<Record<string, string>>({});
+  const [reviewerNotes, setReviewerNotes] = useState<Record<string, string>>(
+    {},
+  );
 
   const pendingCount = useMemo(
     () => rows.filter((row) => row.status === "pending").length,
@@ -215,7 +217,7 @@ export function BossBoxReviewPage() {
       ) : (
         <div className="review-grid">
           {rows.map((row) => {
-            const box = bossBoxes.find((entry) => entry.id === row.box_item_id);
+            const box = itemById[row.box_item_id];
             const entries = normalizeEntries(row.submitted_entries);
             const isActing = actionRowId === row.id;
 
@@ -232,10 +234,13 @@ export function BossBoxReviewPage() {
                       {box?.name ?? `Ismeretlen box (#${row.box_item_id})`}
                     </h3>
                     <p className="muted">
-                      Submission: {new Date(row.created_at).toLocaleString("hu-HU")}
+                      Submission:{" "}
+                      {new Date(row.created_at).toLocaleString("hu-HU")}
                     </p>
                   </div>
-                  <span className="review-chip">{row.unresolved_count} bizonytalan sor</span>
+                  <span className="review-chip">
+                    {row.unresolved_count} bizonytalan sor
+                  </span>
                 </div>
 
                 <div className="review-meta-grid">
@@ -262,7 +267,8 @@ export function BossBoxReviewPage() {
                     />
                   ) : (
                     <div className="empty-state">
-                      A screenshot előnézet nem elérhető (ellenőrizd a storage policy-kat).
+                      A screenshot előnézet nem elérhető (ellenőrizd a storage
+                      policy-kat).
                     </div>
                   )}
                 </div>

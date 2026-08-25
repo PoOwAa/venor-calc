@@ -86,16 +86,6 @@ Mivel a frontend build időben kapja meg a Supabase URL/kulcs értékeket:
 
 Az Actions workflow ezeket automatikusan átadja a buildnek.
 
-## Új tárgy hozzáadása
-
-`src/data/items.ts`
-
-## Új recept hozzáadása
-
-`src/data/recipes.ts`
-
-A jelenlegi optimizer ciklusvédelmet tartalmaz, és rekurzívan összehasonlítja a piaci vásárlást az ismert receptekkel.
-
 ## Kötelező Discord Login + Guild/Role ellenőrzés
 
 Az app most kötelező Discord login után működik, és egy Supabase Edge Function ellenőrzi:

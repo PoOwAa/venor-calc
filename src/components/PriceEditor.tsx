@@ -18,7 +18,7 @@ export function PriceEditor({ items, targetName, prices, onChange }: Props) {
   function clearVisiblePrices() {
     const next: PriceMap = { ...prices };
     for (const item of items) {
-      delete next[item.id];
+      delete next[item.vnum];
     }
     onChange(next);
   }
@@ -47,17 +47,17 @@ export function PriceEditor({ items, targetName, prices, onChange }: Props) {
       ) : (
         <div className="price-grid">
           {items.map((item) => (
-            <label className="price-field" key={item.id}>
+            <label className="price-field" key={item.vnum}>
               <span>
-                <ItemIcon itemId={item.id} name={item.name} size={12} />{" "}
+                <ItemIcon itemId={item.vnum} name={item.name} size={12} />{" "}
                 {item.name}
               </span>
               <div className="input-with-suffix">
                 <input
                   inputMode="numeric"
                   placeholder="pl. 80000000"
-                  value={prices[item.id] ?? ""}
-                  onChange={(event) => update(item.id, event.target.value)}
+                  value={prices[item.vnum] ?? ""}
+                  onChange={(event) => update(item.vnum, event.target.value)}
                 />
                 <span>Arany</span>
               </div>

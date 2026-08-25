@@ -18,7 +18,7 @@ function findExactItem(query: string) {
     items.find(
       (item) =>
         item.name.toLocaleLowerCase("hu-HU") === normalized ||
-        String(item.id) === normalized,
+        String(item.vnum) === normalized,
     ) ?? null
   );
 }
@@ -31,7 +31,7 @@ function rankItems(query: string) {
   return items
     .map((item) => {
       const name = item.name.toLocaleLowerCase("hu-HU");
-      const id = String(item.id);
+      const id = String(item.vnum);
 
       let score = Number.POSITIVE_INFINITY;
       if (name === normalized || id === normalized) score = 0;
@@ -47,7 +47,7 @@ function rankItems(query: string) {
       (a, b) =>
         a.score - b.score ||
         a.item.name.localeCompare(b.item.name, "hu") ||
-        a.item.id - b.item.id,
+        a.item.vnum - b.item.vnum,
     )
     .slice(0, MAX_SUGGESTIONS)
     .map((entry) => entry.item);
@@ -84,7 +84,7 @@ export function ItemAutocomplete({ selectedItemId, onSelect }: Props) {
   function handleBlur() {
     const exactMatch = findExactItem(query);
     if (exactMatch) {
-      onSelect(exactMatch.id);
+      onSelect(exactMatch.vnum);
     }
 
     window.setTimeout(() => {
@@ -127,7 +127,7 @@ export function ItemAutocomplete({ selectedItemId, onSelect }: Props) {
             event.preventDefault();
             const item = suggestions[activeIndex];
             setQuery(item.name);
-            selectItem(item.id);
+            selectItem(item.vnum);
           }
 
           if (event.key === "Escape") {
@@ -149,18 +149,18 @@ export function ItemAutocomplete({ selectedItemId, onSelect }: Props) {
             suggestions.map((item, index) => (
               <button
                 type="button"
-                key={item.id}
+                key={item.vnum}
                 className={`autocomplete-option ${index === activeIndex ? "active" : ""}`}
                 onMouseDown={(event) => {
                   event.preventDefault();
                   setQuery(item.name);
-                  selectItem(item.id);
+                  selectItem(item.vnum);
                 }}
               >
                 <span>
-                  <ItemIcon itemId={item.id} name={item.name} /> {item.name}
+                  <ItemIcon itemId={item.vnum} name={item.name} /> {item.name}
                 </span>
-                <span className="muted">#{item.id}</span>
+                <span className="muted">#{item.vnum}</span>
               </button>
             ))
           )}

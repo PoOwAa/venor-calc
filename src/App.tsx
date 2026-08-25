@@ -15,7 +15,7 @@ import type { PriceMap } from "./types/domain";
 const STORAGE_KEY = "venor-calc-prices-v1";
 
 const defaultPrices: PriceMap = items.reduce<PriceMap>((prices, item) => {
-  prices[item.id] = item.defaultMarketPrice ?? 0;
+  prices[item.vnum] = item.shop_buy_price ?? 0;
   return prices;
 }, {});
 
@@ -330,7 +330,7 @@ export default function App() {
                   <div className="target-summary">
                     <span className="target-badge">
                       <ItemIcon
-                        itemId={selectedTarget.id}
+                        itemId={selectedTarget.vnum}
                         name={selectedTarget.name}
                         size={18}
                       />{" "}

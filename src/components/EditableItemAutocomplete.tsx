@@ -20,7 +20,7 @@ function findExactItem(query: string) {
     items.find(
       (item) =>
         item.name.toLocaleLowerCase("hu-HU") === normalized ||
-        String(item.id) === normalized,
+        String(item.vnum) === normalized,
     ) ?? null
   );
 }
@@ -33,7 +33,7 @@ function rankItems(query: string) {
   return items
     .map((item) => {
       const name = item.name.toLocaleLowerCase("hu-HU");
-      const id = String(item.id);
+      const id = String(item.vnum);
 
       let score = Number.POSITIVE_INFINITY;
       if (name === normalized || id === normalized) score = 0;
@@ -49,7 +49,7 @@ function rankItems(query: string) {
       (a, b) =>
         a.score - b.score ||
         a.item.name.localeCompare(b.item.name, "hu") ||
-        a.item.id - b.item.id,
+        a.item.vnum - b.item.vnum,
     )
     .slice(0, MAX_SUGGESTIONS)
     .map((entry) => entry.item);
@@ -91,7 +91,7 @@ export function EditableItemAutocomplete({
         onBlur={() => {
           const exactMatch = findExactItem(value);
           if (exactMatch) {
-            applyItem(exactMatch.id, exactMatch.name);
+            applyItem(exactMatch.vnum, exactMatch.name);
           }
 
           window.setTimeout(() => {
@@ -120,7 +120,7 @@ export function EditableItemAutocomplete({
           if (event.key === "Enter" && suggestions[activeIndex]) {
             event.preventDefault();
             const item = suggestions[activeIndex];
-            applyItem(item.id, item.name);
+            applyItem(item.vnum, item.name);
           }
 
           if (event.key === "Escape") {
@@ -141,17 +141,17 @@ export function EditableItemAutocomplete({
             suggestions.map((item, index) => (
               <button
                 type="button"
-                key={item.id}
+                key={item.vnum}
                 className={`autocomplete-option ${index === activeIndex ? "active" : ""}`}
                 onMouseDown={(event) => {
                   event.preventDefault();
-                  applyItem(item.id, item.name);
+                  applyItem(item.vnum, item.name);
                 }}
               >
                 <span>
-                  <ItemIcon itemId={item.id} name={item.name} /> {item.name}
+                  <ItemIcon itemId={item.vnum} name={item.name} /> {item.name}
                 </span>
-                <span className="muted">#{item.id}</span>
+                <span className="muted">#{item.vnum}</span>
               </button>
             ))
           )}

@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { boxOpeningSamples } from "../data/bossBoxObservations";
 import { itemById, items } from "../data/items";
-import { bossBoxes } from "../data/items/boxes";
 import { formatGold } from "../lib/format";
 import { buildBossBoxStats } from "../lib/bossBoxes";
 import {
@@ -36,7 +35,14 @@ interface EditableOcrLine {
 }
 
 export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
-  const [selectedBoxId, setSelectedBoxId] = useState<number>(bossBoxes[0].id);
+  const bossBoxes = useMemo(
+    () => items.filter((item) => item.type === "ITEM_GIFTBOX"),
+    [],
+  );
+
+  const [selectedBoxId, setSelectedBoxId] = useState<number>(
+    bossBoxes[0]?.vnum ?? 0,
+  );
   const [uploadedScreenshot, setUploadedScreenshot] = useState<File | null>(
     null,
   );
@@ -123,7 +129,7 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
           return {
             ...line,
             itemNameInput: value,
-            matchedItemId: exactMatch.id,
+            matchedItemId: exactMatch.vnum,
             matchedItemName: exactMatch.name,
             confidence: 1,
             needsReview: false,
@@ -294,8 +300,8 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
               onChange={(event) => setSelectedBoxId(Number(event.target.value))}
             >
               {bossBoxes.map((box) => (
-                <option key={box.id} value={box.id}>
-                  {box.name} (#{box.id})
+                <option key={box.vnum} value={box.vnum}>
+                  {box.name} (#{box.vnum})
                 </option>
               ))}
             </select>
@@ -428,21 +434,21 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
 
       <div className="boss-box-grid">
         {bossBoxes.map((box) => {
-          const boxStats = statsByBoxId[box.id];
-          const boxPrice = prices[box.id] ?? null;
+          const boxStats = statsByBoxId[box.vnum];
+          const boxPrice = prices[box.vnum] ?? null;
           const expectedIncome = boxStats?.expectedIncome ?? 0;
           const averageProfit =
             boxPrice == null ? null : expectedIncome - (boxPrice ?? 0);
 
           return (
-            <article className="panel boss-box-card" key={box.id}>
+            <article className="panel boss-box-card" key={box.vnum}>
               <div className="boss-box-header">
                 <div>
                   <h3>
-                    <ItemIcon itemId={box.id} name={box.name} size={18} />{" "}
+                    <ItemIcon itemId={box.vnum} name={box.name} size={18} />{" "}
                     {box.name}
                   </h3>
-                  <p className="muted">Tárgy azonosító: {box.id}</p>
+                  <p className="muted">Tárgy azonosító: {box.vnum}</p>
                 </div>
                 <label className="price-field box-price-input">
                   <span>Láda piaci ár</span>
@@ -452,7 +458,7 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
                       placeholder="pl. 250000000"
                       value={boxPrice ?? ""}
                       onChange={(event) =>
-                        updateBoxPrice(box.id, event.target.value)
+                        updateBoxPrice(box.vnum, event.target.value)
                       }
                     />
                     <span>Arany</span>
@@ -484,7 +490,7 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
                   {boxStats.drops.map((drop) => (
                     <div
                       className="boss-drop-row"
-                      key={`${box.id}-${drop.itemId}`}
+                      key={`${box.vnum}-${drop.itemId}`}
                     >
                       <div className="drop-name">
                         <ItemIcon
