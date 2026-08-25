@@ -16,6 +16,7 @@ import type { PriceMap } from "./types/domain";
 
 const SHARED_PRICE_SET_ID = "shared";
 const PRICE_SYNC_PREF_KEY = "venor-calc-central-price-override-v1";
+const CLOUD_PRICE_SYNC_PREF_KEY = "venor-calc-cloud-price-sync-v1";
 const SITE_LOGO = `${import.meta.env.BASE_URL}logo/venorcalc-profile.png`;
 
 interface PriceChangeToast {
@@ -132,6 +133,9 @@ export default function App() {
   const [authLoading, setAuthLoading] = useState(true);
   const [centralPriceOverrideEnabled, setCentralPriceOverrideEnabled] =
     useState(() => localStorage.getItem(PRICE_SYNC_PREF_KEY) === "true");
+  const [cloudPriceSyncEnabled, setCloudPriceSyncEnabled] = useState(
+    () => localStorage.getItem(CLOUD_PRICE_SYNC_PREF_KEY) === "true",
+  );
   const [priceSyncReady, setPriceSyncReady] = useState(false);
   const [priceSyncMessage, setPriceSyncMessage] = useState<string | null>(null);
   const [sharedPriceOverrides, setSharedPriceOverrides] = useState<
@@ -155,6 +159,13 @@ export default function App() {
       centralPriceOverrideEnabled ? "true" : "false",
     );
   }, [centralPriceOverrideEnabled]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      CLOUD_PRICE_SYNC_PREF_KEY,
+      cloudPriceSyncEnabled ? "true" : "false",
+    );
+  }, [cloudPriceSyncEnabled]);
 
   useEffect(() => {
     let ignore = false;
@@ -281,7 +292,9 @@ export default function App() {
             return nextOverrides;
           });
 
-          setPrices(mergeStoredPrices(nextOverrides));
+          if (cloudPriceSyncEnabled) {
+            setPrices(mergeStoredPrices(nextOverrides));
+          }
         },
       )
       .subscribe();
@@ -289,7 +302,12 @@ export default function App() {
     return () => {
       void supabase.removeChannel(channel);
     };
-  }, [session?.user.id]);
+  }, [session?.user.id, cloudPriceSyncEnabled]);
+
+  useEffect(() => {
+    if (!cloudPriceSyncEnabled) return;
+    setPrices(mergeStoredPrices(sharedPriceOverrides));
+  }, [cloudPriceSyncEnabled, sharedPriceOverrides]);
 
   useEffect(() => {
     if (
@@ -557,24 +575,38 @@ export default function App() {
             Optimalizáld a kraftolást és kezeld egy helyen a boss ládákhoz
             kapcsolódó számolásokat.
           </p>
-          <label className="price-field">
-            <span>Központi árakat felülírása</span>
-            <input
-              type="checkbox"
-              checked={centralPriceOverrideEnabled}
-              onChange={(event) =>
-                setCentralPriceOverrideEnabled(event.target.checked)
-              }
-            />
-          </label>
         </div>
-        <button
-          type="button"
-          className="secondary auth-logout"
-          onClick={signOut}
-        >
-          Kijelentkezés
-        </button>
+        <div className="hero-actions">
+          <div className="hero-preferences">
+            <label className="preference-toggle">
+              <input
+                type="checkbox"
+                checked={cloudPriceSyncEnabled}
+                onChange={(event) =>
+                  setCloudPriceSyncEnabled(event.target.checked)
+                }
+              />
+              <span>Árak szinkronizálása a felhőből</span>
+            </label>
+            <label className="preference-toggle">
+              <input
+                type="checkbox"
+                checked={centralPriceOverrideEnabled}
+                onChange={(event) =>
+                  setCentralPriceOverrideEnabled(event.target.checked)
+                }
+              />
+              <span>Központi árakat felülírása</span>
+            </label>
+          </div>
+          <button
+            type="button"
+            className="secondary auth-logout"
+            onClick={signOut}
+          >
+            Kijelentkezés
+          </button>
+        </div>
       </header>
 
       <nav className="top-menu" aria-label="Főmenü">

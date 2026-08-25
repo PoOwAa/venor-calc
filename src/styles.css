@@ -16,6 +16,7 @@ button { cursor: pointer; }
 .app-shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 42px 0 28px; }
 .hero { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 20px; }
 .hero-branding { display: grid; gap: 10px; }
+.hero-actions { display: flex; align-items: end; gap: 14px; flex-wrap: wrap; justify-content: end; }
 .site-logo { width: 72px; height: 72px; object-fit: cover; border-radius: 18px; border: 1px solid rgba(148, 163, 184, .28); box-shadow: 0 14px 32px rgba(2, 6, 23, .25); background: #0b1220; }
 .brand-mark { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: #f59e0b; color: #111827; font-weight: 900; letter-spacing: -1px; }
 .eyebrow { margin: 16px 0 6px; text-transform: uppercase; font-size: 12px; letter-spacing: .18em; color: #94a3b8; font-weight: 800; }
@@ -25,6 +26,30 @@ h2, h3 { margin: 0; }
 .hero-stat { min-width: 300px; padding: 22px; border: 1px solid #334155; border-radius: 18px; background: rgba(15, 23, 42, .8); }
 .hero-stat span, .metrics span, .muted { color: #94a3b8; font-size: 13px; }
 .hero-stat strong { display: block; margin-top: 8px; font-size: 24px; }
+
+.hero-preferences {
+  display: grid;
+  gap: 10px;
+}
+
+.preference-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid #334155;
+  background: rgba(15, 23, 42, .72);
+  color: #e2e8f0;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.preference-toggle input {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
 
 .toast-stack {
   position: fixed;
@@ -809,6 +834,8 @@ footer { margin-top: 30px; text-align: center; color: #64748b; font-size: 12px; 
 
 @media (max-width: 760px) {
   .hero, .target-layout { flex-direction: column; align-items: stretch; }
+  .hero-actions { justify-content: stretch; }
+  .hero-actions > button { width: 100%; }
   .hero-stat { min-width: 0; }
   .auth-actions > button { flex: 1; }
   .crafting-summary { flex-direction: column; align-items: stretch; }
