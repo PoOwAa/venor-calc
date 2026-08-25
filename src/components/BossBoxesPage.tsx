@@ -9,6 +9,7 @@ import {
   parseBoxOcrText,
   type MatchedOcrDropLine,
 } from "../lib/bossBoxOcr";
+import { preprocessImage } from "../lib/ocrImage";
 import { getSupabaseClient, isSupabaseConfigured } from "../lib/supabase";
 import type { PriceMap } from "../types/domain";
 import { EditableItemAutocomplete } from "./EditableItemAutocomplete";
@@ -158,7 +159,8 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
 
     try {
       const tesseract = await import("tesseract.js");
-      const result = await tesseract.recognize(file, "hun+eng", {
+      const processedImage = await preprocessImage(file);
+      const result = await tesseract.recognize(processedImage, "hun+eng", {
         logger: (message: { status?: string; progress?: number }) => {
           if (typeof message.progress === "number") {
             setOcrProgress(Math.round(message.progress * 100));

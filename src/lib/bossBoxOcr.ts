@@ -30,7 +30,7 @@ interface ItemLookupEntry {
 const itemLookup: ItemLookupEntry[] = items.map((item) => ({
   id: item.vnum,
   name: item.locale_name || item.name,
-  normalizedName: normalizeText(item.locale_name || item.name),
+  normalizedName: normalizeOcrName(item.locale_name || item.name),
 }));
 
 export function normalizeText(input: string): string {
@@ -41,6 +41,14 @@ export function normalizeText(input: string): string {
     .replace(/[^\p{L}\p{N}]+/gu, " ")
     .trim()
     .replace(/\s+/g, " ");
+}
+
+function normalizeOcrName(input: string): string {
+  return normalizeText(input)
+    .replace(/\b(?:c+eavart|ceavart|cseavart)\b/g, "csavart")
+    .replace(/\bkules?\b/g, "kulcs")
+    .replace(/\b(?:toredek|tőredék)\b/g, "toredek")
+    .replace(/\b(?:belépesi|belepesi)\b/g, "belepesi");
 }
 
 export function parseBoxOcrText(rawText: string): ParsedOcrResult {
@@ -84,7 +92,7 @@ export function matchDropsToKnownItems(
   drops: ParsedOcrDropLine[],
 ): MatchedOcrDropLine[] {
   return drops.map((drop) => {
-    const normalizedDropName = normalizeText(drop.rawName);
+    const normalizedDropName = normalizeOcrName(drop.rawName);
 
     let bestMatch: ItemLookupEntry | null = null;
     let bestScore = 0;
@@ -121,19 +129,14 @@ export function matchDropsToKnownItems(
 }
 
 function parseDropLine(line: string): ParsedOcrDropLine | null {
-  const compact = line
-    .replace(/[\[\](){}<>]+/g, " ")
-    .replace(/[\u2013\u2014]/g, "-")
-    .replace(/[.,;!?]+$/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
+  const compact = sanitizeOcrLine(line);
 
   if (!compact || /^(?:[a-zA-Z]{1,2}|[\p{P}\p{S}]+)$/u.test(compact)) {
     return null;
   }
 
   const quantityMatch = compact.match(
-    /^(.+?)\s*(?:[-–—:=~]|\s+)\s*([0-9]+)\s*$/u,
+    /^(.+?)\s*(?:[-–—:=~]|\s+)\s*([0-9]+)\s*(?:[a-zA-Z]{0,3}|[\])\]]+|[.,;!?]+)*\s*$/u,
   );
   if (!quantityMatch) {
     return null;
@@ -153,6 +156,16 @@ function parseDropLine(line: string): ParsedOcrDropLine | null {
     quantity: Number(quantityMatch[2]),
     sourceLine: line,
   };
+}
+
+function sanitizeOcrLine(line: string): string {
+  return line
+    .replace(/[\[\](){}<>]+/g, " ")
+    .replace(/[\u2013\u2014]/g, "-")
+    .replace(/\s*(?:[a-zA-Z]{1,3}[\]\)]|[\]\)]+)\s*$/g, "")
+    .replace(/[.,;!?]+$/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function scoreNameSimilarity(a: string, b: string): number {
