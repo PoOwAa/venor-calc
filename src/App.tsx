@@ -13,7 +13,7 @@ import { getSupabaseClient, isSupabaseConfigured } from "./lib/supabase";
 import type { PriceMap } from "./types/domain";
 
 const STORAGE_KEY = "venor-calc-prices-v1";
-const SITE_LOGO = "/logo/venorcalc-profile.png";
+const SITE_LOGO = `${import.meta.env.BASE_URL}logo/venorcalc-profile.png`;
 
 const defaultPrices: PriceMap = items.reduce<PriceMap>((prices, item) => {
   prices[item.vnum] = item.shop_buy_price ?? 0;
