@@ -51,6 +51,7 @@ function marketResult(
     cashCost: cost,
     effectiveCost: cost,
     leftoverValue: 0,
+    containsZeroValueStep: false,
     sourceLabel: `Piaci vásárlás: ${itemById[itemId]?.locale_name ?? itemById[itemId]?.name ?? itemId}`,
     step: {
       type: "market",
@@ -78,6 +79,7 @@ function optimizeInternal(
   itemId: ItemId,
   quantity: number,
   prices: PriceMap,
+  rootItemId: ItemId,
   stack: Set<ItemId>,
   depth: number,
 ): OptimizationResult[] {
@@ -99,6 +101,7 @@ function optimizeInternal(
         input.itemId,
         input.quantity * crafts,
         prices,
+        rootItemId,
         nextStack,
         depth + 1,
       ),
@@ -116,6 +119,9 @@ function optimizeInternal(
         0,
       );
       const recipeGold = recipe.goldCost * crafts;
+      const containsZeroValueStep =
+        combo.some((result) => result.containsZeroValueStep) ||
+        (itemId !== rootItemId && ingredientCash + recipeGold <= 0);
 
       const excess = producedQuantity - quantity;
       const ownMarketPrice = prices[itemId];
@@ -141,6 +147,7 @@ function optimizeInternal(
         leftoverValue:
           combo.reduce((sum, result) => sum + result.leftoverValue, 0) +
           leftoverValue,
+        containsZeroValueStep,
         sourceLabel: `${recipe.label} (${recipe.npc})`,
         step,
       });
@@ -148,6 +155,7 @@ function optimizeInternal(
   }
 
   return results
+    .filter((result) => !result.containsZeroValueStep)
     .sort(
       (a, b) => a.effectiveCost - b.effectiveCost || a.cashCost - b.cashCost,
     )
@@ -159,7 +167,7 @@ export function optimize(
   quantity: number,
   prices: PriceMap,
 ): OptimizationResult[] {
-  return optimizeInternal(itemId, quantity, prices, new Set(), 0);
+  return optimizeInternal(itemId, quantity, prices, itemId, new Set(), 0);
 }
 
 export function getRelevantTradableItems(itemId: ItemId): Item[] {

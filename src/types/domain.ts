@@ -78,6 +78,7 @@ export interface OptimizationResult {
   cashCost: number;
   effectiveCost: number;
   leftoverValue: number;
+  containsZeroValueStep?: boolean;
   step: PathStep;
   sourceLabel: string;
 }
