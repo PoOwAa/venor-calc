@@ -15,7 +15,15 @@ import { vendorRecipeGroups } from "./data/vendors";
 import type { PriceMap } from "./types/domain";
 
 const SHARED_PRICE_SET_ID = "shared";
+const PRICE_SYNC_PREF_KEY = "venor-calc-central-price-override-v1";
 const SITE_LOGO = `${import.meta.env.BASE_URL}logo/venorcalc-profile.png`;
+
+interface PriceChangeToast {
+  id: string;
+  itemId: number;
+  itemName: string;
+  newPrice: number;
+}
 
 const defaultPrices: PriceMap = items.reduce<PriceMap>((prices, item) => {
   prices[item.vnum] = item.shop_buy_price ?? 0;
@@ -49,6 +57,37 @@ function mergeStoredPrices(storedPrices: unknown): PriceMap {
   }
 
   return nextPrices;
+}
+
+function normalizeStoredPriceOverrides(
+  storedPrices: unknown,
+): Record<number, number | null> {
+  const normalized: Record<number, number | null> = {};
+
+  if (
+    !storedPrices ||
+    typeof storedPrices !== "object" ||
+    Array.isArray(storedPrices)
+  ) {
+    return normalized;
+  }
+
+  for (const [rawItemId, rawValue] of Object.entries(
+    storedPrices as Record<string, unknown>,
+  )) {
+    const itemId = Number(rawItemId);
+    if (!Number.isFinite(itemId)) continue;
+
+    if (rawValue == null) {
+      normalized[itemId] = null;
+      continue;
+    }
+
+    const parsedValue = Number(rawValue);
+    normalized[itemId] = Number.isFinite(parsedValue) ? parsedValue : null;
+  }
+
+  return normalized;
 }
 
 function buildStoredPriceOverrides(
@@ -91,8 +130,16 @@ export default function App() {
   const [quantity, setQuantity] = useState(1);
   const [session, setSession] = useState<Session | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [centralPriceOverrideEnabled, setCentralPriceOverrideEnabled] =
+    useState(() => localStorage.getItem(PRICE_SYNC_PREF_KEY) === "true");
   const [priceSyncReady, setPriceSyncReady] = useState(false);
   const [priceSyncMessage, setPriceSyncMessage] = useState<string | null>(null);
+  const [sharedPriceOverrides, setSharedPriceOverrides] = useState<
+    Record<number, number | null>
+  >({});
+  const [priceChangeToasts, setPriceChangeToasts] = useState<
+    PriceChangeToast[]
+  >([]);
   const [membershipState, setMembershipState] = useState<
     "idle" | "checking" | "allowed" | "denied" | "error"
   >("idle");
@@ -101,6 +148,13 @@ export default function App() {
   );
 
   const selectedTarget = targetItem == null ? null : itemById[targetItem];
+
+  useEffect(() => {
+    localStorage.setItem(
+      PRICE_SYNC_PREF_KEY,
+      centralPriceOverrideEnabled ? "true" : "false",
+    );
+  }, [centralPriceOverrideEnabled]);
 
   useEffect(() => {
     let ignore = false;
@@ -124,14 +178,18 @@ export default function App() {
         const supabase = getSupabaseClient();
         const { data, error } = await supabase
           .from("shared_market_prices")
-          .select("price_overrides")
+          .select("price_overrides, updated_by")
           .eq("id", SHARED_PRICE_SET_ID)
           .maybeSingle();
 
         if (error) throw error;
 
         if (!ignore) {
-          setPrices(mergeStoredPrices(data?.price_overrides));
+          const nextOverrides = normalizeStoredPriceOverrides(
+            data?.price_overrides,
+          );
+          setSharedPriceOverrides(nextOverrides);
+          setPrices(mergeStoredPrices(nextOverrides));
           setPriceSyncReady(true);
         }
       } catch (error) {
@@ -154,16 +212,103 @@ export default function App() {
   }, [session?.user.id]);
 
   useEffect(() => {
-    if (!priceSyncReady || !session || !isSupabaseConfigured()) return;
+    if (!isSupabaseConfigured() || !session) return;
+
+    const supabase = getSupabaseClient();
+    const channel = supabase
+      .channel(`shared-market-prices:${session.user.id}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "shared_market_prices",
+          filter: `id=eq.${SHARED_PRICE_SET_ID}`,
+        },
+        (payload) => {
+          const newRow = payload.new as
+            | {
+                price_overrides?: unknown;
+                updated_by?: string | null;
+              }
+            | undefined;
+
+          if (!newRow) return;
+          if (newRow.updated_by === session.user.id) return;
+
+          const nextOverrides = normalizeStoredPriceOverrides(
+            newRow.price_overrides,
+          );
+
+          setSharedPriceOverrides((currentOverrides) => {
+            const changedItems = Object.keys(nextOverrides)
+              .map((rawItemId) => Number(rawItemId))
+              .filter((itemId) => {
+                const nextValue = nextOverrides[itemId] ?? null;
+                const currentValue = currentOverrides[itemId] ?? null;
+                return (
+                  nextValue != null &&
+                  nextValue > 0 &&
+                  nextValue !== currentValue
+                );
+              });
+
+            if (changedItems.length > 0) {
+              const nextToasts = changedItems.map((itemId) => ({
+                id: `${Date.now()}-${itemId}-${Math.random().toString(36).slice(2, 8)}`,
+                itemId,
+                itemName:
+                  itemById[itemId]?.locale_name ??
+                  itemById[itemId]?.name ??
+                  `Item ${itemId}`,
+                newPrice: nextOverrides[itemId] ?? 0,
+              }));
+
+              setPriceChangeToasts((currentToasts) => [
+                ...currentToasts,
+                ...nextToasts,
+              ]);
+
+              for (const toast of nextToasts) {
+                window.setTimeout(() => {
+                  setPriceChangeToasts((currentToasts) =>
+                    currentToasts.filter((entry) => entry.id !== toast.id),
+                  );
+                }, 5000);
+              }
+            }
+
+            return nextOverrides;
+          });
+
+          setPrices(mergeStoredPrices(nextOverrides));
+        },
+      )
+      .subscribe();
+
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  }, [session?.user.id]);
+
+  useEffect(() => {
+    if (
+      !priceSyncReady ||
+      !session ||
+      !isSupabaseConfigured() ||
+      !centralPriceOverrideEnabled
+    )
+      return;
 
     const timeout = window.setTimeout(() => {
       void (async () => {
         try {
           const supabase = getSupabaseClient();
+          const nextOverrides = buildStoredPriceOverrides(prices);
           const { error } = await supabase.from("shared_market_prices").upsert(
             {
               id: SHARED_PRICE_SET_ID,
-              price_overrides: buildStoredPriceOverrides(prices),
+              price_overrides: nextOverrides,
               updated_by: session.user.id,
               updated_at: new Date().toISOString(),
             },
@@ -171,6 +316,8 @@ export default function App() {
           );
 
           if (error) throw error;
+
+          setSharedPriceOverrides(normalizeStoredPriceOverrides(nextOverrides));
 
           setPriceSyncMessage(null);
         } catch (error) {
@@ -185,7 +332,12 @@ export default function App() {
     return () => {
       window.clearTimeout(timeout);
     };
-  }, [prices, priceSyncReady, session?.user.id]);
+  }, [prices, priceSyncReady, session?.user.id, centralPriceOverrideEnabled]);
+
+  useEffect(() => {
+    if (centralPriceOverrideEnabled) return;
+    setPriceSyncMessage(null);
+  }, [centralPriceOverrideEnabled]);
 
   useEffect(() => {
     if (!isSupabaseConfigured()) {
@@ -405,6 +557,16 @@ export default function App() {
             Optimalizáld a kraftolást és kezeld egy helyen a boss ládákhoz
             kapcsolódó számolásokat.
           </p>
+          <label className="price-field">
+            <span>Központi árakat felülírása</span>
+            <input
+              type="checkbox"
+              checked={centralPriceOverrideEnabled}
+              onChange={(event) =>
+                setCentralPriceOverrideEnabled(event.target.checked)
+              }
+            />
+          </label>
         </div>
         <button
           type="button"
@@ -428,6 +590,29 @@ export default function App() {
           </button>
         ))}
       </nav>
+
+      {priceChangeToasts.length > 0 ? (
+        <div
+          className="toast-stack"
+          aria-live="polite"
+          aria-relevant="additions"
+        >
+          {priceChangeToasts.map((toast) => (
+            <article className="toast-card" key={toast.id}>
+              <ItemIcon
+                itemId={toast.itemId}
+                name={toast.itemName}
+                size={28}
+                className="toast-icon"
+              />
+              <div className="toast-copy">
+                <strong>{toast.itemName}</strong>
+                <span>{formatGold(toast.newPrice)}</span>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : null}
 
       {activeMenu === "crafting" ? (
         <>
