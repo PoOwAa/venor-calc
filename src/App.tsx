@@ -331,10 +331,10 @@ export default function App() {
                     <span className="target-badge">
                       <ItemIcon
                         itemId={selectedTarget.vnum}
-                        name={selectedTarget.name}
+                        name={selectedTarget.locale_name || selectedTarget.name}
                         size={18}
                       />{" "}
-                      {selectedTarget.name}
+                      {selectedTarget.locale_name || selectedTarget.name}
                     </span>
                     <span className="target-badge subtle">
                       {relevantTradableItems.length} releváns piaci tárgy
@@ -361,7 +361,7 @@ export default function App() {
           {selectedTarget ? (
             <PriceEditor
               items={relevantTradableItems}
-              targetName={selectedTarget.name}
+              targetName={selectedTarget.locale_name || selectedTarget.name}
               prices={prices}
               onChange={setPrices}
             />
@@ -400,6 +400,7 @@ export default function App() {
                           <ItemIcon
                             itemId={result.itemId}
                             name={
+                              itemById[result.itemId]?.locale_name ??
                               itemById[result.itemId]?.name ??
                               result.sourceLabel
                             }

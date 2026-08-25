@@ -51,7 +51,7 @@ function marketResult(
     cashCost: cost,
     effectiveCost: cost,
     leftoverValue: 0,
-    sourceLabel: `Piaci vásárlás: ${itemById[itemId]?.name ?? itemId}`,
+    sourceLabel: `Piaci vásárlás: ${itemById[itemId]?.locale_name ?? itemById[itemId]?.name ?? itemId}`,
     step: {
       type: "market",
       itemId,
@@ -172,7 +172,7 @@ export function getRelevantTradableItems(itemId: ItemId): Item[] {
     .sort(
       (a, b) =>
         (a.type ?? "").localeCompare(b.type ?? "", "hu") ||
-        a.name.localeCompare(b.name, "hu") ||
+        (a.locale_name || a.name).localeCompare(b.locale_name || b.name, "hu") ||
         a.vnum - b.vnum,
     );
 }

@@ -130,7 +130,7 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
             ...line,
             itemNameInput: value,
             matchedItemId: exactMatch.vnum,
-            matchedItemName: exactMatch.name,
+            matchedItemName: exactMatch.locale_name || exactMatch.name,
             confidence: 1,
             needsReview: false,
           };
@@ -445,8 +445,12 @@ export function BossBoxesPage({ prices, onPriceChange }: BossBoxesPageProps) {
               <div className="boss-box-header">
                 <div>
                   <h3>
-                    <ItemIcon itemId={box.vnum} name={box.name} size={18} />{" "}
-                    {box.name}
+                    <ItemIcon
+                      itemId={box.vnum}
+                      name={box.locale_name || box.name}
+                      size={18}
+                    />{" "}
+                    {box.locale_name || box.name}
                   </h3>
                   <p className="muted">Tárgy azonosító: {box.vnum}</p>
                 </div>
@@ -597,5 +601,9 @@ function findExactItemByName(value: string) {
   const normalized = normalizeText(value);
   if (!normalized) return null;
 
-  return items.find((item) => normalizeText(item.name) === normalized) ?? null;
+  return (
+    items.find(
+      (item) => normalizeText(item.locale_name || item.name) === normalized,
+    ) ?? null
+  );
 }

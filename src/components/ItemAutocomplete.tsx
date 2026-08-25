@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { itemById, items } from "../data/items";
+import { getItemDisplayName, getItemNameForSearch } from "../lib/itemName";
 import type { ItemId } from "../types/domain";
 import { ItemIcon } from "./ItemIcon";
 
@@ -17,7 +18,7 @@ function findExactItem(query: string) {
   return (
     items.find(
       (item) =>
-        item.name.toLocaleLowerCase("hu-HU") === normalized ||
+        getItemNameForSearch(item).toLocaleLowerCase("hu-HU") === normalized ||
         String(item.vnum) === normalized,
     ) ?? null
   );
@@ -30,7 +31,7 @@ function rankItems(query: string) {
 
   return items
     .map((item) => {
-      const name = item.name.toLocaleLowerCase("hu-HU");
+      const name = getItemNameForSearch(item).toLocaleLowerCase("hu-HU");
       const id = String(item.vnum);
 
       let score = Number.POSITIVE_INFINITY;
@@ -46,7 +47,7 @@ function rankItems(query: string) {
     .sort(
       (a, b) =>
         a.score - b.score ||
-        a.item.name.localeCompare(b.item.name, "hu") ||
+        getItemNameForSearch(a.item).localeCompare(getItemNameForSearch(b.item), "hu") ||
         a.item.vnum - b.item.vnum,
     )
     .slice(0, MAX_SUGGESTIONS)
@@ -55,12 +56,12 @@ function rankItems(query: string) {
 
 export function ItemAutocomplete({ selectedItemId, onSelect }: Props) {
   const selectedItem = selectedItemId == null ? null : itemById[selectedItemId];
-  const [query, setQuery] = useState(selectedItem?.name ?? "");
+  const [query, setQuery] = useState(getItemDisplayName(selectedItem));
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    setQuery(selectedItem?.name ?? "");
+    setQuery(getItemDisplayName(selectedItem));
   }, [selectedItem]);
 
   const suggestions = useMemo(() => rankItems(query), [query]);
@@ -90,7 +91,7 @@ export function ItemAutocomplete({ selectedItemId, onSelect }: Props) {
     window.setTimeout(() => {
       setIsOpen(false);
       setActiveIndex(0);
-      setQuery(exactMatch?.name ?? selectedItem?.name ?? "");
+      setQuery(getItemDisplayName(exactMatch ?? selectedItem));
     }, 100);
   }
 
@@ -126,14 +127,14 @@ export function ItemAutocomplete({ selectedItemId, onSelect }: Props) {
           if (event.key === "Enter" && suggestions[activeIndex]) {
             event.preventDefault();
             const item = suggestions[activeIndex];
-            setQuery(item.name);
+            setQuery(getItemDisplayName(item));
             selectItem(item.vnum);
           }
 
           if (event.key === "Escape") {
             setIsOpen(false);
             setActiveIndex(0);
-            setQuery(selectedItem?.name ?? "");
+            setQuery(getItemDisplayName(selectedItem));
           }
         }}
         aria-label="Keresett tárgy"
@@ -153,12 +154,12 @@ export function ItemAutocomplete({ selectedItemId, onSelect }: Props) {
                 className={`autocomplete-option ${index === activeIndex ? "active" : ""}`}
                 onMouseDown={(event) => {
                   event.preventDefault();
-                  setQuery(item.name);
+                  setQuery(getItemDisplayName(item));
                   selectItem(item.vnum);
                 }}
               >
                 <span>
-                  <ItemIcon itemId={item.vnum} name={item.name} /> {item.name}
+                  <ItemIcon itemId={item.vnum} name={getItemDisplayName(item)} /> {getItemDisplayName(item)}
                 </span>
                 <span className="muted">#{item.vnum}</span>
               </button>

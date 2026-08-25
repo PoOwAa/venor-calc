@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { items } from "../data/items";
+import { getItemDisplayName, getItemNameForSearch } from "../lib/itemName";
 import { ItemIcon } from "./ItemIcon";
 
 interface EditableItemAutocompleteProps {
@@ -19,7 +20,7 @@ function findExactItem(query: string) {
   return (
     items.find(
       (item) =>
-        item.name.toLocaleLowerCase("hu-HU") === normalized ||
+        getItemNameForSearch(item).toLocaleLowerCase("hu-HU") === normalized ||
         String(item.vnum) === normalized,
     ) ?? null
   );
@@ -32,7 +33,7 @@ function rankItems(query: string) {
 
   return items
     .map((item) => {
-      const name = item.name.toLocaleLowerCase("hu-HU");
+      const name = getItemNameForSearch(item).toLocaleLowerCase("hu-HU");
       const id = String(item.vnum);
 
       let score = Number.POSITIVE_INFINITY;
@@ -48,7 +49,7 @@ function rankItems(query: string) {
     .sort(
       (a, b) =>
         a.score - b.score ||
-        a.item.name.localeCompare(b.item.name, "hu") ||
+        getItemNameForSearch(a.item).localeCompare(getItemNameForSearch(b.item), "hu") ||
         a.item.vnum - b.item.vnum,
     )
     .slice(0, MAX_SUGGESTIONS)
@@ -91,7 +92,7 @@ export function EditableItemAutocomplete({
         onBlur={() => {
           const exactMatch = findExactItem(value);
           if (exactMatch) {
-            applyItem(exactMatch.vnum, exactMatch.name);
+            applyItem(exactMatch.vnum, getItemDisplayName(exactMatch));
           }
 
           window.setTimeout(() => {
@@ -120,7 +121,7 @@ export function EditableItemAutocomplete({
           if (event.key === "Enter" && suggestions[activeIndex]) {
             event.preventDefault();
             const item = suggestions[activeIndex];
-            applyItem(item.vnum, item.name);
+            applyItem(item.vnum, getItemDisplayName(item));
           }
 
           if (event.key === "Escape") {
@@ -145,11 +146,11 @@ export function EditableItemAutocomplete({
                 className={`autocomplete-option ${index === activeIndex ? "active" : ""}`}
                 onMouseDown={(event) => {
                   event.preventDefault();
-                  applyItem(item.vnum, item.name);
+                  applyItem(item.vnum, getItemDisplayName(item));
                 }}
               >
                 <span>
-                  <ItemIcon itemId={item.vnum} name={item.name} /> {item.name}
+                  <ItemIcon itemId={item.vnum} name={getItemDisplayName(item)} /> {getItemDisplayName(item)}
                 </span>
                 <span className="muted">#{item.vnum}</span>
               </button>

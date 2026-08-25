@@ -1,4 +1,5 @@
 import type { Item, ItemId, PriceMap } from "../types/domain";
+import { getItemDisplayName } from "../lib/itemName";
 import { ItemIcon } from "./ItemIcon";
 
 interface Props {
@@ -49,8 +50,8 @@ export function PriceEditor({ items, targetName, prices, onChange }: Props) {
           {items.map((item) => (
             <label className="price-field" key={item.vnum}>
               <span>
-                <ItemIcon itemId={item.vnum} name={item.name} size={12} />{" "}
-                {item.name}
+                <ItemIcon itemId={item.vnum} name={getItemDisplayName(item)} size={12} />{" "}
+                {getItemDisplayName(item)}
               </span>
               <div className="input-with-suffix">
                 <input

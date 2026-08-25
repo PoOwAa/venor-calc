@@ -76,7 +76,10 @@ export function buildBossBoxStats(
 
           return {
             itemId,
-            itemName: itemById[itemId]?.name ?? `Ismeretlen tárgy (${itemId})`,
+            itemName:
+              itemById[itemId]?.locale_name ??
+              itemById[itemId]?.name ??
+              `Ismeretlen tárgy (${itemId})`,
             dropCount: aggregate.dropCount,
             totalQuantity: aggregate.totalQuantity,
             unitPrice,

@@ -228,10 +228,10 @@ export function BossBoxReviewPage() {
                     <h3>
                       <ItemIcon
                         itemId={row.box_item_id}
-                        name={box?.name ?? `Box #${row.box_item_id}`}
+                        name={box?.locale_name || box?.name || `Box #${row.box_item_id}`}
                         size={18}
                       />{" "}
-                      {box?.name ?? `Ismeretlen box (#${row.box_item_id})`}
+                      {box?.locale_name || box?.name || `Ismeretlen box (#${row.box_item_id})`}
                     </h3>
                     <p className="muted">
                       Submission:{" "}
