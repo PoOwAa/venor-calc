@@ -495,12 +495,6 @@ h2, h3 { margin: 0; }
 }
 
 .review-card {
-.ocr-add-row-sticky {
-  width: 100%;
-  min-height: 46px;
-  justify-content: center;
-  font-weight: 800;
-}
   display: grid;
   gap: 14px;
 }
@@ -550,6 +544,17 @@ h2, h3 { margin: 0; }
   margin-top: 4px;
 }
 
+.review-content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.9fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.review-table-panel {
+  min-width: 0;
+}
+
 .review-image-wrap {
   border: 1px solid #334155;
   border-radius: 14px;
@@ -557,11 +562,20 @@ h2, h3 { margin: 0; }
   background: #0b1220;
 }
 
+.review-image-panel {
+  position: sticky;
+  top: 18px;
+  min-height: 240px;
+  align-self: start;
+}
+
 .review-image {
   width: 100%;
-  max-height: 320px;
+  height: 100%;
+  max-height: 420px;
   object-fit: contain;
   display: block;
+  background: #0b1220;
 }
 
 .review-entries {
@@ -569,14 +583,32 @@ h2, h3 { margin: 0; }
   gap: 8px;
 }
 
+.review-entry-header,
 .review-entry-row {
   display: grid;
-  grid-template-columns: 1.4fr 1.4fr .6fr .6fr;
+  grid-template-columns: 1.6fr .6fr .6fr;
   gap: 10px;
   padding: 10px 12px;
+}
+
+.review-entry-header {
+  color: #94a3b8;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.review-entry-row {
   border-radius: 12px;
   border: 1px solid #334155;
   background: #0b1220;
+}
+
+.review-entry-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
 }
 
 .review-entry-row.needs-review {
@@ -921,6 +953,8 @@ footer { margin-top: 30px; text-align: center; color: #64748b; font-size: 12px; 
   .boss-metrics { grid-template-columns: 1fr; }
   .review-card-header { flex-direction: column; align-items: start; }
   .review-meta-grid { grid-template-columns: 1fr; }
+  .review-content-grid { grid-template-columns: 1fr; }
+  .review-entry-header { display: none; }
   .review-entry-row { grid-template-columns: 1fr; }
   .review-actions { justify-content: stretch; }
   .review-actions > button { flex: 1; }

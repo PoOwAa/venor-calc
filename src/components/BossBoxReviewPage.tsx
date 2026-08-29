@@ -275,43 +275,60 @@ export function BossBoxReviewPage() {
                   </div>
                 </div>
 
-                <div className="review-image-wrap">
-                  {row.screenshotUrl ? (
-                    <img
-                      src={row.screenshotUrl}
-                      alt="Beküldött screenshot"
-                      className="review-image"
-                    />
-                  ) : (
-                    <div className="empty-state">
-                      A screenshot előnézet nem elérhető (ellenőrizd a storage
-                      policy-kat).
+                <div className="review-content-grid">
+                  <div className="review-table-panel">
+                    <div className="review-entries">
+                      <div className="review-entry-header">
+                        <span>Javított</span>
+                        <span>Menny.</span>
+                        <span>Biz.</span>
+                      </div>
+                      {entries.map((entry, index) => (
+                        <div
+                          className={`review-entry-row ${entry.needs_review ? "needs-review" : ""}`}
+                          key={`${row.id}-${index}`}
+                        >
+                          <span className="review-entry-item">
+                            {entry.item_id != null ? (
+                              <ItemIcon
+                                itemId={entry.item_id}
+                                name={
+                                  entry.corrected_name ??
+                                  itemById[entry.item_id]?.locale_name ??
+                                  itemById[entry.item_id]?.name ??
+                                  `Item #${entry.item_id}`
+                                }
+                                size={18}
+                              />
+                            ) : null}
+                            {entry.corrected_name ?? "-"}
+                          </span>
+                          <span>{entry.quantity ?? 0}</span>
+                          <span>
+                            {typeof entry.confidence === "number"
+                              ? `${(entry.confidence * 100).toFixed(0)}%`
+                              : "-"}
+                          </span>
+                        </div>
+                      ))}
                     </div>
-                  )}
-                </div>
+                  </div>
 
-                <div className="review-entries">
-                  {entries.map((entry, index) => (
-                    <div
-                      className={`review-entry-row ${entry.needs_review ? "needs-review" : ""}`}
-                      key={`${row.id}-${index}`}
-                    >
-                      <span>{entry.recognized_name ?? "-"}</span>
-                      <span>{entry.corrected_name ?? "-"}</span>
-                      <span>{entry.quantity ?? 0}</span>
-                      <span>
-                        {typeof entry.confidence === "number"
-                          ? `${(entry.confidence * 100).toFixed(0)}%`
-                          : "-"}
-                      </span>
-                    </div>
-                  ))}
+                  <div className="review-image-wrap review-image-panel">
+                    {row.screenshotUrl ? (
+                      <img
+                        src={row.screenshotUrl}
+                        alt="Beküldött screenshot"
+                        className="review-image"
+                      />
+                    ) : (
+                      <div className="empty-state">
+                        A screenshot előnézet nem elérhető (ellenőrizd a storage
+                        policy-kat).
+                      </div>
+                    )}
+                  </div>
                 </div>
-
-                <details>
-                  <summary>Nyers OCR szöveg</summary>
-                  <pre className="ocr-raw-text">{row.raw_ocr_text}</pre>
-                </details>
 
                 <label className="price-field">
                   <span>Reviewer megjegyzés</span>
