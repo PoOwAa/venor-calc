@@ -6,6 +6,7 @@ import { ItemAutocomplete } from "./components/ItemAutocomplete";
 import { BossBoxesPage } from "./components/BossBoxesPage";
 import { ItemIcon } from "./components/ItemIcon";
 import { PriceEditor } from "./components/PriceEditor";
+import { QuickPriceEditor } from "./components/QuickPriceEditor";
 import { PathView } from "./components/PathView";
 import { itemById, items } from "./data/items";
 import { formatGold } from "./lib/format";
@@ -575,6 +576,8 @@ export default function App() {
 
   return (
     <main className="app-shell">
+      <QuickPriceEditor prices={prices} onChange={setPrices} />
+
       <header className="hero">
         <div className="hero-branding">
           <img className="site-logo" src={SITE_LOGO} alt="VenorCalc" />
