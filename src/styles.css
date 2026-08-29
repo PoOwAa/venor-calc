@@ -398,14 +398,74 @@ h2, h3 { margin: 0; }
   }
 }
 
-.boss-box-grid {
-  display: grid;
-  gap: 16px;
+.boss-box-table-wrap {
+  overflow: hidden;
 }
 
-.boss-box-card {
+.boss-box-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.boss-box-table thead th {
+  padding: 12px 14px;
+  border-bottom: 1px solid #334155;
+  text-align: left;
+  color: #94a3b8;
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.boss-box-table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.75);
+  vertical-align: middle;
+  color: #e2e8f0;
+}
+
+.boss-box-table-row {
+  cursor: pointer;
+  transition: background-color .15s ease, transform .15s ease;
+}
+
+.boss-box-table-row:hover {
+  background: rgba(15, 23, 42, 0.7);
+}
+
+.boss-box-table-row.is-expanded {
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.boss-box-table-row:focus-visible {
+  outline: 2px solid rgba(245, 158, 11, 0.8);
+  outline-offset: -2px;
+}
+
+.boss-box-table-icon {
+  width: 44px;
+}
+
+.boss-box-price-cell {
+  width: 210px;
+}
+
+.table-price-field {
+  width: 100%;
+}
+
+.boss-box-detail-row td {
+  padding: 0 14px 14px;
+}
+
+.boss-box-detail-panel {
   display: grid;
   gap: 16px;
+  padding: 16px;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.72);
 }
 
 .boss-box-header {
