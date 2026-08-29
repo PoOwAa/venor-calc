@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { itemById } from "../data/items";
 import { getSupabaseClient, isSupabaseConfigured } from "../lib/supabase";
+import { EditableItemAutocomplete } from "./EditableItemAutocomplete";
 import { ItemIcon } from "./ItemIcon";
 
 const SCREENSHOT_BUCKET = "box-opening-screenshots";
@@ -34,6 +35,7 @@ interface SubmittedEntry {
   quantity?: number;
   confidence?: number;
   needs_review?: boolean;
+  is_manual?: boolean;
 }
 
 export function BossBoxReviewPage() {
@@ -50,6 +52,9 @@ export function BossBoxReviewPage() {
   const [reviewerNotes, setReviewerNotes] = useState<Record<string, string>>(
     {},
   );
+  const [editedEntriesByRow, setEditedEntriesByRow] = useState<
+    Record<string, SubmittedEntry[]>
+  >({});
 
   const pendingCount = useMemo(
     () => rows.filter((row) => row.status === "pending").length,
@@ -119,6 +124,11 @@ export function BossBoxReviewPage() {
             row.submitted_by,
           );
 
+          setEditedEntriesByRow((current) => ({
+            ...current,
+            [row.id]: normalizeEntries(row.submitted_entries),
+          }));
+
           return {
             ...row,
             uploaderLabel,
@@ -136,6 +146,94 @@ export function BossBoxReviewPage() {
     } finally {
       setIsLoading(false);
     }
+  }
+
+  function updateEditedEntry(
+    rowId: string,
+    entryIndex: number,
+    updater: (entry: SubmittedEntry) => SubmittedEntry,
+  ) {
+    setEditedEntriesByRow((current) => ({
+      ...current,
+      [rowId]: (
+        current[rowId] ??
+        normalizeEntries(
+          rows.find((row) => row.id === rowId)?.submitted_entries ?? [],
+        )
+      ).map((entry, index) => (index === entryIndex ? updater(entry) : entry)),
+    }));
+  }
+
+  function updateEntryItem(
+    rowId: string,
+    entryIndex: number,
+    itemId: number | null,
+    itemName: string,
+  ) {
+    updateEditedEntry(rowId, entryIndex, (entry) => ({
+      ...entry,
+      item_id: itemId,
+      corrected_name: itemName,
+      matched_item_name: itemName,
+      needs_review: false,
+      confidence: itemId == null ? (entry.confidence ?? 0) : 1,
+    }));
+  }
+
+  function updateEntryQuantity(
+    rowId: string,
+    entryIndex: number,
+    rawValue: string,
+  ) {
+    const normalized = rawValue.replace(/\s/g, "");
+    const parsed = normalized === "" ? 0 : Number(normalized);
+
+    updateEditedEntry(rowId, entryIndex, (entry) => ({
+      ...entry,
+      quantity: Number.isFinite(parsed) && parsed >= 0 ? parsed : 0,
+    }));
+  }
+
+  function addManualEntry(rowId: string) {
+    setEditedEntriesByRow((current) => {
+      const existing =
+        current[rowId] ??
+        normalizeEntries(
+          rows.find((row) => row.id === rowId)?.submitted_entries ?? [],
+        );
+
+      return {
+        ...current,
+        [rowId]: [
+          ...existing,
+          {
+            recognized_name: "Kézi sor",
+            corrected_name: "",
+            item_id: null,
+            matched_item_name: null,
+            quantity: 0,
+            confidence: 0,
+            needs_review: true,
+            is_manual: true,
+          },
+        ],
+      };
+    });
+  }
+
+  function removeManualEntry(rowId: string, entryIndex: number) {
+    setEditedEntriesByRow((current) => {
+      const existing =
+        current[rowId] ??
+        normalizeEntries(
+          rows.find((row) => row.id === rowId)?.submitted_entries ?? [],
+        );
+
+      return {
+        ...current,
+        [rowId]: existing.filter((_, index) => index !== entryIndex),
+      };
+    });
   }
 
   async function handleApprove(rowId: string) {
@@ -156,6 +254,23 @@ export function BossBoxReviewPage() {
     try {
       const supabase = getSupabaseClient();
       const note = reviewerNotes[rowId] ?? null;
+      const row = rows.find((entry) => entry.id === rowId);
+      const nextEntries =
+        editedEntriesByRow[rowId] ??
+        normalizeEntries(row?.submitted_entries ?? []);
+
+      if (row) {
+        const { error: updateError } = await supabase
+          .from(REVIEW_QUEUE_TABLE)
+          .update({
+            submitted_entries: nextEntries,
+            unresolved_count: nextEntries.filter((entry) => entry.needs_review)
+              .length,
+          })
+          .eq("id", rowId);
+
+        if (updateError) throw updateError;
+      }
 
       if (decision === "approve") {
         const result = await supabase.rpc("approve_box_opening_submission", {
@@ -226,7 +341,9 @@ export function BossBoxReviewPage() {
         <div className="review-grid">
           {rows.map((row) => {
             const box = itemById[row.box_item_id];
-            const entries = normalizeEntries(row.submitted_entries);
+            const entries =
+              editedEntriesByRow[row.id] ??
+              normalizeEntries(row.submitted_entries);
             const isActing = actionRowId === row.id;
 
             return (
@@ -282,6 +399,7 @@ export function BossBoxReviewPage() {
                         <span>Javított</span>
                         <span>Menny.</span>
                         <span>Biz.</span>
+                        <span className="review-entry-header-action"> </span>
                       </div>
                       {entries.map((entry, index) => (
                         <div
@@ -289,26 +407,52 @@ export function BossBoxReviewPage() {
                           key={`${row.id}-${index}`}
                         >
                           <span className="review-entry-item">
-                            {entry.item_id != null ? (
-                              <ItemIcon
-                                itemId={entry.item_id}
-                                name={
-                                  entry.corrected_name ??
-                                  itemById[entry.item_id]?.locale_name ??
-                                  itemById[entry.item_id]?.name ??
-                                  `Item #${entry.item_id}`
-                                }
-                                size={18}
-                              />
-                            ) : null}
-                            {entry.corrected_name ?? "-"}
+                            <EditableItemAutocomplete
+                              value={entry.corrected_name ?? ""}
+                              onValueChange={(value) =>
+                                updateEditedEntry(row.id, index, (current) => ({
+                                  ...current,
+                                  corrected_name: value,
+                                }))
+                              }
+                              onSelectItem={(itemId, itemName) =>
+                                updateEntryItem(row.id, index, itemId, itemName)
+                              }
+                              placeholder="Kezdj el gépelni..."
+                              ariaLabel="Javított item szerkesztése"
+                            />
                           </span>
-                          <span>{entry.quantity ?? 0}</span>
+                          <input
+                            type="number"
+                            min={0}
+                            value={entry.quantity ?? 0}
+                            onChange={(event) =>
+                              updateEntryQuantity(
+                                row.id,
+                                index,
+                                event.target.value,
+                              )
+                            }
+                            className="review-quantity-input"
+                          />
                           <span>
                             {typeof entry.confidence === "number"
                               ? `${(entry.confidence * 100).toFixed(0)}%`
                               : "-"}
                           </span>
+                          {entry.is_manual ? (
+                            <button
+                              type="button"
+                              className="review-remove-row-button"
+                              onClick={() => removeManualEntry(row.id, index)}
+                              aria-label="Kézi sor eltávolítása"
+                              title="Kézi sor eltávolítása"
+                            >
+                              ×
+                            </button>
+                          ) : (
+                            <span className="review-entry-header-action" />
+                          )}
                         </div>
                       ))}
                     </div>
@@ -328,6 +472,13 @@ export function BossBoxReviewPage() {
                       </div>
                     )}
                   </div>
+                  <button
+                    type="button"
+                    className="secondary review-add-row-button"
+                    onClick={() => addManualEntry(row.id)}
+                  >
+                    Sor hozzáadása
+                  </button>
                 </div>
 
                 <label className="price-field">
