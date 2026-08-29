@@ -331,6 +331,8 @@ export function BossBoxUploadPage() {
         throw uploadResult.error;
       }
 
+      const { data: userData } = await supabase.auth.getUser();
+
       const queuePayload = {
         box_item_id: selectedBoxId,
         opened_box_count: ocrOpenedBoxCount,
@@ -338,6 +340,7 @@ export function BossBoxUploadPage() {
         screenshot_source_filename: uploadedScreenshot.name,
         raw_ocr_text: ocrText,
         unresolved_count: ocrLines.filter((line) => line.needsReview).length,
+        submitted_by: userData.user?.id ?? null,
         submitted_entries: ocrLines.map((line) => ({
           recognized_name: line.recognizedName,
           corrected_name: line.itemNameInput,

@@ -137,6 +137,28 @@ $$;
 grant execute on function public.approve_box_opening_submission(uuid, text) to anon, authenticated;
 grant execute on function public.reject_box_opening_submission(uuid, text) to anon, authenticated;
 
+create or replace function public.get_user_display_name(p_user_id uuid)
+returns text
+language sql
+security definer
+set search_path = public, auth
+as $$
+  select
+    coalesce(
+      nullif((raw_user_meta_data ->> 'display_name')::text, ''),
+      nullif((raw_user_meta_data ->> 'full_name')::text, ''),
+      nullif((raw_user_meta_data ->> 'name')::text, ''),
+      nullif((raw_user_meta_data ->> 'username')::text, ''),
+      nullif((raw_user_meta_data ->> 'user_name')::text, ''),
+      email,
+      'Felhasználó ' || substring(p_user_id::text from 1 for 8)
+    )
+  from auth.users
+  where id = p_user_id;
+$$;
+
+grant execute on function public.get_user_display_name(uuid) to anon, authenticated;
+
 alter table public.box_opening_review_queue enable row level security;
 alter table public.box_opening_approved enable row level security;
 

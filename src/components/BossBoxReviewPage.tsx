@@ -15,6 +15,7 @@ interface ReviewQueueRow {
   raw_ocr_text: string;
   unresolved_count: number;
   submitted_entries: unknown;
+  submitted_by: string | null;
   status: "pending" | "approved" | "rejected";
   reviewer_note: string | null;
   created_at: string;
@@ -22,6 +23,7 @@ interface ReviewQueueRow {
 
 interface ReviewQueueRowWithUrl extends ReviewQueueRow {
   screenshotUrl: string | null;
+  uploaderLabel?: string;
 }
 
 interface SubmittedEntry {
@@ -112,10 +114,16 @@ export function BossBoxReviewPage() {
             .from(SCREENSHOT_BUCKET)
             .createSignedUrl(row.screenshot_object_path, 60 * 60);
 
+          const uploaderLabel = await getUploaderLabel(
+            supabase,
+            row.submitted_by,
+          );
+
           return {
             ...row,
+            uploaderLabel,
             screenshotUrl: signed.data?.signedUrl ?? null,
-          } satisfies ReviewQueueRowWithUrl;
+          } satisfies ReviewQueueRowWithUrl & { uploaderLabel: string };
         }),
       );
 
@@ -243,6 +251,9 @@ export function BossBoxReviewPage() {
                       Submission:{" "}
                       {new Date(row.created_at).toLocaleString("hu-HU")}
                     </p>
+                    <p className="muted">
+                      Feltöltő: {row.uploaderLabel ?? "ismeretlen"}
+                    </p>
                   </div>
                   <span className="review-chip">
                     {row.unresolved_count} bizonytalan sor
@@ -342,6 +353,30 @@ export function BossBoxReviewPage() {
       )}
     </section>
   );
+}
+
+async function getUploaderLabel(
+  supabase: ReturnType<typeof getSupabaseClient>,
+  submittedBy: string | null,
+): Promise<string> {
+  if (!submittedBy) {
+    return "ismeretlen felhasználó";
+  }
+
+  try {
+    const { data, error } = await supabase.rpc("get_user_display_name", {
+      p_user_id: submittedBy,
+    });
+
+    if (error) throw error;
+    if (typeof data === "string" && data.trim()) {
+      return data;
+    }
+  } catch (error) {
+    console.error("Could not resolve uploader label", error);
+  }
+
+  return submittedBy;
 }
 
 function normalizeEntries(value: unknown): SubmittedEntry[] {
