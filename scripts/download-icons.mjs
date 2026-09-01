@@ -1,10 +1,15 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const MANIFEST_PATH = "./data/icon-manifest.json";
-const OUTPUT_DIR = "./public/items";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const rootDir = path.resolve(__dirname, "..");
+const manifestPath = path.join(rootDir, "data", "icon-manifest.json");
+const outputDir = path.join(rootDir, "public", "items");
 
 const ICON_BASE_URL = "https://wiki.venor2.hu/assets/icons/";
+const MANIFEST_URL = "https://wiki.venor2.hu/api/icon-manifest";
 
 const MIN_DELAY = 10;
 const MAX_DELAY = 20;
@@ -24,7 +29,7 @@ async function fileExists(filePath) {
 }
 
 async function downloadIcon(itemId, filename) {
-  const outputPath = path.join(OUTPUT_DIR, `${itemId}.png`);
+  const outputPath = path.join(outputDir, `${itemId}.png`);
 
   // Resume support
   if (await fileExists(outputPath)) {
@@ -39,7 +44,7 @@ async function downloadIcon(itemId, filename) {
   const response = await fetch(url, {
     headers: {
       "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
       Referer: `https://wiki.venor2.hu/items/${itemId}`,
     },
   });
@@ -70,12 +75,70 @@ async function downloadIcon(itemId, filename) {
   return "downloaded";
 }
 
+async function downloadManifest() {
+  const existingManifest = (await fileExists(manifestPath))
+    ? JSON.parse(await fs.readFile(manifestPath, "utf8"))
+    : null;
+
+  const response = await fetch(MANIFEST_URL, {
+    headers: {
+      accept: "*/*",
+      "accept-language": "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7,de;q=0.6",
+      priority: "u=1, i",
+      referer: "https://wiki.venor2.hu/",
+      "sec-ch-ua":
+        '"Chromium";v="152", "Not?A_Brand";v="24", "Google Chrome";v="152"',
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": '"macOS"',
+      "sec-fetch-dest": "empty",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-site": "same-origin",
+      "user-agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch icon manifest: ${response.status}`);
+  }
+
+  const manifest = await response.json();
+
+  if (
+    !manifest ||
+    typeof manifest !== "object" ||
+    typeof manifest.items !== "object"
+  ) {
+    throw new TypeError(
+      "Expected icon manifest endpoint to return an object with an items map",
+    );
+  }
+
+  await fs.mkdir(path.dirname(manifestPath), { recursive: true });
+
+  if (existingManifest?.generatedAt === manifest.generatedAt) {
+    console.log(
+      `Downloaded icon manifest unchanged (${manifest.generatedAt}), keeping ${manifestPath}`,
+    );
+
+    return existingManifest;
+  }
+
+  await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 2));
+
+  console.log(
+    `Downloaded icon manifest ${existingManifest?.generatedAt ?? "(new)"} -> ${manifest.generatedAt}`,
+  );
+
+  return manifest;
+}
+
 async function main() {
-  await fs.mkdir(OUTPUT_DIR, {
+  await fs.mkdir(outputDir, {
     recursive: true,
   });
 
-  const manifest = JSON.parse(await fs.readFile(MANIFEST_PATH, "utf8"));
+  const manifest = await downloadManifest();
 
   const entries = Object.entries(manifest.items);
 
