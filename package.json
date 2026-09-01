@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "generate:vendor-recipes": "node scripts/generate-vendor-recipes.mjs"
+    "generate:items": "node scripts/download-and-create-items.mjs",
+    "generate:shops": "node scripts/download-and-create-shops.mjs",
+    "generate:icons": "node scripts/download-icons.mjs",
+    "generate:all": "npm run generate:items && npm run generate:shops && npm run generate:icons"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",

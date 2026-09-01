@@ -193,15 +193,15 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 230015,
-        "quantity": 100
+        "quantity": 125
       },
       {
         "itemId": 230006,
-        "quantity": 100
+        "quantity": 125
       },
       {
         "itemId": 30608,
-        "quantity": 100
+        "quantity": 125
       }
     ],
     "output": {

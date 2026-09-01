@@ -75,5 +75,129 @@ export const recipes: Recipe[] = [
       "quantity": 1
     },
     "goldCost": 100000000
+  },
+  {
+    "id": "kalandorok-nagyapja-60263-240177-5",
+    "npc": "Kalandorok nagyapja",
+    "vendor": "Kalandorok nagyapja",
+    "vendorNpcVnum": 60263,
+    "label": "Kalandorok nagyapja • 240177",
+    "inputs": [
+      {
+        "itemId": 230099,
+        "quantity": 5
+      },
+      {
+        "itemId": 230085,
+        "quantity": 1
+      }
+    ],
+    "output": {
+      "itemId": 240177,
+      "quantity": 1
+    },
+    "goldCost": 500000000
+  },
+  {
+    "id": "kalandorok-nagyapja-60263-240178-6",
+    "npc": "Kalandorok nagyapja",
+    "vendor": "Kalandorok nagyapja",
+    "vendorNpcVnum": 60263,
+    "label": "Kalandorok nagyapja • 240178",
+    "inputs": [
+      {
+        "itemId": 230012,
+        "quantity": 1000
+      },
+      {
+        "itemId": 230085,
+        "quantity": 1
+      }
+    ],
+    "output": {
+      "itemId": 240178,
+      "quantity": 1
+    },
+    "goldCost": 1500000000
+  },
+  {
+    "id": "kalandorok-nagyapja-60263-240179-7",
+    "npc": "Kalandorok nagyapja",
+    "vendor": "Kalandorok nagyapja",
+    "vendorNpcVnum": 60263,
+    "label": "Kalandorok nagyapja • 240179",
+    "inputs": [
+      {
+        "itemId": 240001,
+        "quantity": 1
+      },
+      {
+        "itemId": 230085,
+        "quantity": 1
+      }
+    ],
+    "output": {
+      "itemId": 240179,
+      "quantity": 1
+    },
+    "goldCost": 5000000000
+  },
+  {
+    "id": "kalandorok-nagyapja-60263-220037-8",
+    "npc": "Kalandorok nagyapja",
+    "vendor": "Kalandorok nagyapja",
+    "vendorNpcVnum": 60263,
+    "label": "Kalandorok nagyapja • 220037",
+    "inputs": [
+      {
+        "itemId": 230135,
+        "quantity": 150
+      },
+      {
+        "itemId": 230136,
+        "quantity": 2
+      }
+    ],
+    "output": {
+      "itemId": 220037,
+      "quantity": 1
+    },
+    "goldCost": 100000000
+  },
+  {
+    "id": "kalandorok-nagyapja-60263-220037-9",
+    "npc": "Kalandorok nagyapja",
+    "vendor": "Kalandorok nagyapja",
+    "vendorNpcVnum": 60263,
+    "label": "Kalandorok nagyapja • 220037",
+    "inputs": [
+      {
+        "itemId": 230135,
+        "quantity": 300
+      }
+    ],
+    "output": {
+      "itemId": 220037,
+      "quantity": 1
+    },
+    "goldCost": 100000000
+  },
+  {
+    "id": "kalandorok-nagyapja-60263-220037-10",
+    "npc": "Kalandorok nagyapja",
+    "vendor": "Kalandorok nagyapja",
+    "vendorNpcVnum": 60263,
+    "label": "Kalandorok nagyapja • 220037",
+    "inputs": [
+      {
+        "itemId": 230136,
+        "quantity": 4
+      }
+    ],
+    "output": {
+      "itemId": 220037,
+      "quantity": 1
+    },
+    "goldCost": 100000000
   }
 ];

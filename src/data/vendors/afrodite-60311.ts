@@ -227,5 +227,155 @@ export const recipes: Recipe[] = [
       "quantity": 1
     },
     "goldCost": 10000000000
+  },
+  {
+    "id": "afrodite-60311-220036-11",
+    "npc": "Afrodité",
+    "vendor": "Afrodité",
+    "vendorNpcVnum": 60311,
+    "label": "Afrodité • 220036",
+    "inputs": [
+      {
+        "itemId": 230012,
+        "quantity": 50
+      },
+      {
+        "itemId": 230114,
+        "quantity": 2
+      },
+      {
+        "itemId": 230134,
+        "quantity": 3
+      },
+      {
+        "itemId": 30608,
+        "quantity": 18
+      }
+    ],
+    "output": {
+      "itemId": 220036,
+      "quantity": 1
+    },
+    "goldCost": 200000000
+  },
+  {
+    "id": "afrodite-60311-220036-12",
+    "npc": "Afrodité",
+    "vendor": "Afrodité",
+    "vendorNpcVnum": 60311,
+    "label": "Afrodité • 220036",
+    "inputs": [
+      {
+        "itemId": 230012,
+        "quantity": 50
+      },
+      {
+        "itemId": 230114,
+        "quantity": 2
+      },
+      {
+        "itemId": 230134,
+        "quantity": 3
+      },
+      {
+        "itemId": 230015,
+        "quantity": 18
+      }
+    ],
+    "output": {
+      "itemId": 220036,
+      "quantity": 1
+    },
+    "goldCost": 200000000
+  },
+  {
+    "id": "afrodite-60311-220036-13",
+    "npc": "Afrodité",
+    "vendor": "Afrodité",
+    "vendorNpcVnum": 60311,
+    "label": "Afrodité • 220036",
+    "inputs": [
+      {
+        "itemId": 230012,
+        "quantity": 50
+      },
+      {
+        "itemId": 230114,
+        "quantity": 2
+      },
+      {
+        "itemId": 230134,
+        "quantity": 3
+      },
+      {
+        "itemId": 230006,
+        "quantity": 18
+      }
+    ],
+    "output": {
+      "itemId": 220036,
+      "quantity": 1
+    },
+    "goldCost": 200000000
+  },
+  {
+    "id": "afrodite-60311-220036-14",
+    "npc": "Afrodité",
+    "vendor": "Afrodité",
+    "vendorNpcVnum": 60311,
+    "label": "Afrodité • 220036",
+    "inputs": [
+      {
+        "itemId": 230012,
+        "quantity": 50
+      },
+      {
+        "itemId": 230114,
+        "quantity": 2
+      },
+      {
+        "itemId": 230134,
+        "quantity": 3
+      },
+      {
+        "itemId": 220000,
+        "quantity": 75
+      }
+    ],
+    "output": {
+      "itemId": 220036,
+      "quantity": 1
+    },
+    "goldCost": 200000000
+  },
+  {
+    "id": "afrodite-60311-220036-15",
+    "npc": "Afrodité",
+    "vendor": "Afrodité",
+    "vendorNpcVnum": 60311,
+    "label": "Afrodité • 220036",
+    "inputs": [
+      {
+        "itemId": 230012,
+        "quantity": 50
+      },
+      {
+        "itemId": 230114,
+        "quantity": 2
+      },
+      {
+        "itemId": 230134,
+        "quantity": 3
+      },
+      {
+        "itemId": 220001,
+        "quantity": 75
+      }
+    ],
+    "output": {
+      "itemId": 220036,
+      "quantity": 1
+    },
+    "goldCost": 200000000
   }
 ];

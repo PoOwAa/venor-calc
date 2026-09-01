@@ -103,12 +103,12 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 30524,
-        "quantity": 2
+        "quantity": 3
       }
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 3
+      "quantity": 1
     },
     "goldCost": 0
   },
@@ -121,12 +121,12 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 30525,
-        "quantity": 2
+        "quantity": 3
       }
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 3
+      "quantity": 1
     },
     "goldCost": 0
   },
@@ -139,12 +139,12 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 230000,
-        "quantity": 2
+        "quantity": 3
       }
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 3
+      "quantity": 1
     },
     "goldCost": 0
   },
@@ -157,12 +157,12 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 30618,
-        "quantity": 2
+        "quantity": 1
       }
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 5
+      "quantity": 2
     },
     "goldCost": 0
   },
@@ -175,12 +175,12 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 71129,
-        "quantity": 4
+        "quantity": 2
       }
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 5
+      "quantity": 1
     },
     "goldCost": 0
   },
@@ -193,12 +193,12 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 71123,
-        "quantity": 4
+        "quantity": 2
       }
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 5
+      "quantity": 1
     },
     "goldCost": 0
   },
@@ -211,12 +211,12 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 230004,
-        "quantity": 2
+        "quantity": 1
       }
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 9
+      "quantity": 2
     },
     "goldCost": 0
   },
@@ -229,12 +229,12 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 30601,
-        "quantity": 2
+        "quantity": 1
       }
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 15
+      "quantity": 2
     },
     "goldCost": 0
   },
@@ -247,12 +247,12 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 30600,
-        "quantity": 2
+        "quantity": 1
       }
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 15
+      "quantity": 3
     },
     "goldCost": 0
   },
@@ -265,12 +265,12 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 230003,
-        "quantity": 4
+        "quantity": 1
       }
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 15
+      "quantity": 3
     },
     "goldCost": 0
   },
@@ -283,12 +283,12 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 30603,
-        "quantity": 3
+        "quantity": 1
       }
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 21
+      "quantity": 5
     },
     "goldCost": 0
   },
@@ -301,12 +301,12 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 30602,
-        "quantity": 3
+        "quantity": 1
       }
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 21
+      "quantity": 2
     },
     "goldCost": 0
   },
@@ -324,7 +324,7 @@ export const recipes: Recipe[] = [
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 24
+      "quantity": 5
     },
     "goldCost": 0
   },
@@ -342,7 +342,7 @@ export const recipes: Recipe[] = [
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 24
+      "quantity": 5
     },
     "goldCost": 0
   },
@@ -360,7 +360,61 @@ export const recipes: Recipe[] = [
     ],
     "output": {
       "itemId": 240157,
-      "quantity": 24
+      "quantity": 5
+    },
+    "goldCost": 0
+  },
+  {
+    "id": "idohasadek-kereskedo-60313-240157-19",
+    "npc": "Időhasadék kereskedő",
+    "vendor": "Időhasadék kereskedő",
+    "vendorNpcVnum": 60313,
+    "label": "Időhasadék kereskedő • 240157",
+    "inputs": [
+      {
+        "itemId": 30608,
+        "quantity": 20
+      }
+    ],
+    "output": {
+      "itemId": 240157,
+      "quantity": 1
+    },
+    "goldCost": 0
+  },
+  {
+    "id": "idohasadek-kereskedo-60313-240157-20",
+    "npc": "Időhasadék kereskedő",
+    "vendor": "Időhasadék kereskedő",
+    "vendorNpcVnum": 60313,
+    "label": "Időhasadék kereskedő • 240157",
+    "inputs": [
+      {
+        "itemId": 230015,
+        "quantity": 20
+      }
+    ],
+    "output": {
+      "itemId": 240157,
+      "quantity": 1
+    },
+    "goldCost": 0
+  },
+  {
+    "id": "idohasadek-kereskedo-60313-240157-21",
+    "npc": "Időhasadék kereskedő",
+    "vendor": "Időhasadék kereskedő",
+    "vendorNpcVnum": 60313,
+    "label": "Időhasadék kereskedő • 240157",
+    "inputs": [
+      {
+        "itemId": 230006,
+        "quantity": 20
+      }
+    ],
+    "output": {
+      "itemId": 240157,
+      "quantity": 1
     },
     "goldCost": 0
   }

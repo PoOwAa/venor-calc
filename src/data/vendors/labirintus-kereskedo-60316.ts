@@ -343,5 +343,93 @@ export const recipes: Recipe[] = [
       "quantity": 1
     },
     "goldCost": 500000000
+  },
+  {
+    "id": "labirintus-kereskedo-60316-230003-13",
+    "npc": "Labirintus kereskedő",
+    "vendor": "Labirintus kereskedő",
+    "vendorNpcVnum": 60316,
+    "label": "Labirintus kereskedő • 230003",
+    "inputs": [
+      {
+        "itemId": 230004,
+        "quantity": 1
+      },
+      {
+        "itemId": 230027,
+        "quantity": 3
+      }
+    ],
+    "output": {
+      "itemId": 230003,
+      "quantity": 1
+    },
+    "goldCost": 50000000
+  },
+  {
+    "id": "labirintus-kereskedo-60316-230004-14",
+    "npc": "Labirintus kereskedő",
+    "vendor": "Labirintus kereskedő",
+    "vendorNpcVnum": 60316,
+    "label": "Labirintus kereskedő • 230004",
+    "inputs": [
+      {
+        "itemId": 230003,
+        "quantity": 1
+      },
+      {
+        "itemId": 230027,
+        "quantity": 3
+      }
+    ],
+    "output": {
+      "itemId": 230004,
+      "quantity": 1
+    },
+    "goldCost": 50000000
+  },
+  {
+    "id": "labirintus-kereskedo-60316-230122-15",
+    "npc": "Labirintus kereskedő",
+    "vendor": "Labirintus kereskedő",
+    "vendorNpcVnum": 60316,
+    "label": "Labirintus kereskedő • 230122",
+    "inputs": [
+      {
+        "itemId": 31113,
+        "quantity": 15
+      },
+      {
+        "itemId": 230027,
+        "quantity": 1000
+      }
+    ],
+    "output": {
+      "itemId": 230122,
+      "quantity": 1
+    },
+    "goldCost": 5000000000
+  },
+  {
+    "id": "labirintus-kereskedo-60316-240159-16",
+    "npc": "Labirintus kereskedő",
+    "vendor": "Labirintus kereskedő",
+    "vendorNpcVnum": 60316,
+    "label": "Labirintus kereskedő • 240159",
+    "inputs": [
+      {
+        "itemId": 31113,
+        "quantity": 1
+      },
+      {
+        "itemId": 230027,
+        "quantity": 50
+      }
+    ],
+    "output": {
+      "itemId": 240159,
+      "quantity": 30
+    },
+    "goldCost": 1000000000
   }
 ];

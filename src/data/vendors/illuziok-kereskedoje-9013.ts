@@ -600,7 +600,7 @@ export const recipes: Recipe[] = [
     ],
     "output": {
       "itemId": 31160,
-      "quantity": 1
+      "quantity": 2
     },
     "goldCost": 200000000
   },
