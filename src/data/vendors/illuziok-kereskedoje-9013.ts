@@ -218,7 +218,7 @@ export const recipes: Recipe[] = [
       "itemId": 240125,
       "quantity": 1
     },
-    "goldCost": 800000000
+    "goldCost": 300000000
   },
   {
     "id": "illuziok-kereskedoje-9013-240126-13",
@@ -236,7 +236,7 @@ export const recipes: Recipe[] = [
       "itemId": 240126,
       "quantity": 1
     },
-    "goldCost": 500000000
+    "goldCost": 300000000
   },
   {
     "id": "illuziok-kereskedoje-9013-240127-14",
@@ -254,7 +254,7 @@ export const recipes: Recipe[] = [
       "itemId": 240127,
       "quantity": 1
     },
-    "goldCost": 500000000
+    "goldCost": 300000000
   },
   {
     "id": "illuziok-kereskedoje-9013-240128-15",
@@ -272,7 +272,7 @@ export const recipes: Recipe[] = [
       "itemId": 240128,
       "quantity": 1
     },
-    "goldCost": 500000000
+    "goldCost": 300000000
   },
   {
     "id": "illuziok-kereskedoje-9013-30320-16",
@@ -469,7 +469,7 @@ export const recipes: Recipe[] = [
       },
       {
         "itemId": 31096,
-        "quantity": 200
+        "quantity": 150
       }
     ],
     "output": {

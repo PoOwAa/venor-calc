@@ -1,4 +1,5 @@
 import type { Recipe } from "../../types/domain";
+import { recipes as vendorRecipes_a_nyar_ore_60319 } from "./a-nyar-ore-60319";
 import { recipes as vendorRecipes_afrodite_60311 } from "./afrodite-60311";
 import { recipes as vendorRecipes_alkimista_20001 } from "./alkimista-20001";
 import { recipes as vendorRecipes_asmodeus_ore_60271 } from "./asmodeus-ore-60271";
@@ -6,6 +7,7 @@ import { recipes as vendorRecipes_baek_go_20018 } from "./baek-go-20018";
 import { recipes as vendorRecipes_chaegirab_biologus_20084 } from "./chaegirab-biologus-20084";
 import { recipes as vendorRecipes_deokbae_20015 } from "./deokbae-20015";
 import { recipes as vendorRecipes_elementalis_kereskedo_szel_60033 } from "./elementalis-kereskedo-szel-60033";
+import { recipes as vendorRecipes_elementalis_kereskedo_villam_60035 } from "./elementalis-kereskedo-villam-60035";
 import { recipes as vendorRecipes_esemeny_segito_9004 } from "./esemeny-segito-9004";
 import { recipes as vendorRecipes_fegyverkereskedo_9001 } from "./fegyverkereskedo-9001";
 import { recipes as vendorRecipes_fegyverzet_kereskedo_9002 } from "./fegyverzet-kereskedo-9002";
@@ -26,6 +28,7 @@ import { recipes as vendorRecipes_labirintus_kereskedo_60316 } from "./labirintu
 import { recipes as vendorRecipes_lovaszinas_20349 } from "./lovaszinas-20349";
 import { recipes as vendorRecipes_magikus_fegyverek_oktato_20344 } from "./magikus-fegyverek-oktato-20344";
 import { recipes as vendorRecipes_mentalis_kuzdelem_oktato_20341 } from "./mentalis-kuzdelem-oktato-20341";
+import { recipes as vendorRecipes_meszaros_arthur_60326 } from "./meszaros-arthur-60326";
 import { recipes as vendorRecipes_sarkany_hatalom_oktato_20346 } from "./sarkany-hatalom-oktato-20346";
 import { recipes as vendorRecipes_testi_kuzdelem_oktato_20340 } from "./testi-kuzdelem-oktato-20340";
 import { recipes as vendorRecipes_theowahdan_60003 } from "./theowahdan-60003";
@@ -34,6 +37,7 @@ import { recipes as vendorRecipes_vegyeskereskedo_eladono_9003 } from "./vegyesk
 import { recipes as vendorRecipes_zodiakus_kereskedo_20451 } from "./zodiakus-kereskedo-20451";
 
 export const vendorRecipeGroups = [
+  { vendorName: "A nyár őre", vendorNpcVnum: 60319, recipes: vendorRecipes_a_nyar_ore_60319 },
   { vendorName: "Afrodité", vendorNpcVnum: 60311, recipes: vendorRecipes_afrodite_60311 },
   { vendorName: "Alkimista", vendorNpcVnum: 20001, recipes: vendorRecipes_alkimista_20001 },
   { vendorName: "Asmodeus őre", vendorNpcVnum: 60271, recipes: vendorRecipes_asmodeus_ore_60271 },
@@ -41,6 +45,7 @@ export const vendorRecipeGroups = [
   { vendorName: "Chaegirab biológus", vendorNpcVnum: 20084, recipes: vendorRecipes_chaegirab_biologus_20084 },
   { vendorName: "Deokbae", vendorNpcVnum: 20015, recipes: vendorRecipes_deokbae_20015 },
   { vendorName: "Elementális kereskedő (Szél)", vendorNpcVnum: 60033, recipes: vendorRecipes_elementalis_kereskedo_szel_60033 },
+  { vendorName: "Elementális kereskedő (Villám)", vendorNpcVnum: 60035, recipes: vendorRecipes_elementalis_kereskedo_villam_60035 },
   { vendorName: "Esemény segítő", vendorNpcVnum: 9004, recipes: vendorRecipes_esemeny_segito_9004 },
   { vendorName: "Fegyverkereskedő", vendorNpcVnum: 9001, recipes: vendorRecipes_fegyverkereskedo_9001 },
   { vendorName: "Fegyverzet-kereskedő", vendorNpcVnum: 9002, recipes: vendorRecipes_fegyverzet_kereskedo_9002 },
@@ -61,6 +66,7 @@ export const vendorRecipeGroups = [
   { vendorName: "Lovászinas", vendorNpcVnum: 20349, recipes: vendorRecipes_lovaszinas_20349 },
   { vendorName: "Mágikus fegyverek oktató", vendorNpcVnum: 20344, recipes: vendorRecipes_magikus_fegyverek_oktato_20344 },
   { vendorName: "Mentális küzdelem oktató", vendorNpcVnum: 20341, recipes: vendorRecipes_mentalis_kuzdelem_oktato_20341 },
+  { vendorName: "Mészáros Arthúr", vendorNpcVnum: 60326, recipes: vendorRecipes_meszaros_arthur_60326 },
   { vendorName: "Sárkány hatalom oktató", vendorNpcVnum: 20346, recipes: vendorRecipes_sarkany_hatalom_oktato_20346 },
   { vendorName: "Testi küzdelem oktató", vendorNpcVnum: 20340, recipes: vendorRecipes_testi_kuzdelem_oktato_20340 },
   { vendorName: "Theowahdan", vendorNpcVnum: 60003, recipes: vendorRecipes_theowahdan_60003 },

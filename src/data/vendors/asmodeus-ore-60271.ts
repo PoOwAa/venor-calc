@@ -300,13 +300,13 @@ export const recipes: Recipe[] = [
     "label": "Asmodeus őre • 240138",
     "inputs": [
       {
-        "itemId": 31113,
-        "quantity": 1
+        "itemId": 230131,
+        "quantity": 15
       }
     ],
     "output": {
       "itemId": 240138,
-      "quantity": 5
+      "quantity": 1
     },
     "goldCost": 200000000
   },
@@ -318,14 +318,32 @@ export const recipes: Recipe[] = [
     "label": "Asmodeus őre • 240138",
     "inputs": [
       {
-        "itemId": 230131,
-        "quantity": 15
+        "itemId": 31113,
+        "quantity": 1
       }
     ],
     "output": {
       "itemId": 240138,
-      "quantity": 1
+      "quantity": 5
     },
     "goldCost": 200000000
+  },
+  {
+    "id": "asmodeus-ore-60271-240138-19",
+    "npc": "Asmodeus őre",
+    "vendor": "Asmodeus őre",
+    "vendorNpcVnum": 60271,
+    "label": "Asmodeus őre • 240138",
+    "inputs": [
+      {
+        "itemId": 211101,
+        "quantity": 1
+      }
+    ],
+    "output": {
+      "itemId": 240138,
+      "quantity": 12
+    },
+    "goldCost": 500000000
   }
 ];

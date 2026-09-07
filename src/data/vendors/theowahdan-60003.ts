@@ -509,5 +509,31 @@ export const recipes: Recipe[] = [
       "quantity": 1
     },
     "goldCost": 500000000
+  },
+  {
+    "id": "theowahdan-60003-210146-24",
+    "npc": "Theowahdan",
+    "vendor": "Theowahdan",
+    "vendorNpcVnum": 60003,
+    "label": "Theowahdan • 210146",
+    "inputs": [
+      {
+        "itemId": 230029,
+        "quantity": 100
+      },
+      {
+        "itemId": 211152,
+        "quantity": 10
+      },
+      {
+        "itemId": 31113,
+        "quantity": 100
+      }
+    ],
+    "output": {
+      "itemId": 210146,
+      "quantity": 1
+    },
+    "goldCost": 200000000000
   }
 ];

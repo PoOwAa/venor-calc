@@ -199,5 +199,23 @@ export const recipes: Recipe[] = [
       "quantity": 1
     },
     "goldCost": 100000000
+  },
+  {
+    "id": "kalandorok-nagyapja-60263-210001-11",
+    "npc": "Kalandorok nagyapja",
+    "vendor": "Kalandorok nagyapja",
+    "vendorNpcVnum": 60263,
+    "label": "Kalandorok nagyapja • 210001",
+    "inputs": [
+      {
+        "itemId": 230137,
+        "quantity": 10
+      }
+    ],
+    "output": {
+      "itemId": 210001,
+      "quantity": 1
+    },
+    "goldCost": 500000000
   }
 ];
