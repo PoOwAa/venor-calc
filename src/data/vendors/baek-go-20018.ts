@@ -769,6 +769,24 @@ export const recipes: Recipe[] = [
     "goldCost": 2000000000
   },
   {
+    "id": "baek-go-20018-250030-38",
+    "npc": "Baek-Go",
+    "vendor": "Baek-Go",
+    "vendorNpcVnum": 20018,
+    "label": "Baek-Go • 250030",
+    "inputs": [
+      {
+        "itemId": 50702,
+        "quantity": 20
+      }
+    ],
+    "output": {
+      "itemId": 250030,
+      "quantity": 1
+    },
+    "goldCost": 20000000
+  },
+  {
     "id": "baek-go-20018-71181-39",
     "npc": "Baek-Go",
     "vendor": "Baek-Go",

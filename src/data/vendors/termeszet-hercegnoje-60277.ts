@@ -1,15 +1,15 @@
 import type { Recipe } from "../../types/domain";
 
-export const vendorName = "Mészáros Arthúr";
-export const vendorNpcVnum = 60326;
+export const vendorName = "Természet hercegnője";
+export const vendorNpcVnum = 60277;
 
 export const recipes: Recipe[] = [
   {
-    "id": "meszaros-arthur-60326-230046-1",
-    "npc": "Mészáros Arthúr",
-    "vendor": "Mészáros Arthúr",
-    "vendorNpcVnum": 60326,
-    "label": "Mészáros Arthúr • 230046",
+    "id": "termeszet-hercegnoje-60277-230046-1",
+    "npc": "Természet hercegnője",
+    "vendor": "Természet hercegnője",
+    "vendorNpcVnum": 60277,
+    "label": "Természet hercegnője • 230046",
     "inputs": [
       {
         "itemId": 230045,

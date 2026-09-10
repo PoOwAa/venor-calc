@@ -4272,6 +4272,23 @@
         ]
       },
       {
+        "order": 38,
+        "item_vnum": 250030,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 20,
+            "price_vnum": 50702
+          },
+          {
+            "price_type": 1,
+            "amount": 20000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
         "order": 39,
         "item_vnum": 71181,
         "count": 1,
@@ -13495,11 +13512,11 @@
     ]
   },
   {
-    "vnum": 620,
-    "name": "PetShop",
+    "vnum": 619,
+    "name": "Natur",
     "coin_type": "Gold",
-    "npc_vnum": 60326,
-    "npc_name": "Mészáros Arthúr",
+    "npc_vnum": 60277,
+    "npc_name": "Természet hercegnője",
     "offers": [
       {
         "order": 1,

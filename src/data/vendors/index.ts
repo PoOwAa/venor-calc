@@ -28,8 +28,8 @@ import { recipes as vendorRecipes_labirintus_kereskedo_60316 } from "./labirintu
 import { recipes as vendorRecipes_lovaszinas_20349 } from "./lovaszinas-20349";
 import { recipes as vendorRecipes_magikus_fegyverek_oktato_20344 } from "./magikus-fegyverek-oktato-20344";
 import { recipes as vendorRecipes_mentalis_kuzdelem_oktato_20341 } from "./mentalis-kuzdelem-oktato-20341";
-import { recipes as vendorRecipes_meszaros_arthur_60326 } from "./meszaros-arthur-60326";
 import { recipes as vendorRecipes_sarkany_hatalom_oktato_20346 } from "./sarkany-hatalom-oktato-20346";
+import { recipes as vendorRecipes_termeszet_hercegnoje_60277 } from "./termeszet-hercegnoje-60277";
 import { recipes as vendorRecipes_testi_kuzdelem_oktato_20340 } from "./testi-kuzdelem-oktato-20340";
 import { recipes as vendorRecipes_theowahdan_60003 } from "./theowahdan-60003";
 import { recipes as vendorRecipes_torharc_oktato_20342 } from "./torharc-oktato-20342";
@@ -66,8 +66,8 @@ export const vendorRecipeGroups = [
   { vendorName: "Lovászinas", vendorNpcVnum: 20349, recipes: vendorRecipes_lovaszinas_20349 },
   { vendorName: "Mágikus fegyverek oktató", vendorNpcVnum: 20344, recipes: vendorRecipes_magikus_fegyverek_oktato_20344 },
   { vendorName: "Mentális küzdelem oktató", vendorNpcVnum: 20341, recipes: vendorRecipes_mentalis_kuzdelem_oktato_20341 },
-  { vendorName: "Mészáros Arthúr", vendorNpcVnum: 60326, recipes: vendorRecipes_meszaros_arthur_60326 },
   { vendorName: "Sárkány hatalom oktató", vendorNpcVnum: 20346, recipes: vendorRecipes_sarkany_hatalom_oktato_20346 },
+  { vendorName: "Természet hercegnője", vendorNpcVnum: 60277, recipes: vendorRecipes_termeszet_hercegnoje_60277 },
   { vendorName: "Testi küzdelem oktató", vendorNpcVnum: 20340, recipes: vendorRecipes_testi_kuzdelem_oktato_20340 },
   { vendorName: "Theowahdan", vendorNpcVnum: 60003, recipes: vendorRecipes_theowahdan_60003 },
   { vendorName: "Tőrharc oktató", vendorNpcVnum: 20342, recipes: vendorRecipes_torharc_oktato_20342 },
