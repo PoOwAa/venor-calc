@@ -359,7 +359,97 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "a-nyar-ore-60319-230124-18",
+    "id": "a-nyar-ore-60319-230115-18",
+    "npc": "A nyár őre",
+    "vendor": "A nyár őre",
+    "vendorNpcVnum": 60319,
+    "label": "A nyár őre • 230115",
+    "inputs": [
+      {
+        "itemId": 230126,
+        "quantity": 1
+      }
+    ],
+    "output": {
+      "itemId": 230115,
+      "quantity": 4
+    },
+    "goldCost": 0
+  },
+  {
+    "id": "a-nyar-ore-60319-230115-19",
+    "npc": "A nyár őre",
+    "vendor": "A nyár őre",
+    "vendorNpcVnum": 60319,
+    "label": "A nyár őre • 230115",
+    "inputs": [
+      {
+        "itemId": 230125,
+        "quantity": 1
+      }
+    ],
+    "output": {
+      "itemId": 230115,
+      "quantity": 6
+    },
+    "goldCost": 0
+  },
+  {
+    "id": "a-nyar-ore-60319-240182-20",
+    "npc": "A nyár őre",
+    "vendor": "A nyár őre",
+    "vendorNpcVnum": 60319,
+    "label": "A nyár őre • 240182",
+    "inputs": [
+      {
+        "itemId": 230015,
+        "quantity": 50
+      }
+    ],
+    "output": {
+      "itemId": 240182,
+      "quantity": 1
+    },
+    "goldCost": 100000000
+  },
+  {
+    "id": "a-nyar-ore-60319-240182-21",
+    "npc": "A nyár őre",
+    "vendor": "A nyár őre",
+    "vendorNpcVnum": 60319,
+    "label": "A nyár őre • 240182",
+    "inputs": [
+      {
+        "itemId": 230006,
+        "quantity": 50
+      }
+    ],
+    "output": {
+      "itemId": 240182,
+      "quantity": 1
+    },
+    "goldCost": 100000000
+  },
+  {
+    "id": "a-nyar-ore-60319-240182-22",
+    "npc": "A nyár őre",
+    "vendor": "A nyár őre",
+    "vendorNpcVnum": 60319,
+    "label": "A nyár őre • 240182",
+    "inputs": [
+      {
+        "itemId": 30608,
+        "quantity": 50
+      }
+    ],
+    "output": {
+      "itemId": 240182,
+      "quantity": 1
+    },
+    "goldCost": 100000000
+  },
+  {
+    "id": "a-nyar-ore-60319-230124-23",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -377,7 +467,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-19",
+    "id": "a-nyar-ore-60319-230124-24",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -395,7 +485,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-20",
+    "id": "a-nyar-ore-60319-230124-25",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -413,7 +503,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-21",
+    "id": "a-nyar-ore-60319-230124-26",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -431,7 +521,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-22",
+    "id": "a-nyar-ore-60319-230124-27",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -449,7 +539,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-23",
+    "id": "a-nyar-ore-60319-230124-28",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -467,7 +557,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-24",
+    "id": "a-nyar-ore-60319-230124-29",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -485,7 +575,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-25",
+    "id": "a-nyar-ore-60319-230124-30",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -503,7 +593,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-26",
+    "id": "a-nyar-ore-60319-230124-31",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -521,7 +611,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-27",
+    "id": "a-nyar-ore-60319-230124-32",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -539,7 +629,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-28",
+    "id": "a-nyar-ore-60319-230124-33",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -557,7 +647,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-29",
+    "id": "a-nyar-ore-60319-230124-34",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -575,7 +665,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-30",
+    "id": "a-nyar-ore-60319-230124-35",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -593,7 +683,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-31",
+    "id": "a-nyar-ore-60319-230124-36",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -611,7 +701,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-32",
+    "id": "a-nyar-ore-60319-230124-37",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -629,7 +719,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-33",
+    "id": "a-nyar-ore-60319-230124-38",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -647,7 +737,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-34",
+    "id": "a-nyar-ore-60319-230124-39",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -665,7 +755,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-35",
+    "id": "a-nyar-ore-60319-230124-40",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -683,7 +773,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-36",
+    "id": "a-nyar-ore-60319-230124-41",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -701,7 +791,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-37",
+    "id": "a-nyar-ore-60319-230124-42",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -719,7 +809,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-38",
+    "id": "a-nyar-ore-60319-230124-43",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -737,7 +827,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-39",
+    "id": "a-nyar-ore-60319-230124-44",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -755,7 +845,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-40",
+    "id": "a-nyar-ore-60319-230124-45",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -773,7 +863,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-41",
+    "id": "a-nyar-ore-60319-230124-46",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -791,7 +881,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-42",
+    "id": "a-nyar-ore-60319-230124-47",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -809,7 +899,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-43",
+    "id": "a-nyar-ore-60319-230124-48",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -827,7 +917,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-44",
+    "id": "a-nyar-ore-60319-230124-49",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -845,7 +935,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-45",
+    "id": "a-nyar-ore-60319-230124-50",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -863,7 +953,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-46",
+    "id": "a-nyar-ore-60319-230124-51",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -881,7 +971,25 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-47",
+    "id": "a-nyar-ore-60319-230124-52",
+    "npc": "A nyár őre",
+    "vendor": "A nyár őre",
+    "vendorNpcVnum": 60319,
+    "label": "A nyár őre • 230124",
+    "inputs": [
+      {
+        "itemId": 230140,
+        "quantity": 5
+      }
+    ],
+    "output": {
+      "itemId": 230124,
+      "quantity": 1
+    },
+    "goldCost": 100000000
+  },
+  {
+    "id": "a-nyar-ore-60319-230124-53",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -899,7 +1007,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-230124-48",
+    "id": "a-nyar-ore-60319-230124-54",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -917,7 +1025,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "a-nyar-ore-60319-210193-49",
+    "id": "a-nyar-ore-60319-210193-55",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -943,7 +1051,7 @@ export const recipes: Recipe[] = [
     "goldCost": 50000000000
   },
   {
-    "id": "a-nyar-ore-60319-210199-50",
+    "id": "a-nyar-ore-60319-210199-56",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -973,7 +1081,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000000
   },
   {
-    "id": "a-nyar-ore-60319-211169-51",
+    "id": "a-nyar-ore-60319-211169-57",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -991,7 +1099,7 @@ export const recipes: Recipe[] = [
     "goldCost": 20000000000
   },
   {
-    "id": "a-nyar-ore-60319-210194-52",
+    "id": "a-nyar-ore-60319-210194-58",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -1017,7 +1125,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000000
   },
   {
-    "id": "a-nyar-ore-60319-211174-53",
+    "id": "a-nyar-ore-60319-211174-59",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -1039,7 +1147,7 @@ export const recipes: Recipe[] = [
     "goldCost": 20000000000
   },
   {
-    "id": "a-nyar-ore-60319-211175-54",
+    "id": "a-nyar-ore-60319-211175-60",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -1061,7 +1169,7 @@ export const recipes: Recipe[] = [
     "goldCost": 20000000000
   },
   {
-    "id": "a-nyar-ore-60319-211146-55",
+    "id": "a-nyar-ore-60319-211146-61",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,
@@ -1083,7 +1191,7 @@ export const recipes: Recipe[] = [
     "goldCost": 20000000000
   },
   {
-    "id": "a-nyar-ore-60319-105020-56",
+    "id": "a-nyar-ore-60319-105020-62",
     "npc": "A nyár őre",
     "vendor": "A nyár őre",
     "vendorNpcVnum": 60319,

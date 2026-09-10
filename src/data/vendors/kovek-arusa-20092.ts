@@ -392,12 +392,16 @@ export const recipes: Recipe[] = [
     "label": "Kövek árusa • 184005",
     "inputs": [
       {
-        "itemId": 230001,
-        "quantity": 10
+        "itemId": 230140,
+        "quantity": 200
       },
       {
-        "itemId": 240163,
-        "quantity": 10
+        "itemId": 39075,
+        "quantity": 500
+      },
+      {
+        "itemId": 50259,
+        "quantity": 200
       }
     ],
     "output": {
@@ -414,12 +418,16 @@ export const recipes: Recipe[] = [
     "label": "Kövek árusa • 184006",
     "inputs": [
       {
-        "itemId": 230001,
-        "quantity": 10
+        "itemId": 230140,
+        "quantity": 200
       },
       {
-        "itemId": 240163,
-        "quantity": 10
+        "itemId": 39075,
+        "quantity": 500
+      },
+      {
+        "itemId": 50259,
+        "quantity": 200
       }
     ],
     "output": {
@@ -436,12 +444,16 @@ export const recipes: Recipe[] = [
     "label": "Kövek árusa • 184007",
     "inputs": [
       {
-        "itemId": 230001,
-        "quantity": 10
+        "itemId": 230140,
+        "quantity": 200
       },
       {
-        "itemId": 240163,
-        "quantity": 10
+        "itemId": 39075,
+        "quantity": 500
+      },
+      {
+        "itemId": 50259,
+        "quantity": 200
       }
     ],
     "output": {
@@ -458,12 +470,16 @@ export const recipes: Recipe[] = [
     "label": "Kövek árusa • 184008",
     "inputs": [
       {
-        "itemId": 230001,
-        "quantity": 10
+        "itemId": 230140,
+        "quantity": 200
       },
       {
-        "itemId": 240163,
-        "quantity": 10
+        "itemId": 39075,
+        "quantity": 500
+      },
+      {
+        "itemId": 50259,
+        "quantity": 200
       }
     ],
     "output": {

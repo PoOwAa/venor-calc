@@ -8,7 +8,7 @@ export const ITEM_SPECIALItems: Item[] = [
     "type": "ITEM_SPECIAL",
     "sub_type": "SPECIAL_MAP",
     "size": 1,
-    "anti_flags": "NONE",
+    "anti_flags": "ANTI_DROP | ANTI_SELL",
     "flags": "ITEM_STACKABLE",
     "wear_flags": "NONE",
     "immune_flags": "NONE",
