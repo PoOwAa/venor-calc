@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { getItemDisplayName } from "../lib/itemName";
+import { getItemApplyBoons } from "../lib/itemApplies";
 import type { Item } from "../types/domain";
 import { ItemIcon } from "./ItemIcon";
 
@@ -80,27 +81,41 @@ export function PetInventoryPage({ pets }: PetInventoryPageProps) {
         <div className="pet-inventory-grid">
           {pets.map((pet) => {
             const isOwned = ownedPetIds.has(pet.vnum);
+            const boons = getItemApplyBoons(pet);
+
             return (
               <label
                 key={pet.vnum}
                 className={`pet-inventory-card ${isOwned ? "owned" : ""}`}
               >
-                <span className="pet-inventory-icon-wrap">
-                  <ItemIcon
-                    itemId={pet.vnum}
-                    name={getItemDisplayName(pet)}
-                    size={32}
+                <span className="pet-inventory-header">
+                  <span className="pet-inventory-icon-wrap">
+                    <ItemIcon
+                      itemId={pet.vnum}
+                      name={getItemDisplayName(pet)}
+                      size={32}
+                    />
+                  </span>
+                  <span className="pet-inventory-name">
+                    {getItemDisplayName(pet)}
+                  </span>
+                  <input
+                    type="checkbox"
+                    checked={isOwned}
+                    onChange={() => toggleOwned(pet.vnum)}
+                    aria-label={`${getItemDisplayName(pet)} megszerezve`}
                   />
                 </span>
-                <span className="pet-inventory-name">
-                  {getItemDisplayName(pet)}
-                </span>
-                <input
-                  type="checkbox"
-                  checked={isOwned}
-                  onChange={() => toggleOwned(pet.vnum)}
-                  aria-label={`${getItemDisplayName(pet)} megszerezve`}
-                />
+
+                {boons.length > 0 ? (
+                  <ul className="pet-inventory-boons">
+                    {boons.map((boon) => (
+                      <li key={boon.key}>{boon.label}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="pet-inventory-empty">Nincs ismert bónusz.</p>
+                )}
               </label>
             );
           })}
