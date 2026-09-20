@@ -145,6 +145,30 @@ h2, h3 { margin: 0; }
   margin-top: 0;
 }
 
+.pet-inventory-filter-panel {
+  padding: 16px;
+}
+
+.pet-inventory-filter-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 260px) minmax(220px, 1fr) minmax(220px, 1fr);
+  gap: 12px;
+  align-items: end;
+}
+
+.pet-inventory-filter-grid .price-field {
+  margin: 0;
+}
+
+.pet-inventory-filter-grid .autocomplete-input {
+  min-height: 50px;
+  padding: 12px 14px;
+}
+
+.pet-inventory-owned-toggle {
+  min-height: 50px;
+}
+
 .pet-inventory-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -1153,6 +1177,9 @@ footer { margin-top: 30px; text-align: center; color: #64748b; font-size: 12px; 
   .target-controls { flex-direction: column; }
   .target-controls > .price-field { flex-basis: auto; width: 100%; }
   .target-controls > .price-field input { min-width: 0; }
+  .pet-inventory-filter-grid {
+    grid-template-columns: 1fr;
+  }
   .pet-inventory-grid {
     grid-template-columns: 1fr;
   }
