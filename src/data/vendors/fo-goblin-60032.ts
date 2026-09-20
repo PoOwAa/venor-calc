@@ -148,6 +148,24 @@ export const recipes: Recipe[] = [
     "goldCost": 30000000
   },
   {
+    "id": "fo-goblin-60032-240026-9",
+    "npc": "Fő Goblin",
+    "vendor": "Fő Goblin",
+    "vendorNpcVnum": 60032,
+    "label": "Fő Goblin • 240026",
+    "inputs": [
+      {
+        "itemId": 220009,
+        "quantity": 5
+      }
+    ],
+    "output": {
+      "itemId": 240026,
+      "quantity": 1
+    },
+    "goldCost": 0
+  },
+  {
     "id": "fo-goblin-60032-30324-10",
     "npc": "Fő Goblin",
     "vendor": "Fő Goblin",

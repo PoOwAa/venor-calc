@@ -6629,7 +6629,7 @@
           {
             "price_type": 3,
             "amount": 500,
-            "price_vnum": 230108
+            "price_vnum": 0
           },
           {
             "price_type": 1,
@@ -7404,6 +7404,18 @@
             "price_type": 1,
             "amount": 30000000,
             "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 9,
+        "item_vnum": 240026,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 5,
+            "price_vnum": 220009
           }
         ]
       },
