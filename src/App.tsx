@@ -5,6 +5,7 @@ import { BossBoxUploadPage } from "./components/BossBoxUploadPage";
 import { ItemAutocomplete } from "./components/ItemAutocomplete";
 import { BossBoxesPage } from "./components/BossBoxesPage";
 import { ItemIcon } from "./components/ItemIcon";
+import { PetInventoryPage } from "./components/PetInventoryPage";
 import { PriceEditor } from "./components/PriceEditor";
 import { QuickPriceEditor } from "./components/QuickPriceEditor";
 import { PathView } from "./components/PathView";
@@ -121,6 +122,7 @@ export default function App() {
   const menuItems = [
     { key: "crafting", label: "Kraftolás" },
     { key: "boss-boxes", label: "Boss ládák" },
+    { key: "pet-inventory", label: "Pet leltár" },
     { key: "boss-box-upload", label: "Boss láda nyitás feltöltése" },
     { key: "review", label: "Review" },
   ] as const;
@@ -414,6 +416,23 @@ export default function App() {
   const totalRecipeCount = useMemo(
     () =>
       vendorRecipeGroups.reduce((sum, group) => sum + group.recipes.length, 0),
+    [],
+  );
+
+  const petCostumeItems = useMemo(
+    () =>
+      items
+        .filter(
+          (item) =>
+            item.type === "ITEM_COSTUME" && item.sub_type === "COSTUME_PET",
+        )
+        .sort(
+          (left, right) =>
+            (left.locale_name || left.name).localeCompare(
+              right.locale_name || right.name,
+              "hu",
+            ) || left.vnum - right.vnum,
+        ),
     [],
   );
 
@@ -820,6 +839,8 @@ export default function App() {
         <BossBoxesPage prices={prices} onPriceChange={setPrices} />
       ) : activeMenu === "boss-box-upload" ? (
         <BossBoxUploadPage />
+      ) : activeMenu === "pet-inventory" ? (
+        <PetInventoryPage pets={petCostumeItems} />
       ) : (
         <BossBoxReviewPage />
       )}

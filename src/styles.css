@@ -137,6 +137,61 @@ h2, h3 { margin: 0; }
   margin-top: 8px;
 }
 
+.pet-inventory-page {
+  margin-top: 8px;
+}
+
+.pet-inventory-panel {
+  margin-top: 0;
+}
+
+.pet-inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.pet-inventory-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  background: #0b1220;
+}
+
+.pet-inventory-card:hover {
+  border-color: #475569;
+}
+
+.pet-inventory-card.owned {
+  border-color: rgba(22, 163, 74, 0.7);
+  background: rgba(21, 128, 61, 0.16);
+}
+
+.pet-inventory-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.85);
+}
+
+.pet-inventory-name {
+  color: #e2e8f0;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.pet-inventory-card input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
 .ocr-panel {
   display: grid;
   gap: 14px;
@@ -1075,5 +1130,8 @@ footer { margin-top: 30px; text-align: center; color: #64748b; font-size: 12px; 
   .target-controls { flex-direction: column; }
   .target-controls > .price-field { flex-basis: auto; width: 100%; }
   .target-controls > .price-field input { min-width: 0; }
+  .pet-inventory-grid {
+    grid-template-columns: 1fr;
+  }
   .metrics { grid-template-columns: 1fr; }
 }
