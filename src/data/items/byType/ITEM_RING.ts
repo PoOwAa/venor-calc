@@ -292,7 +292,7 @@ export const ITEM_RINGItems: Item[] = [
   {
     "vnum": 105014,
     "name": "Tier4Ring3",
-    "locale_name": "Goblin Nyalóka",
+    "locale_name": "Goblin Nyalóka (4)",
     "type": "ITEM_RING",
     "sub_type": "NONE",
     "size": 1,

@@ -345,5 +345,49 @@ export const recipes: Recipe[] = [
       "quantity": 1
     },
     "goldCost": 20000000
+  },
+  {
+    "id": "termeszet-hercegnoje-60277-50705-14",
+    "npc": "Természet hercegnője",
+    "vendor": "Természet hercegnője",
+    "vendorNpcVnum": 60277,
+    "label": "Természet hercegnője • 50705",
+    "inputs": [
+      {
+        "itemId": 50707,
+        "quantity": 1
+      },
+      {
+        "itemId": 30618,
+        "quantity": 2
+      }
+    ],
+    "output": {
+      "itemId": 50705,
+      "quantity": 1
+    },
+    "goldCost": 500000000
+  },
+  {
+    "id": "termeszet-hercegnoje-60277-50707-15",
+    "npc": "Természet hercegnője",
+    "vendor": "Természet hercegnője",
+    "vendorNpcVnum": 60277,
+    "label": "Természet hercegnője • 50707",
+    "inputs": [
+      {
+        "itemId": 50705,
+        "quantity": 1
+      },
+      {
+        "itemId": 30618,
+        "quantity": 2
+      }
+    ],
+    "output": {
+      "itemId": 50707,
+      "quantity": 1
+    },
+    "goldCost": 500000000
   }
 ];

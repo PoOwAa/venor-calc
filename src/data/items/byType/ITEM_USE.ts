@@ -688,7 +688,7 @@ export const ITEM_USEItems: Item[] = [
   {
     "vnum": 39023,
     "name": "Researcher's Elixir",
-    "locale_name": "Kutatói elixír",
+    "locale_name": "Történész koncentráló",
     "type": "ITEM_USE",
     "sub_type": "USE_SPECIAL",
     "size": 1,

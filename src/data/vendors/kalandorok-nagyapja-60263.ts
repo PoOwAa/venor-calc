@@ -143,7 +143,20 @@ export const recipes: Recipe[] = [
     "goldCost": 5000000000
   },
   {
-    "id": "kalandorok-nagyapja-60263-220037-8",
+    "id": "kalandorok-nagyapja-60263-240185-8",
+    "npc": "Kalandorok nagyapja",
+    "vendor": "Kalandorok nagyapja",
+    "vendorNpcVnum": 60263,
+    "label": "Kalandorok nagyapja • 240185",
+    "inputs": [],
+    "output": {
+      "itemId": 240185,
+      "quantity": 1
+    },
+    "goldCost": 2000000000
+  },
+  {
+    "id": "kalandorok-nagyapja-60263-220037-9",
     "npc": "Kalandorok nagyapja",
     "vendor": "Kalandorok nagyapja",
     "vendorNpcVnum": 60263,
@@ -165,7 +178,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "kalandorok-nagyapja-60263-220037-9",
+    "id": "kalandorok-nagyapja-60263-220037-10",
     "npc": "Kalandorok nagyapja",
     "vendor": "Kalandorok nagyapja",
     "vendorNpcVnum": 60263,
@@ -183,7 +196,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "kalandorok-nagyapja-60263-220037-10",
+    "id": "kalandorok-nagyapja-60263-220037-11",
     "npc": "Kalandorok nagyapja",
     "vendor": "Kalandorok nagyapja",
     "vendorNpcVnum": 60263,
@@ -201,7 +214,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "kalandorok-nagyapja-60263-210001-11",
+    "id": "kalandorok-nagyapja-60263-210001-12",
     "npc": "Kalandorok nagyapja",
     "vendor": "Kalandorok nagyapja",
     "vendorNpcVnum": 60263,

@@ -64,7 +64,7 @@
         "prices": [
           {
             "price_type": 3,
-            "amount": 6,
+            "amount": 7,
             "price_vnum": 30179
           },
           {
@@ -263,6 +263,33 @@
       },
       {
         "order": 16,
+        "item_vnum": 240132,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 240109
+          },
+          {
+            "price_type": 3,
+            "amount": 5,
+            "price_vnum": 230144
+          },
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 230032
+          },
+          {
+            "price_type": 1,
+            "amount": 5000000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 17,
         "item_vnum": 30320,
         "count": 1,
         "prices": [
@@ -279,7 +306,7 @@
         ]
       },
       {
-        "order": 17,
+        "order": 18,
         "item_vnum": 30179,
         "count": 1,
         "prices": [
@@ -296,7 +323,7 @@
         ]
       },
       {
-        "order": 18,
+        "order": 19,
         "item_vnum": 30179,
         "count": 1,
         "prices": [
@@ -313,7 +340,7 @@
         ]
       },
       {
-        "order": 19,
+        "order": 20,
         "item_vnum": 71174,
         "count": 1,
         "prices": [
@@ -330,7 +357,7 @@
         ]
       },
       {
-        "order": 20,
+        "order": 21,
         "item_vnum": 30613,
         "count": 1,
         "prices": [
@@ -352,7 +379,7 @@
         ]
       },
       {
-        "order": 21,
+        "order": 22,
         "item_vnum": 70303,
         "count": 1,
         "prices": [
@@ -374,7 +401,7 @@
         ]
       },
       {
-        "order": 22,
+        "order": 23,
         "item_vnum": 70303,
         "count": 1,
         "prices": [
@@ -391,7 +418,7 @@
         ]
       },
       {
-        "order": 23,
+        "order": 24,
         "item_vnum": 240002,
         "count": 1,
         "prices": [
@@ -418,7 +445,7 @@
         ]
       },
       {
-        "order": 24,
+        "order": 25,
         "item_vnum": 240002,
         "count": 1,
         "prices": [
@@ -440,7 +467,7 @@
         ]
       },
       {
-        "order": 25,
+        "order": 26,
         "item_vnum": 240142,
         "count": 1,
         "prices": [
@@ -462,7 +489,7 @@
         ]
       },
       {
-        "order": 26,
+        "order": 27,
         "item_vnum": 71201,
         "count": 1,
         "prices": [
@@ -484,7 +511,7 @@
         ]
       },
       {
-        "order": 27,
+        "order": 28,
         "item_vnum": 71201,
         "count": 1,
         "prices": [
@@ -511,7 +538,7 @@
         ]
       },
       {
-        "order": 28,
+        "order": 29,
         "item_vnum": 56013,
         "count": 1,
         "prices": [
@@ -538,34 +565,34 @@
         ]
       },
       {
-        "order": 29,
+        "order": 30,
         "item_vnum": 56013,
         "count": 1,
         "prices": [
           {
             "price_type": 3,
-            "amount": 30,
+            "amount": 5,
             "price_vnum": 33029
           },
           {
             "price_type": 3,
-            "amount": 30,
+            "amount": 5,
             "price_vnum": 33030
           },
           {
             "price_type": 3,
-            "amount": 10,
+            "amount": 5,
             "price_vnum": 230010
           },
           {
             "price_type": 1,
-            "amount": 250000000,
+            "amount": 500000000,
             "price_vnum": 0
           }
         ]
       },
       {
-        "order": 30,
+        "order": 31,
         "item_vnum": 31160,
         "count": 2,
         "prices": [
@@ -592,7 +619,7 @@
         ]
       },
       {
-        "order": 31,
+        "order": 32,
         "item_vnum": 240004,
         "count": 1,
         "prices": [
@@ -619,7 +646,7 @@
         ]
       },
       {
-        "order": 32,
+        "order": 33,
         "item_vnum": 31161,
         "count": 1,
         "prices": [
@@ -646,23 +673,23 @@
         ]
       },
       {
-        "order": 33,
+        "order": 34,
         "item_vnum": 240109,
         "count": 1,
         "prices": [
           {
             "price_type": 3,
-            "amount": 100,
+            "amount": 75,
             "price_vnum": 230081
           },
           {
             "price_type": 3,
-            "amount": 20,
+            "amount": 30,
             "price_vnum": 31096
           },
           {
             "price_type": 3,
-            "amount": 1,
+            "amount": 4,
             "price_vnum": 230032
           },
           {
@@ -673,7 +700,61 @@
         ]
       },
       {
-        "order": 34,
+        "order": 35,
+        "item_vnum": 240184,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 240109
+          },
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 31113
+          },
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 240001
+          },
+          {
+            "price_type": 1,
+            "amount": 5000000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 36,
+        "item_vnum": 230147,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 240109
+          },
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 230146
+          },
+          {
+            "price_type": 3,
+            "amount": 10,
+            "price_vnum": 33030
+          },
+          {
+            "price_type": 1,
+            "amount": 5000000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 37,
         "item_vnum": 240110,
         "count": 1,
         "prices": [
@@ -2419,7 +2500,7 @@
         "prices": [
           {
             "price_type": 3,
-            "amount": 10,
+            "amount": 50,
             "price_vnum": 230015
           },
           {
@@ -2880,7 +2961,7 @@
         "prices": [
           {
             "price_type": 1,
-            "amount": 50000000,
+            "amount": 100000000,
             "price_vnum": 0
           }
         ]
@@ -2931,6 +3012,23 @@
       },
       {
         "order": 24,
+        "item_vnum": 101032,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 1500,
+            "price_vnum": 101003
+          },
+          {
+            "price_type": 1,
+            "amount": 50000000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 25,
         "item_vnum": 53250,
         "count": 1,
         "prices": [
@@ -2942,7 +3040,7 @@
         ]
       },
       {
-        "order": 25,
+        "order": 26,
         "item_vnum": 240148,
         "count": 1,
         "prices": [
@@ -2954,7 +3052,7 @@
         ]
       },
       {
-        "order": 27,
+        "order": 28,
         "item_vnum": 79504,
         "count": 1,
         "prices": [
@@ -2966,7 +3064,7 @@
         ]
       },
       {
-        "order": 28,
+        "order": 29,
         "item_vnum": 30181,
         "count": 1,
         "prices": [
@@ -2998,7 +3096,7 @@
         ]
       },
       {
-        "order": 29,
+        "order": 30,
         "item_vnum": 240167,
         "count": 1,
         "prices": [
@@ -3010,7 +3108,7 @@
         ]
       },
       {
-        "order": 30,
+        "order": 31,
         "item_vnum": 90010,
         "count": 1,
         "prices": [
@@ -3022,7 +3120,7 @@
         ]
       },
       {
-        "order": 31,
+        "order": 32,
         "item_vnum": 70002,
         "count": 1,
         "prices": [
@@ -3034,7 +3132,7 @@
         ]
       },
       {
-        "order": 32,
+        "order": 33,
         "item_vnum": 240170,
         "count": 1,
         "prices": [
@@ -3056,7 +3154,7 @@
         ]
       },
       {
-        "order": 33,
+        "order": 34,
         "item_vnum": 210121,
         "count": 1,
         "prices": [
@@ -3078,7 +3176,7 @@
         ]
       },
       {
-        "order": 34,
+        "order": 35,
         "item_vnum": 30255,
         "count": 1,
         "prices": [
@@ -4177,12 +4275,93 @@
       },
       {
         "order": 35,
+        "item_vnum": 105020,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 20,
+            "price_vnum": 105006
+          },
+          {
+            "price_type": 3,
+            "amount": 150,
+            "price_vnum": 33030
+          },
+          {
+            "price_type": 1,
+            "amount": 5000000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 36,
+        "item_vnum": 105015,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 100,
+            "price_vnum": 50705
+          },
+          {
+            "price_type": 3,
+            "amount": 75,
+            "price_vnum": 50707
+          },
+          {
+            "price_type": 3,
+            "amount": 5,
+            "price_vnum": 105006
+          },
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 105007
+          },
+          {
+            "price_type": 1,
+            "amount": 15000000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 37,
+        "item_vnum": 105014,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 53248
+          },
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 105007
+          },
+          {
+            "price_type": 3,
+            "amount": 5,
+            "price_vnum": 105006
+          },
+          {
+            "price_type": 1,
+            "amount": 15000000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 38,
         "item_vnum": 101018,
         "count": 1,
         "prices": [
           {
             "price_type": 3,
-            "amount": 5,
+            "amount": 15,
             "price_vnum": 230072
           },
           {
@@ -4208,28 +4387,28 @@
         ]
       },
       {
-        "order": 36,
+        "order": 39,
         "item_vnum": 101019,
         "count": 1,
         "prices": [
           {
             "price_type": 3,
-            "amount": 10,
+            "amount": 200,
             "price_vnum": 230073
           },
           {
             "price_type": 3,
-            "amount": 100,
+            "amount": 500,
             "price_vnum": 230081
           },
           {
             "price_type": 3,
-            "amount": 250,
+            "amount": 2500,
             "price_vnum": 220006
           },
           {
             "price_type": 3,
-            "amount": 3,
+            "amount": 5,
             "price_vnum": 27995
           },
           {
@@ -4240,7 +4419,7 @@
         ]
       },
       {
-        "order": 37,
+        "order": 40,
         "item_vnum": 101020,
         "count": 1,
         "prices": [
@@ -4256,12 +4435,12 @@
           },
           {
             "price_type": 3,
-            "amount": 500,
+            "amount": 5000,
             "price_vnum": 220006
           },
           {
             "price_type": 3,
-            "amount": 3,
+            "amount": 5,
             "price_vnum": 27995
           },
           {
@@ -4272,7 +4451,7 @@
         ]
       },
       {
-        "order": 38,
+        "order": 41,
         "item_vnum": 250030,
         "count": 1,
         "prices": [
@@ -4289,7 +4468,7 @@
         ]
       },
       {
-        "order": 39,
+        "order": 42,
         "item_vnum": 71181,
         "count": 1,
         "prices": [
@@ -4311,7 +4490,7 @@
         ]
       },
       {
-        "order": 40,
+        "order": 43,
         "item_vnum": 240015,
         "count": 20,
         "prices": [
@@ -4333,7 +4512,7 @@
         ]
       },
       {
-        "order": 41,
+        "order": 44,
         "item_vnum": 240016,
         "count": 10,
         "prices": [
@@ -4355,7 +4534,7 @@
         ]
       },
       {
-        "order": 42,
+        "order": 45,
         "item_vnum": 240017,
         "count": 1,
         "prices": [
@@ -4372,6 +4551,33 @@
           {
             "price_type": 1,
             "amount": 100000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 46,
+        "item_vnum": 240118,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 5,
+            "price_vnum": 240017
+          },
+          {
+            "price_type": 3,
+            "amount": 5,
+            "price_vnum": 230102
+          },
+          {
+            "price_type": 3,
+            "amount": 500,
+            "price_vnum": 230012
+          },
+          {
+            "price_type": 1,
+            "amount": 200000000,
             "price_vnum": 0
           }
         ]
@@ -6943,6 +7149,33 @@
       },
       {
         "order": 12,
+        "item_vnum": 250033,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 10000,
+            "price_vnum": 80019
+          },
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 31113
+          },
+          {
+            "price_type": 3,
+            "amount": 1000,
+            "price_vnum": 31096
+          },
+          {
+            "price_type": 1,
+            "amount": 5000000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 13,
         "item_vnum": 230104,
         "count": 1,
         "prices": [
@@ -6959,7 +7192,7 @@
         ]
       },
       {
-        "order": 13,
+        "order": 14,
         "item_vnum": 53006,
         "count": 1,
         "prices": [
@@ -6986,7 +7219,7 @@
         ]
       },
       {
-        "order": 14,
+        "order": 15,
         "item_vnum": 210243,
         "count": 1,
         "prices": [
@@ -7018,7 +7251,7 @@
         ]
       },
       {
-        "order": 15,
+        "order": 16,
         "item_vnum": 210058,
         "count": 1,
         "prices": [
@@ -7045,7 +7278,7 @@
         ]
       },
       {
-        "order": 16,
+        "order": 17,
         "item_vnum": 210090,
         "count": 1,
         "prices": [
@@ -7072,7 +7305,7 @@
         ]
       },
       {
-        "order": 17,
+        "order": 18,
         "item_vnum": 53015,
         "count": 1,
         "prices": [
@@ -7088,7 +7321,7 @@
           },
           {
             "price_type": 3,
-            "amount": 2500,
+            "amount": 1000,
             "price_vnum": 31096
           },
           {
@@ -7104,7 +7337,7 @@
         ]
       },
       {
-        "order": 18,
+        "order": 19,
         "item_vnum": 210242,
         "count": 1,
         "prices": [
@@ -7131,7 +7364,7 @@
         ]
       },
       {
-        "order": 19,
+        "order": 20,
         "item_vnum": 210106,
         "count": 1,
         "prices": [
@@ -7148,7 +7381,7 @@
         ]
       },
       {
-        "order": 20,
+        "order": 21,
         "item_vnum": 210018,
         "count": 1,
         "prices": [
@@ -7170,7 +7403,7 @@
         ]
       },
       {
-        "order": 21,
+        "order": 22,
         "item_vnum": 210019,
         "count": 1,
         "prices": [
@@ -7192,7 +7425,7 @@
         ]
       },
       {
-        "order": 22,
+        "order": 23,
         "item_vnum": 210180,
         "count": 1,
         "prices": [
@@ -7219,7 +7452,7 @@
         ]
       },
       {
-        "order": 23,
+        "order": 24,
         "item_vnum": 210084,
         "count": 1,
         "prices": [
@@ -7241,7 +7474,7 @@
         ]
       },
       {
-        "order": 24,
+        "order": 25,
         "item_vnum": 210146,
         "count": 1,
         "prices": [
@@ -7263,6 +7496,38 @@
           {
             "price_type": 1,
             "amount": 200000000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 26,
+        "item_vnum": 210081,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 20000,
+            "price_vnum": 230081
+          },
+          {
+            "price_type": 3,
+            "amount": 100,
+            "price_vnum": 230083
+          },
+          {
+            "price_type": 3,
+            "amount": 250,
+            "price_vnum": 230141
+          },
+          {
+            "price_type": 3,
+            "amount": 50,
+            "price_vnum": 230080
+          },
+          {
+            "price_type": 1,
+            "amount": 500000000,
             "price_vnum": 0
           }
         ]
@@ -8672,7 +8937,7 @@
     "name": "Biology",
     "coin_type": "Gold",
     "npc_vnum": 20084,
-    "npc_name": "Chaegirab biológus",
+    "npc_name": "Gerlinda, a történész",
     "offers": [
       {
         "order": 1,
@@ -8796,13 +9061,28 @@
       },
       {
         "order": 11,
-        "item_vnum": 230028,
+        "item_vnum": 230145,
         "count": 1,
         "prices": [
           {
             "price_type": 3,
-            "amount": 3,
-            "price_vnum": 30006
+            "amount": 50,
+            "price_vnum": 230028
+          },
+          {
+            "price_type": 3,
+            "amount": 25,
+            "price_vnum": 39023
+          },
+          {
+            "price_type": 3,
+            "amount": 25,
+            "price_vnum": 72347
+          },
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 230004
           }
         ]
       },
@@ -8814,7 +9094,7 @@
           {
             "price_type": 3,
             "amount": 3,
-            "price_vnum": 30047
+            "price_vnum": 30006
           }
         ]
       },
@@ -8826,19 +9106,19 @@
           {
             "price_type": 3,
             "amount": 3,
-            "price_vnum": 30015
+            "price_vnum": 30047
           }
         ]
       },
       {
         "order": 14,
         "item_vnum": 230028,
-        "count": 2,
+        "count": 1,
         "prices": [
           {
             "price_type": 3,
             "amount": 3,
-            "price_vnum": 30050
+            "price_vnum": 30015
           }
         ]
       },
@@ -8850,12 +9130,24 @@
           {
             "price_type": 3,
             "amount": 3,
-            "price_vnum": 30165
+            "price_vnum": 30050
           }
         ]
       },
       {
         "order": 16,
+        "item_vnum": 230028,
+        "count": 2,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 3,
+            "price_vnum": 30165
+          }
+        ]
+      },
+      {
+        "order": 17,
         "item_vnum": 230028,
         "count": 5,
         "prices": [
@@ -8867,7 +9159,7 @@
         ]
       },
       {
-        "order": 17,
+        "order": 18,
         "item_vnum": 230028,
         "count": 1,
         "prices": [
@@ -8879,7 +9171,7 @@
         ]
       },
       {
-        "order": 18,
+        "order": 19,
         "item_vnum": 230028,
         "count": 3,
         "prices": [
@@ -8891,7 +9183,7 @@
         ]
       },
       {
-        "order": 19,
+        "order": 20,
         "item_vnum": 230028,
         "count": 10,
         "prices": [
@@ -8903,7 +9195,7 @@
         ]
       },
       {
-        "order": 20,
+        "order": 21,
         "item_vnum": 230028,
         "count": 10,
         "prices": [
@@ -8915,7 +9207,19 @@
         ]
       },
       {
-        "order": 21,
+        "order": 22,
+        "item_vnum": 230028,
+        "count": 200,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 230145
+          }
+        ]
+      },
+      {
+        "order": 23,
         "item_vnum": 210186,
         "count": 1,
         "prices": [
@@ -8942,7 +9246,7 @@
         ]
       },
       {
-        "order": 22,
+        "order": 24,
         "item_vnum": 210187,
         "count": 1,
         "prices": [
@@ -8969,7 +9273,7 @@
         ]
       },
       {
-        "order": 23,
+        "order": 25,
         "item_vnum": 39023,
         "count": 1,
         "prices": [
@@ -8986,7 +9290,7 @@
         ]
       },
       {
-        "order": 24,
+        "order": 26,
         "item_vnum": 72347,
         "count": 1,
         "prices": [
@@ -9811,6 +10115,18 @@
       },
       {
         "order": 8,
+        "item_vnum": 240185,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 1,
+            "amount": 2000000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 9,
         "item_vnum": 220037,
         "count": 1,
         "prices": [
@@ -9832,7 +10148,7 @@
         ]
       },
       {
-        "order": 9,
+        "order": 10,
         "item_vnum": 220037,
         "count": 1,
         "prices": [
@@ -9849,7 +10165,7 @@
         ]
       },
       {
-        "order": 10,
+        "order": 11,
         "item_vnum": 220037,
         "count": 1,
         "prices": [
@@ -9866,7 +10182,7 @@
         ]
       },
       {
-        "order": 11,
+        "order": 12,
         "item_vnum": 210001,
         "count": 1,
         "prices": [
@@ -10863,7 +11179,7 @@
           },
           {
             "price_type": 3,
-            "amount": 20,
+            "amount": 5,
             "price_vnum": 230027
           },
           {
@@ -10875,6 +11191,72 @@
       },
       {
         "order": 9,
+        "item_vnum": 230032,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 230141
+          },
+          {
+            "price_type": 3,
+            "amount": 5,
+            "price_vnum": 230027
+          },
+          {
+            "price_type": 1,
+            "amount": 50000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 10,
+        "item_vnum": 230032,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 230142
+          },
+          {
+            "price_type": 3,
+            "amount": 5,
+            "price_vnum": 230027
+          },
+          {
+            "price_type": 1,
+            "amount": 50000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 11,
+        "item_vnum": 230032,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 230143
+          },
+          {
+            "price_type": 3,
+            "amount": 5,
+            "price_vnum": 230027
+          },
+          {
+            "price_type": 1,
+            "amount": 50000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 12,
         "item_vnum": 250003,
         "count": 1,
         "prices": [
@@ -10901,7 +11283,7 @@
         ]
       },
       {
-        "order": 10,
+        "order": 13,
         "item_vnum": 184016,
         "count": 1,
         "prices": [
@@ -10923,7 +11305,7 @@
         ]
       },
       {
-        "order": 11,
+        "order": 14,
         "item_vnum": 184016,
         "count": 1,
         "prices": [
@@ -10945,7 +11327,7 @@
         ]
       },
       {
-        "order": 12,
+        "order": 15,
         "item_vnum": 184016,
         "count": 1,
         "prices": [
@@ -10967,7 +11349,7 @@
         ]
       },
       {
-        "order": 13,
+        "order": 16,
         "item_vnum": 230003,
         "count": 1,
         "prices": [
@@ -10989,7 +11371,7 @@
         ]
       },
       {
-        "order": 14,
+        "order": 17,
         "item_vnum": 230004,
         "count": 1,
         "prices": [
@@ -11011,7 +11393,7 @@
         ]
       },
       {
-        "order": 15,
+        "order": 18,
         "item_vnum": 230122,
         "count": 1,
         "prices": [
@@ -11033,7 +11415,7 @@
         ]
       },
       {
-        "order": 16,
+        "order": 19,
         "item_vnum": 240159,
         "count": 30,
         "prices": [
@@ -11055,7 +11437,7 @@
         ]
       },
       {
-        "order": 17,
+        "order": 20,
         "item_vnum": 30524,
         "count": 30,
         "prices": [
@@ -11082,7 +11464,7 @@
         ]
       },
       {
-        "order": 18,
+        "order": 21,
         "item_vnum": 30525,
         "count": 30,
         "prices": [
@@ -11109,7 +11491,7 @@
         ]
       },
       {
-        "order": 19,
+        "order": 22,
         "item_vnum": 230000,
         "count": 30,
         "prices": [
@@ -11126,6 +11508,165 @@
           {
             "price_type": 3,
             "amount": 5,
+            "price_vnum": 230027
+          },
+          {
+            "price_type": 1,
+            "amount": 100000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 23,
+        "item_vnum": 230082,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 200,
+            "price_vnum": 230080
+          },
+          {
+            "price_type": 3,
+            "amount": 4,
+            "price_vnum": 31113
+          },
+          {
+            "price_type": 3,
+            "amount": 50,
+            "price_vnum": 230141
+          },
+          {
+            "price_type": 1,
+            "amount": 20000000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 24,
+        "item_vnum": 230144,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 10750
+          },
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 230027
+          },
+          {
+            "price_type": 1,
+            "amount": 100000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 25,
+        "item_vnum": 230144,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 10520
+          },
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 230027
+          },
+          {
+            "price_type": 1,
+            "amount": 100000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 26,
+        "item_vnum": 230144,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 9600
+          },
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 230027
+          },
+          {
+            "price_type": 1,
+            "amount": 100000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 27,
+        "item_vnum": 230144,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 9830
+          },
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 230027
+          },
+          {
+            "price_type": 1,
+            "amount": 100000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 28,
+        "item_vnum": 230144,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 10060
+          },
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 230027
+          },
+          {
+            "price_type": 1,
+            "amount": 100000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 29,
+        "item_vnum": 230144,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 10290
+          },
+          {
+            "price_type": 3,
+            "amount": 2,
             "price_vnum": 230027
           },
           {
@@ -13419,6 +13960,18 @@
       },
       {
         "order": 40,
+        "item_vnum": 230045,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 3,
+            "price_vnum": 230041
+          }
+        ]
+      },
+      {
+        "order": 41,
         "item_vnum": 230012,
         "count": 200,
         "prices": [
@@ -13430,7 +13983,7 @@
         ]
       },
       {
-        "order": 41,
+        "order": 42,
         "item_vnum": 30179,
         "count": 3,
         "prices": [
@@ -13442,7 +13995,7 @@
         ]
       },
       {
-        "order": 42,
+        "order": 43,
         "item_vnum": 71174,
         "count": 1,
         "prices": [
@@ -13454,7 +14007,7 @@
         ]
       },
       {
-        "order": 43,
+        "order": 44,
         "item_vnum": 71123,
         "count": 2,
         "prices": [
@@ -13466,7 +14019,7 @@
         ]
       },
       {
-        "order": 44,
+        "order": 45,
         "item_vnum": 71129,
         "count": 2,
         "prices": [
@@ -13478,7 +14031,7 @@
         ]
       },
       {
-        "order": 45,
+        "order": 46,
         "item_vnum": 30613,
         "count": 1,
         "prices": [
@@ -13490,7 +14043,7 @@
         ]
       },
       {
-        "order": 46,
+        "order": 47,
         "item_vnum": 70303,
         "count": 1,
         "prices": [
@@ -13502,7 +14055,7 @@
         ]
       },
       {
-        "order": 47,
+        "order": 48,
         "item_vnum": 240002,
         "count": 3,
         "prices": [
@@ -13514,7 +14067,7 @@
         ]
       },
       {
-        "order": 48,
+        "order": 49,
         "item_vnum": 71201,
         "count": 1,
         "prices": [
@@ -13526,7 +14079,7 @@
         ]
       },
       {
-        "order": 49,
+        "order": 50,
         "item_vnum": 56013,
         "count": 1,
         "prices": [
@@ -13538,7 +14091,7 @@
         ]
       },
       {
-        "order": 50,
+        "order": 51,
         "item_vnum": 250016,
         "count": 1,
         "prices": [
@@ -13550,7 +14103,7 @@
         ]
       },
       {
-        "order": 51,
+        "order": 52,
         "item_vnum": 250003,
         "count": 8,
         "prices": [
@@ -13562,7 +14115,7 @@
         ]
       },
       {
-        "order": 52,
+        "order": 53,
         "item_vnum": 220000,
         "count": 40,
         "prices": [
@@ -13574,7 +14127,7 @@
         ]
       },
       {
-        "order": 53,
+        "order": 54,
         "item_vnum": 220001,
         "count": 40,
         "prices": [
@@ -13586,7 +14139,7 @@
         ]
       },
       {
-        "order": 54,
+        "order": 55,
         "item_vnum": 240000,
         "count": 1,
         "prices": [
@@ -13598,7 +14151,7 @@
         ]
       },
       {
-        "order": 55,
+        "order": 56,
         "item_vnum": 240177,
         "count": 1,
         "prices": [
@@ -13610,7 +14163,7 @@
         ]
       },
       {
-        "order": 56,
+        "order": 57,
         "item_vnum": 240178,
         "count": 1,
         "prices": [
@@ -13622,7 +14175,7 @@
         ]
       },
       {
-        "order": 57,
+        "order": 58,
         "item_vnum": 240179,
         "count": 1,
         "prices": [
@@ -13949,6 +14502,50 @@
           {
             "price_type": 1,
             "amount": 20000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 14,
+        "item_vnum": 50705,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 50707
+          },
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 30618
+          },
+          {
+            "price_type": 1,
+            "amount": 500000000,
+            "price_vnum": 0
+          }
+        ]
+      },
+      {
+        "order": 15,
+        "item_vnum": 50707,
+        "count": 1,
+        "prices": [
+          {
+            "price_type": 3,
+            "amount": 1,
+            "price_vnum": 50705
+          },
+          {
+            "price_type": 3,
+            "amount": 2,
+            "price_vnum": 30618
+          },
+          {
+            "price_type": 1,
+            "amount": 500000000,
             "price_vnum": 0
           }
         ]

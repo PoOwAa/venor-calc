@@ -67,7 +67,7 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 30179,
-        "quantity": 6
+        "quantity": 7
       }
     ],
     "output": {
@@ -275,7 +275,33 @@ export const recipes: Recipe[] = [
     "goldCost": 300000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-30320-16",
+    "id": "illuziok-kereskedoje-9013-240132-16",
+    "npc": "Illúziók kereskedője",
+    "vendor": "Illúziók kereskedője",
+    "vendorNpcVnum": 9013,
+    "label": "Illúziók kereskedője • 240132",
+    "inputs": [
+      {
+        "itemId": 240109,
+        "quantity": 2
+      },
+      {
+        "itemId": 230144,
+        "quantity": 5
+      },
+      {
+        "itemId": 230032,
+        "quantity": 2
+      }
+    ],
+    "output": {
+      "itemId": 240132,
+      "quantity": 1
+    },
+    "goldCost": 5000000000
+  },
+  {
+    "id": "illuziok-kereskedoje-9013-30320-17",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -293,7 +319,7 @@ export const recipes: Recipe[] = [
     "goldCost": 10000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-30179-17",
+    "id": "illuziok-kereskedoje-9013-30179-18",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -311,7 +337,7 @@ export const recipes: Recipe[] = [
     "goldCost": 25000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-30179-18",
+    "id": "illuziok-kereskedoje-9013-30179-19",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -329,7 +355,7 @@ export const recipes: Recipe[] = [
     "goldCost": 20000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-71174-19",
+    "id": "illuziok-kereskedoje-9013-71174-20",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -347,7 +373,7 @@ export const recipes: Recipe[] = [
     "goldCost": 50000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-30613-20",
+    "id": "illuziok-kereskedoje-9013-30613-21",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -369,7 +395,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-70303-21",
+    "id": "illuziok-kereskedoje-9013-70303-22",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -391,7 +417,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-70303-22",
+    "id": "illuziok-kereskedoje-9013-70303-23",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -409,7 +435,7 @@ export const recipes: Recipe[] = [
     "goldCost": 150000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-240002-23",
+    "id": "illuziok-kereskedoje-9013-240002-24",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -435,7 +461,7 @@ export const recipes: Recipe[] = [
     "goldCost": 40000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-240002-24",
+    "id": "illuziok-kereskedoje-9013-240002-25",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -457,7 +483,7 @@ export const recipes: Recipe[] = [
     "goldCost": 40000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-240142-25",
+    "id": "illuziok-kereskedoje-9013-240142-26",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -479,7 +505,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-71201-26",
+    "id": "illuziok-kereskedoje-9013-71201-27",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -501,7 +527,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-71201-27",
+    "id": "illuziok-kereskedoje-9013-71201-28",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -527,7 +553,7 @@ export const recipes: Recipe[] = [
     "goldCost": 200000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-56013-28",
+    "id": "illuziok-kereskedoje-9013-56013-29",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -553,7 +579,7 @@ export const recipes: Recipe[] = [
     "goldCost": 250000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-56013-29",
+    "id": "illuziok-kereskedoje-9013-56013-30",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -561,25 +587,25 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 33029,
-        "quantity": 30
+        "quantity": 5
       },
       {
         "itemId": 33030,
-        "quantity": 30
+        "quantity": 5
       },
       {
         "itemId": 230010,
-        "quantity": 10
+        "quantity": 5
       }
     ],
     "output": {
       "itemId": 56013,
       "quantity": 1
     },
-    "goldCost": 250000000
+    "goldCost": 500000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-31160-30",
+    "id": "illuziok-kereskedoje-9013-31160-31",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -605,7 +631,7 @@ export const recipes: Recipe[] = [
     "goldCost": 200000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-240004-31",
+    "id": "illuziok-kereskedoje-9013-240004-32",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -631,7 +657,7 @@ export const recipes: Recipe[] = [
     "goldCost": 200000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-31161-32",
+    "id": "illuziok-kereskedoje-9013-31161-33",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -657,7 +683,7 @@ export const recipes: Recipe[] = [
     "goldCost": 200000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-240109-33",
+    "id": "illuziok-kereskedoje-9013-240109-34",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,
@@ -665,15 +691,15 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 230081,
-        "quantity": 100
+        "quantity": 75
       },
       {
         "itemId": 31096,
-        "quantity": 20
+        "quantity": 30
       },
       {
         "itemId": 230032,
-        "quantity": 1
+        "quantity": 4
       }
     ],
     "output": {
@@ -683,7 +709,59 @@ export const recipes: Recipe[] = [
     "goldCost": 1000000000
   },
   {
-    "id": "illuziok-kereskedoje-9013-240110-34",
+    "id": "illuziok-kereskedoje-9013-240184-35",
+    "npc": "Illúziók kereskedője",
+    "vendor": "Illúziók kereskedője",
+    "vendorNpcVnum": 9013,
+    "label": "Illúziók kereskedője • 240184",
+    "inputs": [
+      {
+        "itemId": 240109,
+        "quantity": 1
+      },
+      {
+        "itemId": 31113,
+        "quantity": 1
+      },
+      {
+        "itemId": 240001,
+        "quantity": 2
+      }
+    ],
+    "output": {
+      "itemId": 240184,
+      "quantity": 1
+    },
+    "goldCost": 5000000000
+  },
+  {
+    "id": "illuziok-kereskedoje-9013-230147-36",
+    "npc": "Illúziók kereskedője",
+    "vendor": "Illúziók kereskedője",
+    "vendorNpcVnum": 9013,
+    "label": "Illúziók kereskedője • 230147",
+    "inputs": [
+      {
+        "itemId": 240109,
+        "quantity": 1
+      },
+      {
+        "itemId": 230146,
+        "quantity": 1
+      },
+      {
+        "itemId": 33030,
+        "quantity": 10
+      }
+    ],
+    "output": {
+      "itemId": 230147,
+      "quantity": 1
+    },
+    "goldCost": 5000000000
+  },
+  {
+    "id": "illuziok-kereskedoje-9013-240110-37",
     "npc": "Illúziók kereskedője",
     "vendor": "Illúziók kereskedője",
     "vendorNpcVnum": 9013,

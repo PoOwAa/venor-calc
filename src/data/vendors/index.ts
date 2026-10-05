@@ -4,7 +4,6 @@ import { recipes as vendorRecipes_afrodite_60311 } from "./afrodite-60311";
 import { recipes as vendorRecipes_alkimista_20001 } from "./alkimista-20001";
 import { recipes as vendorRecipes_asmodeus_ore_60271 } from "./asmodeus-ore-60271";
 import { recipes as vendorRecipes_baek_go_20018 } from "./baek-go-20018";
-import { recipes as vendorRecipes_chaegirab_biologus_20084 } from "./chaegirab-biologus-20084";
 import { recipes as vendorRecipes_deokbae_20015 } from "./deokbae-20015";
 import { recipes as vendorRecipes_elementalis_kereskedo_szel_60033 } from "./elementalis-kereskedo-szel-60033";
 import { recipes as vendorRecipes_elementalis_kereskedo_villam_60035 } from "./elementalis-kereskedo-villam-60035";
@@ -13,6 +12,7 @@ import { recipes as vendorRecipes_fegyverkereskedo_9001 } from "./fegyverkereske
 import { recipes as vendorRecipes_fegyverzet_kereskedo_9002 } from "./fegyverzet-kereskedo-9002";
 import { recipes as vendorRecipes_fekete_magia_oktato_20345 } from "./fekete-magia-oktato-20345";
 import { recipes as vendorRecipes_fo_goblin_60032 } from "./fo-goblin-60032";
+import { recipes as vendorRecipes_gerlinda_a_tortenesz_20084 } from "./gerlinda-a-tortenesz-20084";
 import { recipes as vendorRecipes_gyogyitas_oktato_20347 } from "./gyogyitas-oktato-20347";
 import { recipes as vendorRecipes_heti_ranglista_ore_60320 } from "./heti-ranglista-ore-60320";
 import { recipes as vendorRecipes_idohasadek_kereskedo_60313 } from "./idohasadek-kereskedo-60313";
@@ -42,7 +42,6 @@ export const vendorRecipeGroups = [
   { vendorName: "Alkimista", vendorNpcVnum: 20001, recipes: vendorRecipes_alkimista_20001 },
   { vendorName: "Asmodeus őre", vendorNpcVnum: 60271, recipes: vendorRecipes_asmodeus_ore_60271 },
   { vendorName: "Baek-Go", vendorNpcVnum: 20018, recipes: vendorRecipes_baek_go_20018 },
-  { vendorName: "Chaegirab biológus", vendorNpcVnum: 20084, recipes: vendorRecipes_chaegirab_biologus_20084 },
   { vendorName: "Deokbae", vendorNpcVnum: 20015, recipes: vendorRecipes_deokbae_20015 },
   { vendorName: "Elementális kereskedő (Szél)", vendorNpcVnum: 60033, recipes: vendorRecipes_elementalis_kereskedo_szel_60033 },
   { vendorName: "Elementális kereskedő (Villám)", vendorNpcVnum: 60035, recipes: vendorRecipes_elementalis_kereskedo_villam_60035 },
@@ -51,6 +50,7 @@ export const vendorRecipeGroups = [
   { vendorName: "Fegyverzet-kereskedő", vendorNpcVnum: 9002, recipes: vendorRecipes_fegyverzet_kereskedo_9002 },
   { vendorName: "Fekete mágia oktató", vendorNpcVnum: 20345, recipes: vendorRecipes_fekete_magia_oktato_20345 },
   { vendorName: "Fő Goblin", vendorNpcVnum: 60032, recipes: vendorRecipes_fo_goblin_60032 },
+  { vendorName: "Gerlinda, a történész", vendorNpcVnum: 20084, recipes: vendorRecipes_gerlinda_a_tortenesz_20084 },
   { vendorName: "Gyógyítás oktató", vendorNpcVnum: 20347, recipes: vendorRecipes_gyogyitas_oktato_20347 },
   { vendorName: "Heti ranglista őre", vendorNpcVnum: 60320, recipes: vendorRecipes_heti_ranglista_ore_60320 },
   { vendorName: "Időhasadék kereskedő", vendorNpcVnum: 60313, recipes: vendorRecipes_idohasadek_kereskedo_60313 },

@@ -739,7 +739,25 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-230012-40",
+    "id": "elementalis-kereskedo-villam-60035-230045-40",
+    "npc": "Elementális kereskedő (Villám)",
+    "vendor": "Elementális kereskedő (Villám)",
+    "vendorNpcVnum": 60035,
+    "label": "Elementális kereskedő (Villám) • 230045",
+    "inputs": [
+      {
+        "itemId": 230041,
+        "quantity": 3
+      }
+    ],
+    "output": {
+      "itemId": 230045,
+      "quantity": 1
+    },
+    "goldCost": 0
+  },
+  {
+    "id": "elementalis-kereskedo-villam-60035-230012-41",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -757,7 +775,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-30179-41",
+    "id": "elementalis-kereskedo-villam-60035-30179-42",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -775,7 +793,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-71174-42",
+    "id": "elementalis-kereskedo-villam-60035-71174-43",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -793,7 +811,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-71123-43",
+    "id": "elementalis-kereskedo-villam-60035-71123-44",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -811,7 +829,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-71129-44",
+    "id": "elementalis-kereskedo-villam-60035-71129-45",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -829,7 +847,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-30613-45",
+    "id": "elementalis-kereskedo-villam-60035-30613-46",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -847,7 +865,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-70303-46",
+    "id": "elementalis-kereskedo-villam-60035-70303-47",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -865,7 +883,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-240002-47",
+    "id": "elementalis-kereskedo-villam-60035-240002-48",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -883,7 +901,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-71201-48",
+    "id": "elementalis-kereskedo-villam-60035-71201-49",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -901,7 +919,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-56013-49",
+    "id": "elementalis-kereskedo-villam-60035-56013-50",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -919,7 +937,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-250016-50",
+    "id": "elementalis-kereskedo-villam-60035-250016-51",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -937,7 +955,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-250003-51",
+    "id": "elementalis-kereskedo-villam-60035-250003-52",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -955,7 +973,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-220000-52",
+    "id": "elementalis-kereskedo-villam-60035-220000-53",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -973,7 +991,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-220001-53",
+    "id": "elementalis-kereskedo-villam-60035-220001-54",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -991,7 +1009,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-240000-54",
+    "id": "elementalis-kereskedo-villam-60035-240000-55",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -1009,7 +1027,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-240177-55",
+    "id": "elementalis-kereskedo-villam-60035-240177-56",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -1027,7 +1045,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-240178-56",
+    "id": "elementalis-kereskedo-villam-60035-240178-57",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,
@@ -1045,7 +1063,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "elementalis-kereskedo-villam-60035-240179-57",
+    "id": "elementalis-kereskedo-villam-60035-240179-58",
     "npc": "Elementális kereskedő (Villám)",
     "vendor": "Elementális kereskedő (Villám)",
     "vendorNpcVnum": 60035,

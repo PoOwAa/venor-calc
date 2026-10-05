@@ -402,7 +402,7 @@ export const recipes: Recipe[] = [
       "itemId": 250022,
       "quantity": 10
     },
-    "goldCost": 50000000
+    "goldCost": 100000000
   },
   {
     "id": "vegyeskereskedo-eladono-9003-101003-22",
@@ -449,7 +449,25 @@ export const recipes: Recipe[] = [
     "goldCost": 5000000000
   },
   {
-    "id": "vegyeskereskedo-eladono-9003-53250-24",
+    "id": "vegyeskereskedo-eladono-9003-101032-24",
+    "npc": "Vegyeskereskedő Eladónő",
+    "vendor": "Vegyeskereskedő Eladónő",
+    "vendorNpcVnum": 9003,
+    "label": "Vegyeskereskedő Eladónő • 101032",
+    "inputs": [
+      {
+        "itemId": 101003,
+        "quantity": 1500
+      }
+    ],
+    "output": {
+      "itemId": 101032,
+      "quantity": 1
+    },
+    "goldCost": 50000000000
+  },
+  {
+    "id": "vegyeskereskedo-eladono-9003-53250-25",
     "npc": "Vegyeskereskedő Eladónő",
     "vendor": "Vegyeskereskedő Eladónő",
     "vendorNpcVnum": 9003,
@@ -467,7 +485,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "vegyeskereskedo-eladono-9003-240148-25",
+    "id": "vegyeskereskedo-eladono-9003-240148-26",
     "npc": "Vegyeskereskedő Eladónő",
     "vendor": "Vegyeskereskedő Eladónő",
     "vendorNpcVnum": 9003,
@@ -485,7 +503,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "vegyeskereskedo-eladono-9003-79504-27",
+    "id": "vegyeskereskedo-eladono-9003-79504-28",
     "npc": "Vegyeskereskedő Eladónő",
     "vendor": "Vegyeskereskedő Eladónő",
     "vendorNpcVnum": 9003,
@@ -498,7 +516,7 @@ export const recipes: Recipe[] = [
     "goldCost": 1
   },
   {
-    "id": "vegyeskereskedo-eladono-9003-30181-28",
+    "id": "vegyeskereskedo-eladono-9003-30181-29",
     "npc": "Vegyeskereskedő Eladónő",
     "vendor": "Vegyeskereskedő Eladónő",
     "vendorNpcVnum": 9003,
@@ -528,7 +546,7 @@ export const recipes: Recipe[] = [
     "goldCost": 25000000
   },
   {
-    "id": "vegyeskereskedo-eladono-9003-240167-29",
+    "id": "vegyeskereskedo-eladono-9003-240167-30",
     "npc": "Vegyeskereskedő Eladónő",
     "vendor": "Vegyeskereskedő Eladónő",
     "vendorNpcVnum": 9003,
@@ -546,7 +564,7 @@ export const recipes: Recipe[] = [
     "goldCost": 0
   },
   {
-    "id": "vegyeskereskedo-eladono-9003-90010-30",
+    "id": "vegyeskereskedo-eladono-9003-90010-31",
     "npc": "Vegyeskereskedő Eladónő",
     "vendor": "Vegyeskereskedő Eladónő",
     "vendorNpcVnum": 9003,
@@ -559,7 +577,7 @@ export const recipes: Recipe[] = [
     "goldCost": 500000000
   },
   {
-    "id": "vegyeskereskedo-eladono-9003-70002-31",
+    "id": "vegyeskereskedo-eladono-9003-70002-32",
     "npc": "Vegyeskereskedő Eladónő",
     "vendor": "Vegyeskereskedő Eladónő",
     "vendorNpcVnum": 9003,
@@ -572,7 +590,7 @@ export const recipes: Recipe[] = [
     "goldCost": 1
   },
   {
-    "id": "vegyeskereskedo-eladono-9003-240170-32",
+    "id": "vegyeskereskedo-eladono-9003-240170-33",
     "npc": "Vegyeskereskedő Eladónő",
     "vendor": "Vegyeskereskedő Eladónő",
     "vendorNpcVnum": 9003,
@@ -594,7 +612,7 @@ export const recipes: Recipe[] = [
     "goldCost": 500000000
   },
   {
-    "id": "vegyeskereskedo-eladono-9003-210121-33",
+    "id": "vegyeskereskedo-eladono-9003-210121-34",
     "npc": "Vegyeskereskedő Eladónő",
     "vendor": "Vegyeskereskedő Eladónő",
     "vendorNpcVnum": 9003,
@@ -616,7 +634,7 @@ export const recipes: Recipe[] = [
     "goldCost": 200000000000
   },
   {
-    "id": "vegyeskereskedo-eladono-9003-30255-34",
+    "id": "vegyeskereskedo-eladono-9003-30255-35",
     "npc": "Vegyeskereskedő Eladónő",
     "vendor": "Vegyeskereskedő Eladónő",
     "vendorNpcVnum": 9003,

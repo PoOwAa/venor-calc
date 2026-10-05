@@ -679,7 +679,85 @@ export const recipes: Recipe[] = [
     "goldCost": 5000000000
   },
   {
-    "id": "baek-go-20018-101018-35",
+    "id": "baek-go-20018-105020-35",
+    "npc": "Baek-Go",
+    "vendor": "Baek-Go",
+    "vendorNpcVnum": 20018,
+    "label": "Baek-Go • 105020",
+    "inputs": [
+      {
+        "itemId": 105006,
+        "quantity": 20
+      },
+      {
+        "itemId": 33030,
+        "quantity": 150
+      }
+    ],
+    "output": {
+      "itemId": 105020,
+      "quantity": 1
+    },
+    "goldCost": 5000000000
+  },
+  {
+    "id": "baek-go-20018-105015-36",
+    "npc": "Baek-Go",
+    "vendor": "Baek-Go",
+    "vendorNpcVnum": 20018,
+    "label": "Baek-Go • 105015",
+    "inputs": [
+      {
+        "itemId": 50705,
+        "quantity": 100
+      },
+      {
+        "itemId": 50707,
+        "quantity": 75
+      },
+      {
+        "itemId": 105006,
+        "quantity": 5
+      },
+      {
+        "itemId": 105007,
+        "quantity": 1
+      }
+    ],
+    "output": {
+      "itemId": 105015,
+      "quantity": 1
+    },
+    "goldCost": 15000000000
+  },
+  {
+    "id": "baek-go-20018-105014-37",
+    "npc": "Baek-Go",
+    "vendor": "Baek-Go",
+    "vendorNpcVnum": 20018,
+    "label": "Baek-Go • 105014",
+    "inputs": [
+      {
+        "itemId": 53248,
+        "quantity": 2
+      },
+      {
+        "itemId": 105007,
+        "quantity": 1
+      },
+      {
+        "itemId": 105006,
+        "quantity": 5
+      }
+    ],
+    "output": {
+      "itemId": 105014,
+      "quantity": 1
+    },
+    "goldCost": 15000000000
+  },
+  {
+    "id": "baek-go-20018-101018-38",
     "npc": "Baek-Go",
     "vendor": "Baek-Go",
     "vendorNpcVnum": 20018,
@@ -687,7 +765,7 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 230072,
-        "quantity": 5
+        "quantity": 15
       },
       {
         "itemId": 230059,
@@ -709,7 +787,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "baek-go-20018-101019-36",
+    "id": "baek-go-20018-101019-39",
     "npc": "Baek-Go",
     "vendor": "Baek-Go",
     "vendorNpcVnum": 20018,
@@ -717,19 +795,19 @@ export const recipes: Recipe[] = [
     "inputs": [
       {
         "itemId": 230073,
-        "quantity": 10
+        "quantity": 200
       },
       {
         "itemId": 230081,
-        "quantity": 100
+        "quantity": 500
       },
       {
         "itemId": 220006,
-        "quantity": 250
+        "quantity": 2500
       },
       {
         "itemId": 27995,
-        "quantity": 3
+        "quantity": 5
       }
     ],
     "output": {
@@ -739,7 +817,7 @@ export const recipes: Recipe[] = [
     "goldCost": 2000000000
   },
   {
-    "id": "baek-go-20018-101020-37",
+    "id": "baek-go-20018-101020-40",
     "npc": "Baek-Go",
     "vendor": "Baek-Go",
     "vendorNpcVnum": 20018,
@@ -755,11 +833,11 @@ export const recipes: Recipe[] = [
       },
       {
         "itemId": 220006,
-        "quantity": 500
+        "quantity": 5000
       },
       {
         "itemId": 27995,
-        "quantity": 3
+        "quantity": 5
       }
     ],
     "output": {
@@ -769,7 +847,7 @@ export const recipes: Recipe[] = [
     "goldCost": 2000000000
   },
   {
-    "id": "baek-go-20018-250030-38",
+    "id": "baek-go-20018-250030-41",
     "npc": "Baek-Go",
     "vendor": "Baek-Go",
     "vendorNpcVnum": 20018,
@@ -787,7 +865,7 @@ export const recipes: Recipe[] = [
     "goldCost": 20000000
   },
   {
-    "id": "baek-go-20018-71181-39",
+    "id": "baek-go-20018-71181-42",
     "npc": "Baek-Go",
     "vendor": "Baek-Go",
     "vendorNpcVnum": 20018,
@@ -809,7 +887,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "baek-go-20018-240015-40",
+    "id": "baek-go-20018-240015-43",
     "npc": "Baek-Go",
     "vendor": "Baek-Go",
     "vendorNpcVnum": 20018,
@@ -831,7 +909,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "baek-go-20018-240016-41",
+    "id": "baek-go-20018-240016-44",
     "npc": "Baek-Go",
     "vendor": "Baek-Go",
     "vendorNpcVnum": 20018,
@@ -853,7 +931,7 @@ export const recipes: Recipe[] = [
     "goldCost": 100000000
   },
   {
-    "id": "baek-go-20018-240017-42",
+    "id": "baek-go-20018-240017-45",
     "npc": "Baek-Go",
     "vendor": "Baek-Go",
     "vendorNpcVnum": 20018,
@@ -873,5 +951,31 @@ export const recipes: Recipe[] = [
       "quantity": 1
     },
     "goldCost": 100000000
+  },
+  {
+    "id": "baek-go-20018-240118-46",
+    "npc": "Baek-Go",
+    "vendor": "Baek-Go",
+    "vendorNpcVnum": 20018,
+    "label": "Baek-Go • 240118",
+    "inputs": [
+      {
+        "itemId": 240017,
+        "quantity": 5
+      },
+      {
+        "itemId": 230102,
+        "quantity": 5
+      },
+      {
+        "itemId": 230012,
+        "quantity": 500
+      }
+    ],
+    "output": {
+      "itemId": 240118,
+      "quantity": 1
+    },
+    "goldCost": 200000000
   }
 ];
